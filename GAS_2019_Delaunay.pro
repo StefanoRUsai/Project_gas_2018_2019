@@ -45,7 +45,8 @@ SOURCES += \
     managers/delaunaymanager.cpp \
     utils/delaunay_checker.cpp \
     utils/fileutils.cpp \
-    managers/pointcollectiondrawer.tpp
+    managers/pointcollectiondrawer.tpp \
+    data_structures/triangle.cpp
 
 FORMS += \
     managers/delaunaymanager.ui
@@ -55,7 +56,8 @@ HEADERS += \
     utils/delaunay_checker.h \
     utils/fileutils.h \
     managers/delaunaymanager.h \
-    managers/pointcollectiondrawer.h
+    managers/pointcollectiondrawer.h \
+    data_structures/triangle.h
 
 
 
