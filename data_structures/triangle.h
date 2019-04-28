@@ -30,7 +30,7 @@ class Triangle{
         cg3::Point2Dd* getVertexTwo() const;
         cg3::Point2Dd* getVertexThree() const;
         Triangle* getAdjacentOne() const;
-        Triangle* getAdjacentTwoo() const;
+        Triangle* getAdjacentTwo() const;
         Triangle* getAdjacentThree() const;
 
         /**
