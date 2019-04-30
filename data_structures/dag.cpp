@@ -4,8 +4,8 @@ Dag::Dag(){}
 
 Dag::~Dag(){ }
 
-Dag::Dag(Triangle* tr){
-    this->tr = tr;
+Dag::Dag(Triangle* triangle){
+    this->triangle = triangle;
 }
 
 //getter
