@@ -13,7 +13,7 @@ private:
 
 public:
     Dag();
-    Dag(Triangle* tr);
+    Dag(Triangle* triangle);
     ~Dag();
 
     Dag* getChildOne() const;
