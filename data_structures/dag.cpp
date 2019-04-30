@@ -39,3 +39,18 @@ void Dag::setChildThree(Dag* node){
 void Dag::setTriangle(Triangle* triangle){
     this->triangle = triangle;
 }
+
+//add node
+void Dag::add(Dag* node, Dag* old){
+
+    if(old->getChildOne() == nullptr){
+        old->setChildOne(node);
+
+    }
+    if(old->getChildTwo() == nullptr){
+        old->setChildTwo(node);
+    }
+    if(old->getChildTrhee() == nullptr){
+        old->setChildThree(node);
+    }
+}

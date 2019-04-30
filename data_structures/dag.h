@@ -6,7 +6,7 @@
 class Dag{
 
 private:
-    Triangle* tr = nullptr;
+    Triangle* triangle = nullptr;
     Dag* childOne = nullptr;
     Dag* childTwo = nullptr;
     Dag* childThree = nullptr;
@@ -17,7 +17,7 @@ public:
     ~Dag();
 
     Dag* getChildOne() const;
-    Dag* getChildTwoo() const;
+    Dag* getChildTwo() const;
     Dag* getChildTrhee() const;
     Triangle* getTriangle() const;
 
@@ -26,6 +26,7 @@ public:
     void setChildThree(Dag* node);
     void setTriangle(Triangle* triangle);
 
+    static void add(Dag* node, Dag* old);
 
 };
 
