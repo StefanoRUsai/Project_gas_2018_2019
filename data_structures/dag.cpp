@@ -29,6 +29,7 @@ void Dag::setChildOne(Dag* node){
     this->childOne = node;
 }
 
+//setter
 void Dag::setChildTwo(Dag* node){
     this->childTwo = node;
 }
@@ -45,11 +46,12 @@ void Dag::add(Dag* node, Dag* old){
 
     if(old->getChildOne() == nullptr){
         old->setChildOne(node);
-
     }
+
     if(old->getChildTwo() == nullptr){
         old->setChildTwo(node);
     }
+
     if(old->getChildTrhee() == nullptr){
         old->setChildThree(node);
     }
