@@ -8,11 +8,12 @@
 class Triangulation{
 public:
     Triangulation();
+    ~Triangulation();
 
 
 private:
     std::vector<cg3::Point2Dd*> points; //punti in input per la triangolazione
-    std::vector<Dag> nodes;
+    std::vector<Dag*> nodes; // nodi del dag
     std::vector<Triangle*> triangles;  // triangoli da restituire
 
 };

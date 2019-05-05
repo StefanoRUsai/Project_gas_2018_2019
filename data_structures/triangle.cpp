@@ -63,3 +63,26 @@ void Triangle::setAdjacentTwo(Triangle* adjacentTwo){
 void Triangle::setAdjacentThree(Triangle* adjacentThree){
     this->adjacentThree = adjacentThree;
 }
+
+
+//https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
+//tecnica del baricentro
+bool Triangle::controlPoint(const cg3::Point2Dd &point){
+
+   cg3::Point2Dd* one = this->getVertexOne();
+   cg3::Point2Dd* two = this->getVertexTwo();
+   cg3::Point2Dd* three = this->getVertexThree();
+
+
+   double area = 0.5 *(-two->y()*three->x() + one->y()*(-two->x() + three->x()) + one->x()*(two->y() - three->y()) + two->x()*three->y());
+
+   double s = (1/(2*area))*(one->y()*three->x() - one->x()*three->y() + (three->y() - one->y())*point.x() + (one->x() - three->x())*point.y());
+
+   double t = (1/(2*area))*(one->x()*two->y() - one->y()*two->x() + (one->y() - two->y())*point.x() + (two->x() - one->x())*point.y());
+
+   if(s > 0 && t > 0 && (1-s-t) > 0)
+       return true;
+
+    return false;
+
+}
