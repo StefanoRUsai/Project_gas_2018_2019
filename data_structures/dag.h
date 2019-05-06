@@ -32,7 +32,7 @@ public:
 
     void add(Dag* node);
     //navigazione del grafo per controllare dove si trova il punto in oggetto
-    Dag* navigateGraph(const cg3::Point2Dd& point);
+    void navigateGraph(const cg3::Point2Dd& point);
     //controllo se il punto è contenuto dentro il triangolo
 
 

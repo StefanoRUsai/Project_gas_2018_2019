@@ -65,7 +65,7 @@ void Dag::add(Dag* node){
     }
 }
 
-Dag* Dag::navigateGraph(const cg3::Point2Dd& point){
+void Dag::navigateGraph(const cg3::Point2Dd& point){
     bool flag = true; // se esiste un figlio deve continuare
 
     do{
@@ -78,7 +78,7 @@ Dag* Dag::navigateGraph(const cg3::Point2Dd& point){
             t = this->getChildOne()->getTriangle();
 
             if(t->pointIsVertex(point))
-                return nullptr;
+                return;
 
             if(t->controlPoint(point)){
                 this->childOne = this->getChildOne()->getChildOne();
@@ -93,7 +93,7 @@ Dag* Dag::navigateGraph(const cg3::Point2Dd& point){
             t = this->getChildTwo()->getTriangle();
 
             if(t->pointIsVertex(point))
-                return nullptr;
+                return;
 
             if(t->controlPoint(point)){
                 this->childOne = this->getChildTwo()->getChildOne();
@@ -108,7 +108,7 @@ Dag* Dag::navigateGraph(const cg3::Point2Dd& point){
             t = this->getChildTwo()->getTriangle();
 
             if(t->pointIsVertex(point))
-                return nullptr;
+                return;
 
             if(t->controlPoint(point)){
                 this->childOne = this->getChildTwo()->getChildOne();
@@ -124,5 +124,5 @@ Dag* Dag::navigateGraph(const cg3::Point2Dd& point){
             flag = false;
     }while(flag != false);
 
-    return this;
+
 }

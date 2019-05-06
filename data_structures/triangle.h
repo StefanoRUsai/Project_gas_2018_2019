@@ -3,7 +3,7 @@
 
 #include <cg3/geometry/2d/point2d.h>
 
-
+class Dag;
 class Triangle{
 
 
@@ -12,10 +12,7 @@ class Triangle{
         cg3::Point2Dd* vertexTwo;
         cg3::Point2Dd* vertexThree;
 
-        Triangle* adjacentOne = nullptr;
-        Triangle* adjacentTwo = nullptr;
-        Triangle* adjacentThree = nullptr;
-        //Dag* node = nullptr;  // link al nodo di appartenenza nel dag per il triancolo
+        Dag* node = nullptr;  // link al nodo di appartenenza nel dag per il triancolo
 
 
     public:

@@ -3,9 +3,9 @@
 
 Triangle::Triangle(){}
 
-Triangle::Triangle(cg3::Point2Dd* vertexOne,
-         cg3::Point2Dd* vertexTwo,
-         cg3::Point2Dd* vertexThree){
+Triangle::Triangle(cg3::Point2Dd& vertexOne,
+         cg3::Point2Dd& vertexTwo,
+         cg3::Point2Dd& vertexThree){
     this->vertexOne = vertexOne;
     this->vertexTwo = vertexTwo;
     this->vertexThree = vertexThree;
@@ -14,15 +14,15 @@ Triangle::Triangle(cg3::Point2Dd* vertexOne,
 Triangle::~Triangle(){}
 
 //getter come in java?
-cg3::Point2Dd* Triangle::getVertexOne() const{
+cg3::Point2Dd Triangle::getVertexOne() const{
     return this->vertexOne;
 }
 
-cg3::Point2Dd* Triangle::getVertexTwo() const{
+cg3::Point2Dd Triangle::getVertexTwo() const{
     return this->vertexTwo;
 }
 
-cg3::Point2Dd* Triangle::getVertexThree() const{
+cg3::Point2Dd Triangle::getVertexThree() const{
     return this->vertexThree;
 }
 
@@ -31,15 +31,15 @@ cg3::Point2Dd* Triangle::getVertexThree() const{
 
 //setter
 void Triangle::setVertexOne(cg3::Point2Dd* vertexOne){
-    this->vertexOne = vertexOne;
+    this->vertexOne = *vertexOne;
 }
 
 void Triangle::setVertexTwo(cg3::Point2Dd* vertexTwo){
-    this->vertexTwo = vertexTwo;
+    this->vertexTwo = *vertexTwo;
 }
 
 void Triangle::setVertexThree(cg3::Point2Dd* vertexThree){
-    this->vertexThree = vertexThree;
+    this->vertexThree = *vertexThree;
 }
 
 
@@ -48,16 +48,16 @@ void Triangle::setVertexThree(cg3::Point2Dd* vertexThree){
 //tecnica del baricentro
 bool Triangle::controlPoint(const cg3::Point2Dd &point){
 
-   cg3::Point2Dd* one = this->getVertexOne();
-   cg3::Point2Dd* two = this->getVertexTwo();
-   cg3::Point2Dd* three = this->getVertexThree();
+   cg3::Point2Dd one = this->getVertexOne();
+   cg3::Point2Dd two = this->getVertexTwo();
+   cg3::Point2Dd three = this->getVertexThree();
 
 
-   double area = 0.5 *(-two->y()*three->x() + one->y()*(-two->x() + three->x()) + one->x()*(two->y() - three->y()) + two->x()*three->y());
+   double area = 0.5 *(-two.y()*three.x() + one.y()*(-two.x() + three.x()) + one.x()*(two.y() - three.y()) + two.x()*three.y());
 
-   double s = (1/(2*area))*(one->y()*three->x() - one->x()*three->y() + (three->y() - one->y())*point.x() + (one->x() - three->x())*point.y());
+   double s = (1/(2*area))*(one.y()*three.x() - one.x()*three.y() + (three.y() - one.y())*point.x() + (one.x() - three.x())*point.y());
 
-   double t = (1/(2*area))*(one->x()*two->y() - one->y()*two->x() + (one->y() - two->y())*point.x() + (two->x() - one->x())*point.y());
+   double t = (1/(2*area))*(one.x()*two.y() - one.y()*two.x() + (one.y() - two.y())*point.x() + (two.x() - one.x())*point.y());
 
    if(s > 0 && t > 0 && (1-s-t) > 0)
        return true;
@@ -67,11 +67,11 @@ bool Triangle::controlPoint(const cg3::Point2Dd &point){
 }
 
 bool Triangle::pointIsVertex(const cg3::Point2Dd &point){
-    if(point == *this->vertexOne)
+    if(point == this->vertexOne)
         return true;
-    if(point == *this->vertexTwo)
+    if(point == this->vertexTwo)
         return true;
-    if(point == *this->vertexThree)
+    if(point == this->vertexThree)
         return true;
     return false;
 }
