@@ -1,7 +1,7 @@
 #ifndef DAG_H
 #define DAG_H
 
-#include <data_structures/triangle.h>
+#include "triangle.h"
 
 class Dag{
 

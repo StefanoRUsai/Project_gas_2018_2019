@@ -3,6 +3,7 @@
 
 #include <cg3/geometry/2d/point2d.h>
 
+
 class Triangle{
 
 
@@ -14,6 +15,8 @@ class Triangle{
         Triangle* adjacentOne = nullptr;
         Triangle* adjacentTwo = nullptr;
         Triangle* adjacentThree = nullptr;
+        //Dag* node = nullptr;  // link al nodo di appartenenza nel dag per il triancolo
+
 
     public:
         Triangle();
@@ -44,8 +47,8 @@ class Triangle{
         void setAdjacentOne(Triangle* adjacentOne);
         void setAdjacentTwo(Triangle* adjacentTwoo);
         void setAdjacentThree(Triangle* adjacentThree);
-
-
+        bool controlPoint (const cg3::Point2Dd& point);
+        bool pointIsVertex(const cg3::Point2Dd& p);
 };
 
 #endif // TRIANGLE_H

@@ -1,4 +1,5 @@
 #include "triangle.h"
+#include "dag.h"
 
 Triangle::Triangle(){}
 
@@ -26,18 +27,6 @@ cg3::Point2Dd* Triangle::getVertexThree() const{
 }
 
 
-Triangle* Triangle::getAdjacentOne() const{
-   return this->adjacentOne;
-}
-
-Triangle* Triangle::getAdjacentTwo() const{
-   return this->adjacentTwo;
-}
-
-Triangle* Triangle::getAdjacentThree() const{
-   return this->adjacentThree;
-}
-
 
 
 //setter
@@ -53,16 +42,6 @@ void Triangle::setVertexThree(cg3::Point2Dd* vertexThree){
     this->vertexThree = vertexThree;
 }
 
-void Triangle::setAdjacentOne(Triangle* adjacentOne){
-    this->adjacentOne = adjacentOne;
-}
-
-void Triangle::setAdjacentTwo(Triangle* adjacentTwo){
-    this->adjacentTwo = adjacentTwo;
-}
-void Triangle::setAdjacentThree(Triangle* adjacentThree){
-    this->adjacentThree = adjacentThree;
-}
 
 
 //https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
@@ -85,4 +64,14 @@ bool Triangle::controlPoint(const cg3::Point2Dd &point){
 
     return false;
 
+}
+
+bool Triangle::pointIsVertex(const cg3::Point2Dd &point){
+    if(point == *this->vertexOne)
+        return true;
+    if(point == *this->vertexTwo)
+        return true;
+    if(point == *this->vertexThree)
+        return true;
+    return false;
 }

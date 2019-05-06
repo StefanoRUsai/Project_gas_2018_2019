@@ -70,10 +70,6 @@ Dag* Dag::navigateGraph(const cg3::Point2Dd& point){
 
     do{
 
-        if(this == nullptr)
-            return nullptr;
-
-
         Triangle* t = nullptr;
 
         // Se il punto si trova all'interno di questo triangolo

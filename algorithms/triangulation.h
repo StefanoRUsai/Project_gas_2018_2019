@@ -9,7 +9,7 @@ class Triangulation{
 public:
     Triangulation();
     ~Triangulation();
-
+    Triangle* createTriangle(cg3::Point2Dd* one,cg3::Point2Dd* two, cg3::Point2Dd* three, Dag* node);
 
 private:
     std::vector<cg3::Point2Dd*> points; //punti in input per la triangolazione
