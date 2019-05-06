@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     cg3::Point2Dd p2(4,4);
     cg3::Point2Dd p3(5,6);
 
-    Triangle triangolo(&p1,&p2,&p3);
+    Triangle triangolo(p1,p2,p3);
     std::cout<<"sto stampando esattamente qui"<<std::endl;
 
     return 0;
