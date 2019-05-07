@@ -1,11 +1,13 @@
 #include "triangle.h"
 #include "dag.h"
 
+
+using namespace cg3;
 Triangle::Triangle(){}
 
-Triangle::Triangle(cg3::Point2Dd& vertexOne,
-         cg3::Point2Dd& vertexTwo,
-         cg3::Point2Dd& vertexThree){
+Triangle::Triangle(const Point2Dd& vertexOne,
+         const Point2Dd& vertexTwo,
+         const Point2Dd& vertexThree){
     this->vertexOne = vertexOne;
     this->vertexTwo = vertexTwo;
     this->vertexThree = vertexThree;
@@ -74,4 +76,8 @@ bool Triangle::pointIsVertex(const cg3::Point2Dd &point){
     if(point == this->vertexThree)
         return true;
     return false;
+}
+
+void Triangle::setNode(Dag* node){
+    this->node = node;
 }

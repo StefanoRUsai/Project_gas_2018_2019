@@ -9,9 +9,9 @@ Triangle *Triangulation::createTriangle(Point2Dd* one,Point2Dd* two,Point2Dd* th
     this->triangles.push_back(new Triangle(*one, *two, *three));
     this->nodes.push_back(new Dag(triangles.back()));
 
- //   triangles.back()->setNode(nodes.back());
+    triangles.back()->setNode(nodes.back());
 
- //   DagNavigation::addNode(nodes.back(), dagNodeFather);
+    node->add(nodes.back());
 
     return triangles.back();
 
