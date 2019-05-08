@@ -9,26 +9,26 @@ class Triangle{
 
 
     protected:
-        Point2Dd _vertexOne;
-        Point2Dd _vertexTwo;
-        Point2Dd _vertexThree;
+        Point2Dd* _vertexOne;
+        Point2Dd* _vertexTwo;
+        Point2Dd* _vertexThree;
         Dag* node = nullptr;  // link al nodo di appartenenza nel dag per il triancolo
 
 
     public:
         Triangle();
-        Triangle(const Point2Dd& vertexOne,
-                 const Point2Dd& vertexTwo,
-                 const Point2Dd& vertexThree);
+        Triangle(Point2Dd* vertexOne,
+                 Point2Dd* vertexTwo,
+                 Point2Dd* vertexThree);
         ~Triangle(); //distruttore da rivedere?
 
         /**
          * @brief Getter
          * @return
          */
-        cg3::Point2Dd getVertexOne() const;
-        cg3::Point2Dd getVertexTwo() const;
-        cg3::Point2Dd getVertexThree() const;
+        cg3::Point2Dd* getVertexOne() const;
+        cg3::Point2Dd* getVertexTwo() const;
+        cg3::Point2Dd* getVertexThree() const;
 
         /**
          * @brief Setter
@@ -49,7 +49,7 @@ class Triangle{
          * @return
          */
         bool pointIsVertex(const cg3::Point2Dd& p);
-        void printTriamgle();
+        void printTriangle();
 };
 }
 #endif // TRIANGLE_H

@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     Point2Dd p4(3,3);
 
 
-    Triangle triangolo(p1,p2,p3);
+    Triangle triangolo(&p1,&p2,&p3);
     Node node1;
     Node node2;
     Node node3;
