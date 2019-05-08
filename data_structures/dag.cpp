@@ -1,9 +1,14 @@
 #include "dag.h"
 using namespace delaunay;
+
 Dag::Dag(){}
+Dag::Dag(Node *root){
+    this->nodes= (new std::vector<Node*>);
+    this->nodes->push_back(root);
+}
+
 
 Dag::~Dag(){ }
-
 
 Node* Dag::navigateGraph(Node *node, const cg3::Point2Dd& point){
     bool flag = true; // se esiste un figlio deve continuare
@@ -45,4 +50,7 @@ Node* Dag::navigateGraph(Node *node, const cg3::Point2Dd& point){
     }while(flag != false);
 
     return node;
+}
+std::vector<Node*>* Dag::getDag() const{
+    return this->nodes;
 }

@@ -3,6 +3,8 @@
 
 #include <data_structures/triangle.h>
 #include <data_structures/node.h>
+#include <data_structures/dag.h>
+
 using namespace delaunay;
 
 int main(int argc, char *argv[]) {
@@ -40,5 +42,11 @@ int main(int argc, char *argv[]) {
     //std::cout<<"sto stampando esattamente qui"<<std::endl;
     node2.setChildOne(&node1);
     node2.getChildOne()->getTriangle()->printTriangle();
+    Dag dag(&node2);
+    dag.getDag()->push_back(&node1);
+    std::cout<<"passo"<<std::endl;
+    dag.getDag()->front()->getChildOne()->getTriangle()->printTriangle();
+
+    std::cout<<"finisco qui"<<std::endl;
     return 0;
 }
