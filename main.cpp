@@ -2,6 +2,7 @@
 #include "managers/delaunaymanager.h"
 
 #include <data_structures/triangle.h>
+#include <data_structures/node.h>
 using namespace delaunay;
 
 int main(int argc, char *argv[]) {
@@ -31,8 +32,13 @@ int main(int argc, char *argv[]) {
     Point2Dd p4(3,3);
 
 
-    Triangle triangolo= *new Triangle(p1,p2,p3);
-    std::cout<<"sto stampando esattamente qui"<<std::endl;
-
+    Triangle triangolo(p1,p2,p3);
+    Node node1;
+    Node node2;
+    Node node3;
+    node1.setTriangle(&triangolo);
+    //std::cout<<"sto stampando esattamente qui"<<std::endl;
+    node2.setChildOne(&node1);
+    node2.getChildOne()->getTriangle()->printTriangle();
     return 0;
 }

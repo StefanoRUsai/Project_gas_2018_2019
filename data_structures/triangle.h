@@ -49,6 +49,7 @@ class Triangle{
          * @return
          */
         bool pointIsVertex(const cg3::Point2Dd& p);
+        void printTriamgle();
 };
 }
 #endif // TRIANGLE_H

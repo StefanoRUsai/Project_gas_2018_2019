@@ -1,3 +1,4 @@
+#include <iostream>
 #include "triangle.h"
 #include "dag.h"
 
@@ -60,4 +61,12 @@ bool Triangle::pointIsVertex(const cg3::Point2Dd &point){
 
 void Triangle::setNode(Dag* node){
     this->node = node;
+}
+
+void Triangle::printTriamgle(){
+    std::cout<<"primo vertice "<<this->_vertexOne.x()<<" - "<< this->_vertexOne.y()<<std::endl;
+    std::cout<<"secondo vertice "<<this->_vertexTwo.x()<<" - "<< this->_vertexTwo.y()<<std::endl;
+    std::cout<<"terzo vertice "<<this->_vertexThree.x()<<" - "<< this->_vertexThree.y()<<std::endl;
+
+
 }
