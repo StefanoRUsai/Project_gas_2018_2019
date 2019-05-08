@@ -1,9 +1,11 @@
 #include <cg3/viewer/mainwindow.h>
 #include "managers/delaunaymanager.h"
+
 #include <data_structures/triangle.h>
+using namespace delaunay;
 
 int main(int argc, char *argv[]) {
-
+/*
     CG3_SUPPRESS_WARNING(argc);
     CG3_SUPPRESS_WARNING(argv);
 
@@ -20,14 +22,17 @@ int main(int argc, char *argv[]) {
     gui.show();
 
     return app.exec();
-
-  /*
-    Point2Dd p1(2,3);
-    Point2Dd p2(4,4);
-    Point2Dd p3(5,6);
-
-    Triangle triangolo(p1,p2,p3);
-    std::cout<<"sto stampando esattamente qui"<<std::endl;
 */
+
+    Point2Dd p1(2,2);
+    Point2Dd p2(4,4);
+    Point2Dd p3(8,8);
+
+    Point2Dd p4(3,3);
+
+
+    Triangle triangolo= *new Triangle(p1,p2,p3);
+    std::cout<<"sto stampando esattamente qui"<<std::endl;
+
     return 0;
 }

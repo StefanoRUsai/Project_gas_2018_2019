@@ -1,42 +1,21 @@
 #ifndef DAG_H
 #define DAG_H
 
-#include "triangle.h"
+#include "node.h"
+
+using namespace cg3;
+namespace  delaunay{
 
 class Dag{
 
-private:
-    Triangle* triangle = nullptr; //informazione
-    //figli, al massimo sono 3 come da slide
-    Dag* childOne = nullptr;
-    Dag* childTwo = nullptr;
-    Dag* childThree = nullptr;
-
 public:
     Dag();
-    Dag(Triangle* triangle);
-    ~Dag();
-
-    Dag* getChildOne() const;
-    Dag* getChildTwo() const;
-    Dag* getChildThree() const;
-    Triangle* getTriangle() const;
-
-    void setChildOne(Dag* node);
-    void setChildTwo(Dag* node);
-    void setChildThree(Dag* node);
-    void setTriangle(Triangle* triangle);
-    
-    //per comparare
-    bool operator == (const Dag& node);
-
-    void add(Dag* node);
+   ~Dag();
+    std::vector<Node> nodes; // nodi del dag
     //navigazione del grafo per controllare dove si trova il punto in oggetto
-    void navigateGraph(const cg3::Point2Dd& point);
+    Node* navigateGraph(Node *node, const Point2Dd& point);
     //controllo se il punto è contenuto dentro il triangolo
-
-
-
 };
 
+}
 #endif // DAG_H

@@ -1,6 +1,7 @@
 #ifndef TRIANGULATION_H
 #define TRIANGULATION_H
 
+
 #include <cg3/geometry/2d/point2d.h>
 #include <data_structures/triangle.h>
 #include <data_structures/dag.h>

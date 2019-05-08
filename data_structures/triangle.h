@@ -3,15 +3,15 @@
 
 #include <cg3/geometry/2d/point2d.h>
 using namespace cg3;
-
+namespace  delaunay{
 class Dag;
 class Triangle{
 
 
-    private:
-        cg3::Point2Dd vertexOne;
-        cg3::Point2Dd vertexTwo;
-        cg3::Point2Dd vertexThree;
+    protected:
+        Point2Dd _vertexOne;
+        Point2Dd _vertexTwo;
+        Point2Dd _vertexThree;
         Dag* node = nullptr;  // link al nodo di appartenenza nel dag per il triancolo
 
 
@@ -34,12 +34,21 @@ class Triangle{
          * @brief Setter
          * @return
          */
-        void setVertexOne(cg3::Point2Dd* vertexOne);
-        void setVertexTwo(cg3::Point2Dd* vertexTwoo);
-        void setVertexThree(cg3::Point2Dd* vertexThree);
         void setNode(Dag* node);
+
+        /**
+         * @brief controlPoint
+         * @param point
+         * @return
+         */
+
         bool controlPoint (const cg3::Point2Dd& point);
+        /**
+         * @brief pointIsVertex
+         * @param p
+         * @return
+         */
         bool pointIsVertex(const cg3::Point2Dd& p);
 };
-
+}
 #endif // TRIANGLE_H

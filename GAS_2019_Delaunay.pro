@@ -48,8 +48,10 @@ SOURCES += \
     managers/pointcollectiondrawer.tpp \
     data_structures/triangle.cpp \
     data_structures/dag.cpp \
-    algorithms/triangulation.cpp \
-    managers/drawabletriangulation.cpp
+    managers/drawabletriangulation.cpp \
+    data_structures/node.cpp \
+    data_structures/triangulation.cpp \
+    algorithms/delaunay.cpp
 
 FORMS += \
     managers/delaunaymanager.ui
@@ -62,8 +64,10 @@ HEADERS += \
     managers/pointcollectiondrawer.h \
     data_structures/triangle.h \
     data_structures/dag.h \
-    algorithms/triangulation.h \
-    managers/drawabletriangulation.h
+    managers/drawabletriangulation.h \
+    data_structures/node.h \
+    data_structures/triangulation.h \
+    algorithms/delaunay.h
 
 
 
