@@ -1,12 +1,15 @@
 #ifndef DELAUNAYMANAGER_H
 #define DELAUNAYMANAGER_H
 
+#include "drawabletriangulation.h"
+#include "pointcollectiondrawer.h"
+
 #include <QFrame>
 
 #include <cg3/viewer/mainwindow.h>
 
 #include <cg3/viewer/drawable_objects/2d/drawable_bounding_box2d.h>
-
+#include <data_structures/triangulation.h>
 
 namespace Ui {
     class DelaunayManager;
@@ -38,10 +41,16 @@ private:
     std::vector<cg3::Point2Dd> points;
 
 
+
+
     //Declare your private attributes here
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
+    //Drawer for the collection of points
+    PointCollectionDrawer<std::vector<cg3::Point2Dd>> pcd;
+    DrawableTriangulation tcd;
+    std::vector<delaunay::Triangulation *> _triangulation;
 
     /********************************************************************************************************************/
 

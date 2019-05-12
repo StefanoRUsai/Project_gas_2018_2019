@@ -1,56 +1,45 @@
 #include "dag.h"
 using namespace delaunay;
-
 Dag::Dag(){}
-Dag::Dag(Node *root){
-    this->nodes= (new std::vector<Node*>);
-    this->nodes->push_back(root);
+Dag::Dag(Node* root){
+    _nodes.push_back(root);
 }
 
+std::vector<Node *> Dag::nodes() { return _nodes; }
 
-Dag::~Dag(){ }
+void Dag::setNodes(Node* node){ _nodes.push_back(node); }
 
-Node* Dag::navigateGraph(Node *node, const cg3::Point2Dd& point){
-    bool flag = true; // se esiste un figlio deve continuare
-
-    do{
+Node* Dag::navigateGraph(const Point2Dd &point){
+    bool flag = true;
+    Node* root = _nodes.front();
+    while(flag == false){
         Triangle* triangle = nullptr;
         // Se il punto si trova all'interno di questo triangolo
         //controllo che ci siano bambini. Se il punto è contenuto da uno dei suoi figli, aggiorno il puntatore e ripeto il ciclo.
-        if(node->getChildOne() != nullptr){
-            triangle = node->getChildOne()->getTriangle();
+        if(root->first() != nullptr){
+            triangle = root->first()->t();
             if(triangle->pointIsVertex(point)) return nullptr;
-            if(triangle->controlPoint(point)){
-                node = node->getChildOne();
-                continue;
+            if(triangle->controlPointinTriangle(point)){
+                root = root->first();
             }
         }
-
-        if(node->getChildTwo() != nullptr){
-            triangle = node->getChildTwo()->getTriangle();
+        if(root->second() != nullptr){
+            triangle = root->second()->t();
             if(triangle->pointIsVertex(point)) return nullptr;
-            if(triangle->controlPoint(point)){
-                node = node->getChildTwo();
-                continue;
+            if(triangle->controlPointinTriangle(point)){
+                root = root->second();
             }
         }
-
-        if(node->getChildThree() != nullptr){
-            triangle = node->getChildTwo()->getTriangle();
+        if(root->third() != nullptr){
+            triangle = root->third()->t();
             if(triangle->pointIsVertex(point)) return nullptr;
-            if(triangle->controlPoint(point)){
-                node = node->getChildThree();
-                continue;
+            if(triangle->controlPointinTriangle(point)){
+                root = root->third();
             }
         }
+        //se non ci sono più figli si blocca il loop
+       if(root->first() == nullptr && root->second() == nullptr && root->third() == nullptr)
+           flag = false;
 
-         //se non ci sono più figli si blocca il loop
-        if(node->getChildOne() == nullptr && node->getChildTwo() == nullptr && node->getChildThree() == nullptr)
-            flag = false;
-    }while(flag != false);
-
-    return node;
-}
-std::vector<Node*>* Dag::getDag() const{
-    return this->nodes;
+    }
 }

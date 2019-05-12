@@ -1,55 +1,34 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
-
 #include <cg3/geometry/2d/point2d.h>
 using namespace cg3;
-namespace  delaunay{
-class Dag;
+namespace delaunay {
+
 class Triangle{
+public:
+    //costruttori
+    Triangle();
+    Triangle(Point2Dd* v1, Point2Dd* v2, Point2Dd* v3);
+
+    //getter
+    Point2Dd* v1() const;
+    Point2Dd* v2() const;
+    Point2Dd* v3() const;
 
 
-    protected:
-        Point2Dd* _vertexOne;
-        Point2Dd* _vertexTwo;
-        Point2Dd* _vertexThree;
-        Dag* node = nullptr;  // link al nodo di appartenenza nel dag per il triancolo
+    //funzione di stampa
+    void printTriangle();
 
+    //funzioni del triangolo
+    double area();
+    bool controlPointinTriangle(const cg3::Point2Dd &point);
+    bool controlPointinTriangle2(const cg3::Point2Dd &point);
+    bool pointIsVertex(const cg3::Point2Dd &point);
 
-    public:
-        Triangle();
-        Triangle(Point2Dd* vertexOne,
-                 Point2Dd* vertexTwo,
-                 Point2Dd* vertexThree);
-        ~Triangle(); //distruttore da rivedere?
+protected:
+    Point2Dd *_v1,*_v2,*_v3;
 
-        /**
-         * @brief Getter
-         * @return
-         */
-        cg3::Point2Dd* getVertexOne() const;
-        cg3::Point2Dd* getVertexTwo() const;
-        cg3::Point2Dd* getVertexThree() const;
-
-        /**
-         * @brief Setter
-         * @return
-         */
-        void setNode(Dag* node);
-
-        /**
-         * @brief controlPoint
-         * @param point
-         * @return
-         */
-
-        bool controlPoint (const cg3::Point2Dd& point);
-        /**
-         * @brief pointIsVertex
-         * @param p
-         * @return
-         */
-        bool pointIsVertex(const cg3::Point2Dd& p);
-        void printTriangle();
 };
+
 }
 #endif // TRIANGLE_H

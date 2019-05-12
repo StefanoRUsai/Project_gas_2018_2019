@@ -1,26 +1,29 @@
 #ifndef DAG_H
 #define DAG_H
 
+#include <iostream>
 #include "node.h"
 
-using namespace cg3;
-using namespace std;
-namespace  delaunay{
-
+namespace delaunay {
 class Dag{
-
-private:
-    std::vector<Node*>* nodes = nullptr; // nodi del dag
 
 public:
     Dag();
     Dag(Node *root);
-   ~Dag();
 
-    std::vector<Node*>* getDag() const;
-    //navigazione del grafo per controllare dove si trova il punto in oggetto
-    Node* navigateGraph(Node *node, const Point2Dd& point);
+
+    //getter
+    std::vector<Node *> nodes();
+    //navigazione del grafo secondo tentativo, vediamo se implode tutto
+    Node* navigateGraph(const Point2Dd& poin);
+    void setNodes(Node* node);
+
+protected:
+    //non è un puntatore ma è composto da puntatori a nodi
+    //usato al posto della lista perchè molto più veloce
+    std::vector<Node *> _nodes;
 };
-
 }
+
+
 #endif // DAG_H

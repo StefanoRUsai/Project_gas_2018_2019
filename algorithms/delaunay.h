@@ -1,11 +1,16 @@
 #ifndef DELAUNAY_H
 #define DELAUNAY_H
 
-#include <cg3lib/cg3/core/cg3/geometry/2d/point2d.h>
-using namespace cg3;
+#include <data_structures/triangulation.h>
 
 
 namespace delaunay {
 
+void triangulation(std::vector<Point2Dd> points, Dag* dag, Triangulation* tri);
+
+
+
+
 }
+
 #endif // DELAUNAY_H

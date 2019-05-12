@@ -1,36 +1,40 @@
 #ifndef NODE_H
 #define NODE_H
-#include "triangle.h"
-using namespace delaunay;
+#include <data_structures/triangle.h>
+
+namespace delaunay  {
 class Node{
-
-
-
-    protected:
-    Triangle* triangle = nullptr; //informazione
-    //figli, al massimo sono 3 come da slide
-    Node* childOne = nullptr;
-    Node* childTwo = nullptr;
-    Node* childThree = nullptr;
-
 public:
+    //costruttore
     Node();
-    Node(Triangle* triangle);
-    ~Node();
+    Node(Triangle* t);
 
-    Node* getChildOne() const;
-    Node* getChildTwo() const;
-    Node* getChildThree() const;
-    Triangle* getTriangle() const;
+    //getter
+    Triangle* t() const;
+    Node* first() const;
+    Node* second() const;
+    Node* third() const;
 
-    void setChildOne(Node* node);
-    void setChildTwo(Node* node);
-    void setChildThree(Node* node);
-    void setTriangle(Triangle* triangle);
-    //per comparare
-    bool operator == (const Node& node);
-    //add nodi a nodo padre
-    void add(Node *node);
+    //setter
+    void setTriangle(Triangle* t);
+    void setFirst(Node* node);
+    void setSecond(Node* node);
+    void setThird(Node* node);
+
+    //add child
+    void add(Node* node);
+
+    //compere
+    bool operator ==(const Node& node);
+
+protected:
+    Triangle* _t;
+    Node* _first = nullptr;
+    Node* _second = nullptr;
+    Node* _third = nullptr;
+
 };
+
+}
 
 #endif // NODE_H

@@ -1,66 +1,41 @@
 #include "node.h"
-
+using namespace delaunay;
 Node::Node(){}
 
-Node::~Node(){}
 
-Node::Node(Triangle* triangle){
-    this->triangle = triangle;
-}
+Node::Node(Triangle* t){ _t=t;}
 
 //getter
-Node* Node::getChildOne() const{
-    return this->childOne;
-}
-
-Node* Node::getChildTwo() const{
-    return this->childTwo;
-}
-
-Node* Node::getChildThree() const{
-    return this->childThree;
-}
-
-Triangle* Node::getTriangle() const{
-    return this->triangle;
-}
-
-void Node::setChildOne(Node* node){
-    this->childOne = node;
-}
+Triangle* Node::t() const{ return _t; }
+Node* Node::first() const{ return _first; }
+Node* Node::second() const{ return _second; }
+Node* Node::third() const{ return _third; }
 
 //setter
-void Node::setChildTwo(Node* node){
-    this->childTwo = node;
-}
-void Node::setChildThree(Node* node){
-    this->childThree = node;
-}
+void Node::setTriangle(Triangle* t){ _t=t; }
+void Node::setFirst(Node* node){ _first=node; }
+void Node::setSecond(Node* node){ _second=node; }
+void Node::setThird(Node* node){ _third=node; }
 
-void Node::setTriangle(Triangle* triangle){
-    this->triangle = triangle;
-}
+//funzioni nodo
+bool Node::operator == (const Node& node){ return (_t == node.t()); }
 
-bool Node::operator == (const Node& node){
-    return (this->triangle == node.getTriangle());
-}
+//add child
 
-
-//add node
 void Node::add(Node* node){
 
-    if(this->getChildOne() == nullptr){
-       this->setChildOne(node);
+    if(this->first() == nullptr){
+       this->setFirst(node);
        return;
     }
 
-    if(this->getChildTwo() == nullptr){
-        this->setChildTwo(node);
+    if(this->second() == nullptr){
+        this->setSecond(node);
         return;
     }
 
-    if(this->getChildThree() == nullptr){
-        this->setChildThree(node);
+    if(this->third() == nullptr){
+        this->setThird(node);
         return;
     }
 }

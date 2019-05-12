@@ -11,9 +11,11 @@
 #include "utils/delaunay_checker.h"
 
 #include <cg3/data_structures/arrays/arrays.h>
+#include <cg3/geometry/triangle.h>
 #include <cg3/utilities/timer.h>
+#include <data_structures/node.h>
 
-
+using namespace delaunay;
 //Limits for the bounding box
 //It defines where points can be added
 //Do not change the following line
@@ -192,6 +194,34 @@ void DelaunayManager::drawDelaunayTriangulation() {
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
+
+    pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
+    mainWindow.pushObj(&pcd, "Points");
+    cg3::Point2Dd a=BT_P1;
+    cg3::Point2Dd b=BT_P2;
+    cg3::Point2Dd c=BT_P3;
+
+
+    delaunay::Triangle start(&a,&b,&c);
+    Triangulation tri(&a,&b,&c);
+    Node node(&start);
+    Dag dag(&node);
+    //triangulation(points, &dag, &tri);
+
+
+    for(Point2Dd point: points){
+        Node* node = dag.navigateGraph(point);
+        delaunay::Triangle *triangle = node->t();
+
+        tri.createTriangle(&point, triangle->v1(), triangle->v2(), node, &dag);
+        tri.createTriangle(&point, triangle->v2(), triangle->v3(), node, &dag );
+        tri.createTriangle(&point, triangle->v3(), triangle->v1(), node, &dag );
+
+    }
+    tcd.setTriangles(tri); //Points shouldn't change whenever the canvas is drawing it!
+    mainWindow.pushObj(&tcd, "Triangle");
+
+    std::cout<< "prova"<<std::endl;
 
     /********************************************************************************************************************/
 
