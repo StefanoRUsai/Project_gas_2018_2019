@@ -21,6 +21,7 @@ Node* Dag::navigateGraph(const Point2Dd &point){
             if(triangle->pointIsVertex(point)) return nullptr;
             if(triangle->controlPointinTriangle(point)){
                 root = root->first();
+                continue;
             }
         }
         if(root->second() != nullptr){
@@ -28,6 +29,7 @@ Node* Dag::navigateGraph(const Point2Dd &point){
             if(triangle->pointIsVertex(point)) return nullptr;
             if(triangle->controlPointinTriangle(point)){
                 root = root->second();
+                continue;
             }
         }
         if(root->third() != nullptr){
@@ -35,6 +37,7 @@ Node* Dag::navigateGraph(const Point2Dd &point){
             if(triangle->pointIsVertex(point)) return nullptr;
             if(triangle->controlPointinTriangle(point)){
                 root = root->third();
+                continue;
             }
         }
         //se non ci sono più figli si blocca il loop

@@ -27,13 +27,13 @@ public:
     double sceneRadius() const;
 
     void setActiveBoundingTriangle(bool b);
-    void setTriangles(Triangulation t);
+    void setTriangles(const std::vector<delaunay::Triangle* >& t);
     void eraseTriangles();
 private:
 
     QColor color; //Color of the edges
     bool activeBoundingTriangle=false;
-    std::vector<Triangle*> triangles;
+    std::vector<delaunay::Triangle* > triangles;
 
 
 

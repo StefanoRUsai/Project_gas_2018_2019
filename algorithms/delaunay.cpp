@@ -1,6 +1,6 @@
 #include "delaunay.h"
 using namespace delaunay;
-
+/*
 void triangulation(std::vector<Point2Dd> points, Dag* dag, Triangulation* tri){
 
     for(Point2Dd point: points){
@@ -15,3 +15,13 @@ void triangulation(std::vector<Point2Dd> points, Dag* dag, Triangulation* tri){
 
 
 }
+*/
+
+Triangle* delaunay::createTriangle(const Point2Dd& one,const Point2Dd& two, const Point2Dd& three, Node *node, Dag *dag){
+    Triangle *t= new Triangle(one, two, three);
+    Node n(t);
+    dag->setNodes(&n);
+    node->add(&n);
+    return t;
+}
+

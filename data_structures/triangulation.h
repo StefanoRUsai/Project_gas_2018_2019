@@ -1,11 +1,12 @@
 #ifndef TRIANGULATION_H
 #define TRIANGULATION_H
-
+#include <cg3lib/cg3/core/cg3/geometry/2d/point2d.h>
+#include <cg3/data_structures/arrays/array2d.h>
 #include "dag.h"
 #include "node.h"
 #include "triangle.h"
 
-
+using namespace cg3;
 namespace delaunay {
 
 
@@ -13,14 +14,10 @@ class Triangulation{
 
 public:
     Triangulation();
-    std::vector<Triangle *> triangles();
-    Triangulation(Triangle startTriangle);
 
-    void setTriangles(Triangle *t);
-    void createTriangle(Point2Dd* one,Point2Dd* two,Point2Dd* three, Node *node, Dag *dag);
-    Triangulation(Point2Dd *one, Point2Dd *two, Point2Dd *three);
 protected:
-    std::vector<Triangle *> _triangles;
+    std::vector<Point2Dd> points;
+    cg3::Array2D<unsigned int> triangles;
 
 };
 

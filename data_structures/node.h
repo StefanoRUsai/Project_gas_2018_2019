@@ -28,7 +28,7 @@ public:
     bool operator ==(const Node& node);
 
 protected:
-    Triangle* _t;
+    Triangle* _t=nullptr;
     Node* _first = nullptr;
     Node* _second = nullptr;
     Node* _third = nullptr;

@@ -32,10 +32,10 @@ void DrawableTriangulation::setColor(const QColor& color)
 void DrawableTriangulation::draw() const{
     // Edges
 
-    for(Triangle* t:this->triangles){
-        cg3::viewer::drawLine2D( *t->v1(), *t->v2(),  color, 2);
-        cg3::viewer::drawLine2D( *t->v2(), *t->v3(), color, 2);
-        cg3::viewer::drawLine2D( *t->v3(), *t->v1(), color, 2);
+    for(Triangle* t: triangles){
+        cg3::viewer::drawLine2D( t->v1(), t->v2(),  color, 2);
+        cg3::viewer::drawLine2D( t->v2(), t->v3(), color, 2);
+        cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 2);
     }
     std::cout<<"prova draw"<<std::endl;
 }
@@ -57,10 +57,9 @@ void DrawableTriangulation::eraseTriangles(){
     this->triangles.clear();
 }
 
-void DrawableTriangulation::setTriangles(Triangulation t){
+void DrawableTriangulation::setTriangles(const std::vector<delaunay::Triangle* >& t){
     this->eraseTriangles();
-
-    this->triangles = t.triangles();
+    this->triangles = t;
 }
 
 

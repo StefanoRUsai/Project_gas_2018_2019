@@ -14,6 +14,7 @@
 #include <cg3/geometry/triangle.h>
 #include <cg3/utilities/timer.h>
 #include <data_structures/node.h>
+#include <algorithms/delaunay.h>
 
 using namespace delaunay;
 //Limits for the bounding box
@@ -197,13 +198,12 @@ void DelaunayManager::drawDelaunayTriangulation() {
 
     pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
     mainWindow.pushObj(&pcd, "Points");
-    cg3::Point2Dd a=BT_P1;
-    cg3::Point2Dd b=BT_P2;
-    cg3::Point2Dd c=BT_P3;
 
 
-    delaunay::Triangle start(&a,&b,&c);
-    Triangulation tri(&a,&b,&c);
+
+    delaunay::Triangle start(BT_P1,BT_P2,BT_P3);
+    std::vector<delaunay::Triangle*> tri;
+    tri.push_back(&start);
     Node node(&start);
     Dag dag(&node);
     //triangulation(points, &dag, &tri);
@@ -213,11 +213,12 @@ void DelaunayManager::drawDelaunayTriangulation() {
         Node* node = dag.navigateGraph(point);
         delaunay::Triangle *triangle = node->t();
 
-        tri.createTriangle(&point, triangle->v1(), triangle->v2(), node, &dag);
-        tri.createTriangle(&point, triangle->v2(), triangle->v3(), node, &dag );
-        tri.createTriangle(&point, triangle->v3(), triangle->v1(), node, &dag );
+        tri.push_back(delaunay::createTriangle(point, triangle->v1(), triangle->v2(), node, &dag));
+        tri.push_back(delaunay::createTriangle(point, triangle->v2(), triangle->v3(), node, &dag));
+        tri.push_back(delaunay::createTriangle(point, triangle->v3(), triangle->v1(), node, &dag));
 
     }
+    std::cout<<"stampo qui nel manager"<<std::endl;
     tcd.setTriangles(tri); //Points shouldn't change whenever the canvas is drawing it!
     mainWindow.pushObj(&tcd, "Triangle");
 

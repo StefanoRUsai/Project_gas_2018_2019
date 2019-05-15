@@ -26,8 +26,8 @@ int main(int argc, char *argv[]) {
 
     return app.exec();
 
-
 /*
+
     Point2Dd p1(2,2);
     Point2Dd p2(4,2);
     Point2Dd p3(3,8);
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     Point2Dd p4(3,2);
 
 
-    Triangle triangolo(&p1,&p2,&p3);
+    delaunay::Triangle triangolo(&p1,&p2,&p3);
 
     triangolo.printTriangle();
 

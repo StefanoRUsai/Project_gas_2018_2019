@@ -1,5 +1,7 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
+
+
 #include <cg3/geometry/2d/point2d.h>
 using namespace cg3;
 namespace delaunay {
@@ -8,12 +10,12 @@ class Triangle{
 public:
     //costruttori
     Triangle();
-    Triangle(Point2Dd* v1, Point2Dd* v2, Point2Dd* v3);
+    Triangle(const Point2Dd& v1, const Point2Dd& v2, const Point2Dd& v3);
 
     //getter
-    Point2Dd* v1() const;
-    Point2Dd* v2() const;
-    Point2Dd* v3() const;
+    Point2Dd v1() const;
+    Point2Dd v2() const;
+    Point2Dd v3() const;
 
 
     //funzione di stampa
@@ -24,9 +26,10 @@ public:
     bool controlPointinTriangle(const cg3::Point2Dd &point);
     bool controlPointinTriangle2(const cg3::Point2Dd &point);
     bool pointIsVertex(const cg3::Point2Dd &point);
+    bool operator == (const Triangle& t);
 
 protected:
-    Point2Dd *_v1,*_v2,*_v3;
+    Point2Dd _v1,_v2,_v3;
 
 };
 

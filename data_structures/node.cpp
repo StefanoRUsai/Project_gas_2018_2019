@@ -3,16 +3,16 @@ using namespace delaunay;
 Node::Node(){}
 
 
-Node::Node(Triangle* t){ _t=t;}
+Node::Node(Triangle* t){ _t= t;}
 
 //getter
-Triangle* Node::t() const{ return _t; }
+Triangle* Node::t() const { return _t; }
 Node* Node::first() const{ return _first; }
 Node* Node::second() const{ return _second; }
 Node* Node::third() const{ return _third; }
 
 //setter
-void Node::setTriangle(Triangle* t){ _t=t; }
+void Node::setTriangle (Triangle* t){ _t=t; }
 void Node::setFirst(Node* node){ _first=node; }
 void Node::setSecond(Node* node){ _second=node; }
 void Node::setThird(Node* node){ _third=node; }
