@@ -27,7 +27,7 @@ using namespace delaunay;
 //Use these coordinates to initialize the bounding triangle
 //of your triangulation.
 //Do not change these coordinates, they are made to avoid
-//numeric errors with the test input files.
+//numeric errors with the test input files. 
 const cg3::Point2Dd BT_P1(1e+10, 0);
 const cg3::Point2Dd BT_P2(0, 1e+10);
 const cg3::Point2Dd BT_P3(-1e+10, -1e+10);
