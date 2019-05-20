@@ -14,10 +14,13 @@ class Triangulation{
 
 public:
     Triangulation();
+    std::vector<delaunay::Triangle*> getDrawTriangles();
+    void addDrawTriangles(delaunay::Triangle *t);
 
 protected:
     std::vector<Point2Dd> points;
     cg3::Array2D<unsigned int> triangles;
+    std::vector<delaunay::Triangle*> drawTriangles;
 
 };
 

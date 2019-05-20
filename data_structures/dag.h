@@ -16,7 +16,9 @@ public:
     std::vector<Node *> nodes();
     //navigazione del grafo secondo tentativo, vediamo se implode tutto
     Node* navigateGraph(const Point2Dd& poin);
+    Node *navigateforFlip(const Point2Dd &point1, const Point2Dd &point2);
     void setNodes(Node* node);
+
 
 protected:
     //non è un puntatore ma è composto da puntatori a nodi

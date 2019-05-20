@@ -26,16 +26,16 @@ int main(int argc, char *argv[]) {
 
     return app.exec();
 
-/*
 
+/*
     Point2Dd p1(2,2);
     Point2Dd p2(4,2);
     Point2Dd p3(3,8);
 
-    Point2Dd p4(3,2);
+    Point2Dd p4(3,3);
 
 
-    delaunay::Triangle triangolo(&p1,&p2,&p3);
+    delaunay::Triangle triangolo(p1,p2,p3);
 
     triangolo.printTriangle();
 
@@ -43,10 +43,17 @@ int main(int argc, char *argv[]) {
     Node node2;
     Node node3;
 
-    if(triangolo.controlPoint2(p4))
+
+    if(triangolo.controlPointinTriangle(p4))
+        std::cout<<"true"<<std::endl;
+    else
+        std::cout<<"false"<<std::endl;
+
+
+    if (triangolo.pointlyingontheline(p4))
         std::cout<<"true"<<std::endl;
     else
         std::cout<<"false"<<std::endl;
     return 0;
-    */
+*/
 }
