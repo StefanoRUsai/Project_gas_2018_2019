@@ -3,9 +3,10 @@
 
 
 #include <cg3/geometry/2d/point2d.h>
+
 using namespace cg3;
 namespace delaunay {
-
+class Node;
 class Triangle{
 public:
     //costruttori
@@ -19,6 +20,7 @@ public:
     Triangle* e1() const;
     Triangle* e2() const;
     Triangle* e3() const;
+    Node* node() const;
     bool legal() const;
 
 
@@ -26,7 +28,7 @@ public:
     void sete1(Triangle* t);
     void sete2(Triangle* t);
     void sete3(Triangle* t);
-
+    void setNode(Node *node);
 
 
     //funzione di stampa
@@ -42,12 +44,14 @@ public:
 
     bool pointlyingontheline(const cg3::Point2Dd &p);
 
+
 protected:
     Point2Dd _v1,_v2,_v3;
     bool _legal = false;
     Triangle* _e1 = nullptr;
     Triangle* _e2 = nullptr;
     Triangle* _e3 = nullptr;
+    delaunay::Node* _node = nullptr;
 
 };
 

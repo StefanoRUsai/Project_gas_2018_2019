@@ -1,5 +1,6 @@
 #include <iostream>
 #include "triangle.h"
+#include "node.h"
 using namespace delaunay;
 
 inline Triangle::Triangle() : _v1(), _v2(), _v3() {}
@@ -18,6 +19,7 @@ Point2Dd Triangle::v3() const{
 Triangle* Triangle::e1() const{ return _e1; }
 Triangle* Triangle::e2() const{ return _e2; }
 Triangle* Triangle::e3() const{ return _e3; }
+Node* Triangle::node() const{ return _node; }
 
 double Triangle::area(){
     return (0.5 * (-_v2.y()*_v3.x() + _v1.y()*(-_v2.x() + _v3.x()) + _v1.x()*(_v2.y() - _v3.y()) + _v2.x()*_v3.y()));
@@ -27,6 +29,7 @@ double Triangle::area(){
 void Triangle::sete1(Triangle *t){ _e1=t; }
 void Triangle::sete2(Triangle *t){ _e2=t; }
 void Triangle::sete3(Triangle *t){ _e3=t; }
+void Triangle::setNode(Node *node){ _node=node; }
 
 //https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
 //tecnica del baricentro

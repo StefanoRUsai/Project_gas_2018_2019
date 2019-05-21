@@ -17,6 +17,8 @@ public:
     std::vector<delaunay::Triangle*> getDrawTriangles();
     void addDrawTriangles(delaunay::Triangle *t);
 
+    Triangle *createTriangle(const Point2Dd &one, const Point2Dd &two, const Point2Dd &three, Node *node, Dag *dag);
+    void unionEdge(const Point2Dd &point, Node *node, Dag *dag);
 protected:
     std::vector<Point2Dd> points;
     cg3::Array2D<unsigned int> triangles;
