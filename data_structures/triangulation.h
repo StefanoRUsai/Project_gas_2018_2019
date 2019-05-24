@@ -15,14 +15,21 @@ class Triangulation{
 public:
     Triangulation();
     std::vector<delaunay::Triangle*> getDrawTriangles();
-    void addDrawTriangles(delaunay::Triangle *t);
-
     Triangle *createTriangle(const Point2Dd &one, const Point2Dd &two, const Point2Dd &three, Node *node, Dag *dag);
-    void unionEdge(const Point2Dd &point, Node *node, Dag *dag);
+
+    void addDrawTriangles(delaunay::Triangle *t);
+    void unionEdge(const Point2Dd &point, Dag *dag);
+
+    void subdivisionTriangle(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
+    void subdivisionTriangleDoubleE1(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
+    void subdivisionTriangleDoubleE2(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
+    void subdivisionTriangleDoubleE3(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
 protected:
+
     std::vector<Point2Dd> points;
     cg3::Array2D<unsigned int> triangles;
     std::vector<delaunay::Triangle*> drawTriangles;
+    int flag=0; // flag controllo costruzione triangoli nel caso di punto sulla linea
 
 };
 

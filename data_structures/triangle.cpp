@@ -22,7 +22,7 @@ Triangle* Triangle::e3() const{ return _e3; }
 Node* Triangle::node() const{ return _node; }
 
 double Triangle::area(){
-    return (0.5 * (-_v2.y()*_v3.x() + _v1.y()*(-_v2.x() + _v3.x()) + _v1.x()*(_v2.y() - _v3.y()) + _v2.x()*_v3.y()));
+    return (0.5 * (-_v2.y() * _v3.x() + _v1.y() * (-_v2.x() + _v3.x()) + _v1.x()*(_v2.y() - _v3.y()) + _v2.x()*_v3.y()));
 }
 
 //setter
@@ -30,6 +30,7 @@ void Triangle::sete1(Triangle *t){ _e1=t; }
 void Triangle::sete2(Triangle *t){ _e2=t; }
 void Triangle::sete3(Triangle *t){ _e3=t; }
 void Triangle::setNode(Node *node){ _node=node; }
+void Triangle::setIndex(unsigned int index){ _index=index; }
 
 //https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
 //tecnica del baricentro
@@ -77,10 +78,17 @@ void Triangle::setLegal(const bool& legal){
     _legal=legal;
 }
 
-bool Triangle::pointlyingontheline(const cg3::Point2Dd &p){
-    if (!(Triangle(_v1,_v2,p).area())) return true;
-    if (!(Triangle(_v2,_v3,p).area())) return true;
-    if (!(Triangle(_v3,_v1,p).area())) return true;
+bool Triangle::pointlyingontheline(const cg3::Point2Dd &p, int &f){
+    if (!(bool(Triangle(_v1,_v2,p).area()))){
+        f=1;
+        return true;}
+    if (!(bool(Triangle(_v2,_v3,p).area()))){
+        f=2;
+        return true;}
+
+    if (!(bool(Triangle(_v3,_v1,p).area()))) {
+        f=3;
+        return true;}
     return false;
 }
 

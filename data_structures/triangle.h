@@ -29,7 +29,7 @@ public:
     void sete2(Triangle* t);
     void sete3(Triangle* t);
     void setNode(Node *node);
-
+    void setIndex(unsigned int value);
 
     //funzione di stampa
     void printTriangle();
@@ -42,7 +42,7 @@ public:
     bool operator == (const Triangle& t);
     void setLegal(const bool& legal);
 
-    bool pointlyingontheline(const cg3::Point2Dd &p);
+    bool pointlyingontheline(const cg3::Point2Dd &p, int& f);
 
 
 protected:
@@ -52,6 +52,7 @@ protected:
     Triangle* _e2 = nullptr;
     Triangle* _e3 = nullptr;
     delaunay::Node* _node = nullptr;
+    unsigned int _index;
 
 };
 

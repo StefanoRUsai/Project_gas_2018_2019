@@ -36,8 +36,12 @@ void DrawableTriangulation::draw() const{
         cg3::viewer::drawLine2D( t->v1(), t->v2(),  color, 2);
         cg3::viewer::drawLine2D( t->v2(), t->v3(), color, 2);
         cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 2);
+
+        std::cout<<"separatore"<<std::endl;
+        t->printTriangle();
+
     }
-    std::cout<<"prova draw"<<std::endl;
+
 }
 
 Pointd DrawableTriangulation::sceneCenter() const {
