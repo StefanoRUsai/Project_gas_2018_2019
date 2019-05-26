@@ -74,9 +74,13 @@ void Triangle::printTriangle(){
 }
 bool Triangle::operator == (const Triangle& t){ return (_v1 == t.v1() && _v2 == t.v2() && _v3 == t.v3()); }
 
-void Triangle::setLegal(const bool& legal){
-    _legal=legal;
+void Triangle::setLegal(){
+    _legal=true;
 }
+void Triangle::setIllegal(){
+    _legal=false;
+}
+bool Triangle::isLegal(){return _legal;}
 
 bool Triangle::pointlyingontheline(const cg3::Point2Dd &p, int &f){
     if (!(bool(Triangle(_v1,_v2,p).area()))){
@@ -89,6 +93,21 @@ bool Triangle::pointlyingontheline(const cg3::Point2Dd &p, int &f){
     if (!(bool(Triangle(_v3,_v1,p).area()))) {
         f=3;
         return true;}
+    return false;
+}
+
+
+const Point2Dd& Triangle::thirdpoint(const Point2Dd& p1, const Point2Dd& p2){
+    if ((_v2 == p1 && _v3 == p2)||(_v3 == p1 && _v2 == p2)) return _v1;
+    if ((_v3 == p1 && _v1 == p2)||(_v1 == p1 && _v3 == p2)) return _v2;
+    if ((_v1 == p1 && _v2 == p2)||(_v2 == p1 && _v1 == p2)) return _v3;
+
+}
+
+bool Triangle::twoPointsAdjacent(const Point2Dd& p1, const Point2Dd& p2){
+    if ((_v2 == p1 && _v3 == p2)||(_v3 == p1 && _v2 == p2)) return true;
+    if ((_v3 == p1 && _v1 == p2)||(_v1 == p1 && _v3 == p2)) return true;
+    if ((_v1 == p1 && _v2 == p2)||(_v2 == p1 && _v1 == p2)) return true;
     return false;
 }
 

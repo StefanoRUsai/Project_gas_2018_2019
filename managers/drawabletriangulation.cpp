@@ -4,6 +4,12 @@
 
 using namespace cg3;
 
+const cg3::Point2Dd BT_P1(1e+10, 0);
+const cg3::Point2Dd BT_P2(0, 1e+10);
+const cg3::Point2Dd BT_P3(-1e+10, -1e+10);
+
+
+
 DrawableTriangulation::DrawableTriangulation() :color(QColor(0,0,255))
 {
 
@@ -33,15 +39,23 @@ void DrawableTriangulation::draw() const{
     // Edges
 
     for(Triangle* t: triangles){
-        cg3::viewer::drawLine2D( t->v1(), t->v2(),  color, 2);
-        cg3::viewer::drawLine2D( t->v2(), t->v3(), color, 2);
-        cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 2);
-
-        std::cout<<"separatore"<<std::endl;
-        t->printTriangle();
+        if(t->isLegal()){
+            if(printPoint(t->v1())&& printPoint(t->v2()))
+                cg3::viewer::drawLine2D( t->v1(), t->v2(),  color, 2);
+            if(printPoint(t->v2())&& printPoint(t->v3()))
+                cg3::viewer::drawLine2D( t->v2(), t->v3(), color, 2);
+            if(printPoint(t->v3())&& printPoint(t->v1()))
+                cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 2);
+         }
+       // std::cout<<"separatore"<<std::endl;
+        //t->printTriangle();
 
     }
 
+}
+
+bool DrawableTriangulation::printPoint(const Point2Dd& p) const{
+    return ( p != BT_P1 && p != BT_P2 && p != BT_P3);
 }
 
 Pointd DrawableTriangulation::sceneCenter() const {

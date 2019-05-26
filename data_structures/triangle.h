@@ -40,14 +40,17 @@ public:
     bool controlPointinTriangle2(const cg3::Point2Dd &point);
     bool pointIsVertex(const cg3::Point2Dd &point);
     bool operator == (const Triangle& t);
-    void setLegal(const bool& legal);
+    void setLegal();
+    void setIllegal();
 
-    bool pointlyingontheline(const cg3::Point2Dd &p, int& f);
-
+    bool pointlyingontheline(const cg3::Point2Dd &p, int& f);    
+    const Point2Dd &thirdpoint(const Point2Dd &p1, const Point2Dd &p2);
+    bool twoPointsAdjacent(const Point2Dd &p1, const Point2Dd &p2);
+    bool isLegal();
 
 protected:
     Point2Dd _v1,_v2,_v3;
-    bool _legal = false;
+    bool _legal = true;
     Triangle* _e1 = nullptr;
     Triangle* _e2 = nullptr;
     Triangle* _e3 = nullptr;

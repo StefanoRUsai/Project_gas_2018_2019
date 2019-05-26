@@ -14,7 +14,7 @@ Triangulation* delaunay::triangulation(std::vector<Point2Dd>& points,
     for(Point2Dd point: points){
         tri->unionEdge(point, &dag);
     }
-    tri->getDrawTriangles()[9]->printTriangle();
+
     return tri;
 }
 

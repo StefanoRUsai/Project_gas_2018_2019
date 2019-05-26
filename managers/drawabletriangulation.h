@@ -29,6 +29,7 @@ public:
     void setActiveBoundingTriangle(bool b);
     void setTriangles(const std::vector<delaunay::Triangle* >& t);
     void eraseTriangles();
+    bool printPoint(const Point2Dd &p) const;
 private:
 
     QColor color; //Color of the edges

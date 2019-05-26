@@ -16,7 +16,7 @@ public:
     Triangulation();
     std::vector<delaunay::Triangle*> getDrawTriangles();
     Triangle *createTriangle(const Point2Dd &one, const Point2Dd &two, const Point2Dd &three, Node *node, Dag *dag);
-
+    Triangle *createTriangle(const Point2Dd &one, const Point2Dd &two, const Point2Dd &three, Node *node1, Node *node2, Dag *dag);
     void addDrawTriangles(delaunay::Triangle *t);
     void unionEdge(const Point2Dd &point, Dag *dag);
 
@@ -24,6 +24,9 @@ public:
     void subdivisionTriangleDoubleE1(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
     void subdivisionTriangleDoubleE2(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
     void subdivisionTriangleDoubleE3(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
+    void legalizeEdge(const Point2Dd &pr, const Point2Dd &pi, const Point2Dd &pj, Triangle *t, Dag* dag);
+    void edgeFlip(const Point2Dd &pr, const Point2Dd &pi, const Point2Dd &pj, Triangle *tr1, Triangle *tr2, Dag* dag);
+
 protected:
 
     std::vector<Point2Dd> points;
