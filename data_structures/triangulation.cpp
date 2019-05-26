@@ -54,6 +54,9 @@ void Triangulation::subdivisionTriangle(const Point2Dd& point, Triangle* triangl
 
 
     legalizeEdge(point, triangle->v1(), triangle->v2(), tr1, dag);
+    legalizeEdge(point, triangle->v2(), triangle->v3(), tr2, dag);
+    legalizeEdge(point, triangle->v3(), triangle->v1(), tr3, dag);
+
 }
 
 //suddivisione in 4 triangoli partendolo dall'edge 1
@@ -323,18 +326,24 @@ void Triangulation::legalizeEdge(const Point2Dd& pr, const Point2Dd& pi, const P
 
 void Triangulation::edgeFlip(const Point2Dd& pr, const Point2Dd& pi, const Point2Dd& pj, Triangle* tr1, Triangle* tr2, Dag* dag ){
 
-    Triangle* newTriangle1 = nullptr;
-    Triangle* newTriangle2 = nullptr;
+    Triangle* ntr1 = nullptr;
+    Triangle* ntr2 = nullptr;
 
     const Point2Dd pk = tr2->thirdpoint(pi, pj);
 
-        newTriangle1 = createTriangle(pr, pi, pk, tr1->node(), tr2->node(), dag );
-        newTriangle2 = createTriangle(pr, pk, pj, tr1->node(), tr2->node(), dag );
+    ntr1 = createTriangle(pr, pi, pk, tr1->node(), tr2->node(), dag );
+    ntr2 = createTriangle(pr, pk, pj, tr1->node(), tr2->node(), dag );
+    //adjacent ntr1
+    ntr1->sete3(ntr2);
+    ntr1->sete1(ntr1->twoPointsAdjacentTriangle(pr,pi,tr1));
+    ntr1->sete2(ntr1->twoPointsAdjacentTriangle(pi,pk,tr1));
+
+    ntr2->sete1(ntr1);
+    ntr2->sete2(ntr2->twoPointsAdjacentTriangle(pk,pj,tr2));
+    ntr2->sete3(ntr2->twoPointsAdjacentTriangle(pj,pr,tr1));
 
 
-
-        legalizeEdge(pr, pi, pk, newTriangle1, dag);
-        legalizeEdge(pr, pk, pj, newTriangle2, dag);
+    legalizeEdge(pr, pi, pk, ntr1, dag);
+    legalizeEdge(pr, pk, pj, ntr2, dag);
 
 }
-
