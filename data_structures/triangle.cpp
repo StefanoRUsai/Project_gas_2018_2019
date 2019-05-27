@@ -130,8 +130,24 @@ Triangle* Triangle::twoPointsAdjacentTriangle(const Point2Dd& p1, const Point2Dd
     }
 
     if ((t->v1() == p1 && t->v2() == p2)||(t->v2() == p1 && t->v1() == p2)){
-        if (t->e2()!= nullptr) return t->e3();
+        if (t->e1()!= nullptr) return t->e1();
     }
     return nullptr;
+
+}
+
+void Triangle::twoPointsEdgeAdjacentFlip(const Point2Dd& p1, const Point2Dd& p2, Triangle* t){
+    if ((_v2 == p1 && _v3 == p2)||(_v3 == p1 && _v2 == p2)){
+        if (t != nullptr)
+            this->sete2(t);
+    }
+    if ((_v3 == p1 && _v1 == p2)||(_v1 == p1 && _v3 == p2)){
+        if (t != nullptr)
+            this->sete3(t);
+    }
+    if ((_v1 == p1 && _v2 == p2)||(_v2 == p1 && _v1 == p2)){
+        if (t != nullptr)
+           this->sete1(t);
+    }
 
 }

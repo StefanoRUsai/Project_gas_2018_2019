@@ -271,6 +271,7 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
     this->addDrawTriangles(tr2_1);
     this->addDrawTriangles(tr2_2);
 
+
     this->flag=0;
 }
 
@@ -304,13 +305,16 @@ void Triangulation::legalizeEdge(const Point2Dd& pr, const Point2Dd& pi, const P
     Triangle* adjacent = nullptr;
 
     if(t->e1() != nullptr){
-        if(t->e1()->twoPointsAdjacent(pi, pj)) adjacent = t->e1();
+        if(t->e1()->twoPointsAdjacent(pi, pj))
+            adjacent = t->e1();
     }
     if(t->e2() != nullptr){
-        if(t->e2()->twoPointsAdjacent(pi, pj)) adjacent = t->e2();
+        if(t->e2()->twoPointsAdjacent(pi, pj))
+            adjacent = t->e2();
     }
     if(t->e3() != nullptr){
-        if(t->e3()->twoPointsAdjacent(pi, pj)) adjacent = t->e3();
+        if(t->e3()->twoPointsAdjacent(pi, pj))
+            adjacent = t->e3();
     }
 
     if(adjacent != nullptr){
@@ -334,14 +338,25 @@ void Triangulation::edgeFlip(const Point2Dd& pr, const Point2Dd& pi, const Point
     ntr1 = createTriangle(pr, pi, pk, tr1->node(), tr2->node(), dag );
     ntr2 = createTriangle(pr, pk, pj, tr1->node(), tr2->node(), dag );
     //adjacent ntr1
-    ntr1->sete3(ntr2);
-    ntr1->sete1(ntr1->twoPointsAdjacentTriangle(pr,pi,tr1));
-    ntr1->sete2(ntr1->twoPointsAdjacentTriangle(pi,pk,tr1));
 
-    ntr2->sete1(ntr1);
-    ntr2->sete2(ntr2->twoPointsAdjacentTriangle(pk,pj,tr2));
-    ntr2->sete3(ntr2->twoPointsAdjacentTriangle(pj,pr,tr1));
+    this->addDrawTriangles(ntr1);
+    this->addDrawTriangles(ntr2);
 
+    ntr1->sete3(ntr2); //e3 pk -> pr
+    ntr1->sete1(ntr1->twoPointsAdjacentTriangle(pr,pi,tr1)); //e1 pr -> pi
+    if (ntr1->e1()!=nullptr)
+        ntr1->twoPointsAdjacentTriangle(pr,pi,tr1)->twoPointsEdgeAdjacentFlip(pr,pi,ntr1); //triangolo ed edge opposto
+    ntr1->sete2(ntr1->twoPointsAdjacentTriangle(pi,pk,tr2)); //e2 pi -> pk
+    if (ntr1->e2()!=nullptr)
+        ntr1->twoPointsAdjacentTriangle(pi,pk,tr2)->twoPointsEdgeAdjacentFlip(pi,pk,ntr1);
+
+    ntr2->sete1(ntr1); // e1 pr -> pk
+    ntr2->sete2(ntr2->twoPointsAdjacentTriangle(pk,pj,tr2)); // e2 pk -> pj
+    if (ntr2->e2()!=nullptr)
+        ntr2->twoPointsAdjacentTriangle(pk,pj,tr2)->twoPointsEdgeAdjacentFlip(pk,pj,ntr2); // triangolo ed edge opposto
+    ntr2->sete3(ntr2->twoPointsAdjacentTriangle(pj,pr,tr1)); // e3 pj -> pr
+    if (ntr1->e3()!=nullptr)
+        ntr2->twoPointsAdjacentTriangle(pj,pr,tr1)->twoPointsEdgeAdjacentFlip(pj,pr,ntr2);
 
     legalizeEdge(pr, pi, pk, ntr1, dag);
     legalizeEdge(pr, pk, pj, ntr2, dag);
