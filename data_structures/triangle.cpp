@@ -8,6 +8,7 @@ Triangle::Triangle(const Point2Dd& v1, const  Point2Dd& v2,const  Point2Dd& v3){
     _v1=v1;
     _v2=v2;
     _v3=v3;
+    _legal=true;
 }
 
 Point2Dd Triangle::v1() const{
@@ -118,23 +119,6 @@ std::string Triangle::twoPointsEdgeAdjacent(const Point2Dd& p1, const Point2Dd& 
     return "false";
 }
 
-Triangle* Triangle::twoPointsAdjacentTriangle(const Point2Dd& p1, const Point2Dd& p2, Triangle* t){
-
-
-    if ((t->v2() == p1 && t->v3() == p2)||(t->v3() == p1 && t->v2() == p2)){
-        if (t->e2()!= nullptr) return t->e2();
-    }
-
-    if ((t->v3() == p1 && t->v1() == p2)||(t->v1() == p1 && t->v3() == p2)){
-        if (t->e3()!= nullptr) return t->e3();
-    }
-
-    if ((t->v1() == p1 && t->v2() == p2)||(t->v2() == p1 && t->v1() == p2)){
-        if (t->e1()!= nullptr) return t->e1();
-    }
-    return nullptr;
-
-}
 
 void Triangle::twoPointsEdgeAdjacentFlip(const Point2Dd& p1, const Point2Dd& p2, Triangle* t){
     if ((_v2 == p1 && _v3 == p2)||(_v3 == p1 && _v2 == p2)){
@@ -149,5 +133,39 @@ void Triangle::twoPointsEdgeAdjacentFlip(const Point2Dd& p1, const Point2Dd& p2,
         if (t != nullptr)
            this->sete1(t);
     }
+
+}
+
+Triangle* Triangle::PointsAdjacent(const Point2Dd& p1, const Point2Dd& p2){
+
+
+    if ((v2() == p1 && v3() == p2)||(v3() == p1 && v2() == p2)){
+        if (e2()!= nullptr) return e2();
+    }
+
+    if ((v3() == p1 && v1() == p2)||(v1() == p1 && v3() == p2)){
+        if (e3()!= nullptr) return e3();
+    }
+
+    if ((v1() == p1 && v2() == p2)||(v2() == p1 && v1() == p2)){
+        if (e1()!= nullptr) return e1();
+    }
+    return nullptr;
+
+}
+
+Triangle* Triangle::searchAdjacentTriangle(const Point2Dd& p1, const Point2Dd& p2){
+
+
+    if(e1()!=nullptr)
+        return e1()->PointsAdjacent(p1,p2);
+
+    if(e2()!=nullptr)
+        return e2()->PointsAdjacent(p1,p2);
+
+    if(e3()!=nullptr)
+        return e3()->PointsAdjacent(p1,p2);
+
+    return nullptr;
 
 }

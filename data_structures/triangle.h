@@ -51,9 +51,12 @@ public:
     std::string twoPointsEdgeAdjacent(const Point2Dd &p1, const Point2Dd &p2);
     Triangle *twoPointsAdjacentTriangle(const Point2Dd &p1, const Point2Dd &p2, Triangle *t);
     void twoPointsEdgeAdjacentFlip(const Point2Dd &p1, const Point2Dd &p2, Triangle *t);
+    Triangle *twoPointsAdjacentTriangleNew(const Point2Dd &p1, const Point2Dd &p2);
+    Triangle *PointsAdjacent(const Point2Dd &p1, const Point2Dd &p2);
+    Triangle *searchAdjacentTriangle(const Point2Dd &p1, const Point2Dd &p2);
 protected:
     Point2Dd _v1,_v2,_v3;
-    bool _legal = true;
+    bool _legal;
     Triangle* _e1 = nullptr;
     Triangle* _e2 = nullptr;
     Triangle* _e3 = nullptr;

@@ -1,5 +1,7 @@
 #include "delaunay.h"
 #include <managers/delaunaymanager.h>
+#include <utils/delaunay_checker.h>
+
 using namespace delaunay;
 
 Triangulation* delaunay::triangulation(std::vector<Point2Dd>& points,
@@ -12,9 +14,15 @@ Triangulation* delaunay::triangulation(std::vector<Point2Dd>& points,
     Dag dag(&node);
 
     for(Point2Dd point: points){
+
         tri->unionEdge(point, &dag);
     }
-
+    tri->TrianglesForValidation();
+    if(DelaunayTriangulation::Checker::isDeulaunayTriangulation(tri->points, tri->triangles)){
+        std::cout<<"è giusta"<<std::endl;
+    }else {
+        std::cout<<"è sbagliato"<<std::endl;
+    }
     return tri;
 }
 

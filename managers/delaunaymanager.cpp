@@ -201,31 +201,10 @@ void DelaunayManager::drawDelaunayTriangulation() {
 
 
 
-//    delaunay::Triangle start(BT_P1,BT_P2,BT_P3);
-//    std::vector<delaunay::Triangle*> tri;
-//    tri.push_back(&start);
-//    Node node(&start);
-//    Dag dag(&node);
-//    //triangulation(points, &dag, &tri);
-
-
-//    for(Point2Dd point: points){
-//        Node* node = dag.navigateGraph(point);
-//        delaunay::Triangle *triangle = node->t();
-
-//        tri.push_back(delaunay::createTriangle(point, triangle->v1(), triangle->v2(), node, &dag));
-//        tri.push_back(delaunay::createTriangle(point, triangle->v2(), triangle->v3(), node, &dag));
-//        tri.push_back(delaunay::createTriangle(point, triangle->v3(), triangle->v1(), node, &dag));
-
-//    }
-//    std::cout<<"stampo qui nel manager"<<std::endl;
     delaunay::Triangulation* tri=delaunay::triangulation(points, BT_P1, BT_P2, BT_P3);
 
-    std::cout<<"stampo qui nel manager"<<std::endl;
     tcd.setTriangles(tri->getDrawTriangles()); //Points shouldn't change whenever the canvas is drawing it!
     mainWindow.pushObj(&tcd, "Triangle");
-
-    std::cout<< "prova"<<std::endl;
 
     /********************************************************************************************************************/
 
