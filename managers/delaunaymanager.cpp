@@ -160,6 +160,9 @@ void DelaunayManager::addPointToDelaunayTriangulation(const cg3::Point2Dd& p) {
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
+
+
+
     /********************************************************************************************************************/
     CG3_SUPPRESS_WARNING(p);
 }
@@ -201,7 +204,9 @@ void DelaunayManager::drawDelaunayTriangulation() {
 
 
 
-    delaunay::Triangulation* tri=delaunay::triangulation(points, BT_P1, BT_P2, BT_P3);
+    Triangulation* tri = delaunay::triangulation(points, BT_P1, BT_P2, BT_P3);
+    //delaunay::Triangulation tri(BT_P1, BT_P2, BT_P3);
+    //tri.addList(points);
 
     tcd.setTriangles(tri->getDrawTriangles()); //Points shouldn't change whenever the canvas is drawing it!
     mainWindow.pushObj(&tcd, "Triangle");

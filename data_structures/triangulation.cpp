@@ -8,26 +8,54 @@ using namespace delaunay;
 Triangulation::Triangulation(){}
 
 
+Triangulation::Triangulation(const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){
+
+    delaunay::Triangle start(BT_P3,BT_P1,BT_P2);
+    Node node(&start);
+    addDrawTriangles(&start);
+    this->_dag.setNodes(&node);
+
+}
+
+Triangulation::Triangulation(Triangle* t, Node* node){
+
+    addDrawTriangles(t);
+    this->_dag.setNodes(node);
+}
+
+
+
+void Triangulation::addList(std::vector<Point2Dd>& points){
+    for(Point2Dd point: points){
+
+        this->unionEdge(point);
+    }
+}
+
+void Triangulation::addPoint( Point2Dd& point){
+
+    this->unionEdge(point);
+}
+
 std::vector<delaunay::Triangle*> Triangulation::getDrawTriangles(){
     return drawTriangles;
 }
 
 void Triangulation::addDrawTriangles(delaunay::Triangle* t){
-    t->setIndex(drawTriangles.size());
     drawTriangles.push_back(t);
 }
 
 
-void Triangulation::unionEdge(const Point2Dd& point, Dag* dag){
-    delaunay::Node *node=dag->navigateGraph(point, flag);
+void Triangulation::unionEdge(const Point2Dd& point){
+    delaunay::Node *node=this->_dag.navigateGraph(point, flag);
     delaunay::Triangle *triangle = node->t();
 
     //triangolazione partendo da un solo nodo
 
-    if (this->flag==0) this->subdivisionTriangle(point,triangle, node, dag);
-    if (this->flag==1) this->subdivisionTriangleDoubleE1(point,triangle, node, dag);
-    if (this->flag==2) this->subdivisionTriangleDoubleE2(point,triangle, node, dag);
-    if (this->flag==3) this->subdivisionTriangleDoubleE3(point,triangle, node, dag);
+    if (this->flag==0) this->subdivisionTriangle(point,triangle, node, &_dag);
+    if (this->flag==1) this->subdivisionTriangleDoubleE1(point,triangle, node, &_dag);
+    if (this->flag==2) this->subdivisionTriangleDoubleE2(point,triangle, node, &_dag);
+    if (this->flag==3) this->subdivisionTriangleDoubleE3(point,triangle, node, &_dag);
 
 
     //triangolazione partendo da 2 nodi
@@ -367,20 +395,39 @@ void Triangulation::TrianglesForValidation(){
             count++;
 
 
-            this->points.push_back(t->v1());
-            this->points.push_back(t->v2());
-            this->points.push_back(t->v3());
+            this->setPoints(t->v1());
+            this->setPoints(t->v2());
+            this->setPoints(t->v3());
 
-            this->triangles.resize( count, 3);
+            this->resizeTriangles( count, 3);
 
-            this->triangles(index, 0) = a;
+            this->setTriangles(index, 0, a);
             a=a+3;
-            this->triangles(index, 1) = b;
+            this->setTriangles(index, 1, b);
             b=b+3;
-            this->triangles(index, 2) = c;
+            this->setTriangles(index, 2, c);
             c=c+3;
 
             index++;
         }
     }
+}
+
+void Triangulation::setTriangles(int index, int c, unsigned int position ){
+    _triangles(index, c) = position;
+}
+void Triangulation::resizeTriangles(int row,int colum){
+    _triangles.resize(row, colum);
+}
+
+void Triangulation::setPoints(Point2Dd p){
+
+    _points.push_back(p);
+}
+
+std::vector<Point2Dd> Triangulation::getPoints(){
+    return this->_points;
+}
+cg3::Array2D<unsigned int> Triangulation::getTriangles(){
+    return this->_triangles;
 }

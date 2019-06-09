@@ -54,6 +54,7 @@ public:
     Triangle *twoPointsAdjacentTriangleNew(const Point2Dd &p1, const Point2Dd &p2);
     Triangle *PointsAdjacent(const Point2Dd &p1, const Point2Dd &p2);
     Triangle *searchAdjacentTriangle(const Point2Dd &p1, const Point2Dd &p2);
+    bool pointLyingOnTheLineCheck(const Point2Dd &p, const Point2Dd &a, const Point2Dd &b);
 protected:
     Point2Dd _v1,_v2,_v3;
     bool _legal;

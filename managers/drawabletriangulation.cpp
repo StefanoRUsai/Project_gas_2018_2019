@@ -60,7 +60,7 @@ void DrawableTriangulation::draw() const{
 }
 
 bool DrawableTriangulation::printPoint(const Point2Dd& p) const{
-    return ( p != BT_P1 && p != BT_P2 && p != BT_P3);
+    return ( p != BT_P1 && p != BT_P2 && p != BT_P3); //
 }
 
 Pointd DrawableTriangulation::sceneCenter() const {

@@ -3,7 +3,7 @@
 #include "node.h"
 using namespace delaunay;
 
-inline Triangle::Triangle() : _v1(), _v2(), _v3() {}
+
 Triangle::Triangle(const Point2Dd& v1, const  Point2Dd& v2,const  Point2Dd& v3){
     _v1=v1;
     _v2=v2;
@@ -82,7 +82,7 @@ void Triangle::setIllegal(){
     _legal=false;
 }
 bool Triangle::isLegal(){return _legal;}
-
+/*
 bool Triangle::pointlyingontheline(const cg3::Point2Dd &p, int &f){
     if (!(bool(Triangle(_v1,_v2,p).area()))){
         f=1;
@@ -95,6 +95,36 @@ bool Triangle::pointlyingontheline(const cg3::Point2Dd &p, int &f){
         f=3;
         return true;}
     return false;
+}
+*/
+bool Triangle::pointlyingontheline(const cg3::Point2Dd &p, int &f){
+    if (pointLyingOnTheLineCheck(p,_v1,_v2) ){
+        f=1;
+        return true;}
+    if (pointLyingOnTheLineCheck(p,_v2,_v3)){
+        f=2;
+        return true;}
+
+    if (pointLyingOnTheLineCheck(p,_v3,_v1)) {
+        f=3;
+        return true;}
+    return false;
+}
+
+
+bool Triangle::pointLyingOnTheLineCheck(const Point2Dd& p, const Point2Dd& a, const Point2Dd& b){
+
+    double epsilon = 0.000001;
+
+    double dap = a.dist(p) + p.dist(b);
+
+    double ab = a.dist(b);
+
+    if( (dap - ab) < epsilon)
+        return true;
+    else
+        return false;
+
 }
 
 

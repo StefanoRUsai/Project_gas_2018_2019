@@ -1,9 +1,6 @@
 #include "dag.h"
 using namespace delaunay;
 Dag::Dag(){}
-Dag::Dag(Node* root){
-    _nodes.push_back(root);
-}
 
 std::vector<Node *> Dag::nodes() { return _nodes; }
 
