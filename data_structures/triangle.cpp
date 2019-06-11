@@ -133,6 +133,8 @@ const Point2Dd& Triangle::thirdpoint(const Point2Dd& p1, const Point2Dd& p2){
     if ((_v3 == p1 && _v1 == p2)||(_v1 == p1 && _v3 == p2)) return _v2;
     if ((_v1 == p1 && _v2 == p2)||(_v2 == p1 && _v1 == p2)) return _v3;
 
+    return p1;
+
 }
 
 bool Triangle::twoPointsAdjacent(const Point2Dd& p1, const Point2Dd& p2){

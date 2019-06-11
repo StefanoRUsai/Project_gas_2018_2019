@@ -67,6 +67,8 @@ void Triangulation::subdivisionTriangle(const Point2Dd& point, Triangle* triangl
     delaunay::Triangle* tr2 = Triangulation::createTriangle(point, triangle->v2(), triangle->v3(), node, dag);
     delaunay::Triangle* tr3 = Triangulation::createTriangle(point, triangle->v3(), triangle->v1(), node, dag);
 
+    triangle->setIllegal();
+
     tr1->sete1(tr3);
     tr1->sete2(triangle->PointsAdjacent(tr1->v2(),tr1->v3()));
     tr1->sete3(tr2);
@@ -79,10 +81,6 @@ void Triangulation::subdivisionTriangle(const Point2Dd& point, Triangle* triangl
     tr3->sete1(tr2);
     tr3->sete2(triangle->PointsAdjacent(tr3->v2(),tr3->v3()));
     tr3->sete3(tr1);
-
-//    this->addDrawTriangles(tr1);
-//    this->addDrawTriangles(tr2);
-//    this->addDrawTriangles(tr3);
 
     legalizeEdge(point, triangle->v1(), triangle->v2(), tr1, dag);
     legalizeEdge(point, triangle->v2(), triangle->v3(), tr2, dag);
@@ -101,60 +99,40 @@ void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle*
     delaunay::Triangle* tr2_1 = nullptr;
     delaunay::Triangle* tr2_2 = nullptr;
 
-    if(triangle->e1()!=nullptr){
-        const Point2Dd tp = triangle->e1()->thirdpoint(triangle->v1(), triangle->v2());
+    const Point2Dd tp = triangle->e1()->thirdpoint(triangle->v1(), triangle->v2());
 
-        tr2_1 = Triangulation::createTriangle(point, tp, triangle->v2(), triangle->e1()->node(), dag);
-        tr2_2 = Triangulation::createTriangle(point, triangle->v1(), tp, triangle->e1()->node(), dag);
+    tr2_1 = Triangulation::createTriangle(point, tp, triangle->v2(), triangle->e1()->node(), dag);
+    tr2_2 = Triangulation::createTriangle(point, triangle->v1(), tp, triangle->e1()->node(), dag);
 
+    triangle->setIllegal();
+    triangle->e1()->setIllegal();
 
-        tr2_1->sete1(tr2_2);
-        tr2_1->sete2(triangle->e1()->searchAdjacentTriangle(tp, triangle->v2()));
-        tr2_1->sete3(tr1_1);
+    tr2_1->sete1(tr2_2);
+    tr2_1->sete2(triangle->e1()->searchAdjacentTriangle(tp, triangle->v2()));
+    tr2_1->sete3(tr1_1);
 
-        tr2_2->sete1(tr1_2);
-        tr2_2->sete2(triangle->e1()->searchAdjacentTriangle(triangle->v1(), tp));
-        tr2_2->sete3(tr2_1);
-
-
-        tr1_1->sete1(tr2_1);
-        if(triangle->e2()!=nullptr)
-            tr1_1->sete2(triangle->e2());
-        tr1_1->sete3(tr1_2);
-
-        tr1_2->sete1(tr1_1);
-        if(triangle->e3()!=nullptr)
-            tr1_2->sete2(triangle->e3());
-        tr1_2->sete3(tr2_2);
-
-        this->flag=0;
+    tr2_2->sete1(tr1_2);
+    tr2_2->sete2(triangle->e1()->searchAdjacentTriangle(triangle->v1(), tp));
+    tr2_2->sete3(tr2_1);
 
 
-        legalizeEdge(point, triangle->v1(), triangle->v2(), tr1_1, dag);
-        legalizeEdge(point, triangle->v3(), triangle->v1(), tr1_2, dag);
-        legalizeEdge(point, triangle->v2(), tp, tr2_1, dag);
-        legalizeEdge(point, tp, triangle->v3(), tr2_2, dag);
+    tr1_1->sete1(tr2_1);
+    if(triangle->e2()!=nullptr)
+        tr1_1->sete2(triangle->e2());
+    tr1_1->sete3(tr1_2);
+
+    tr1_2->sete1(tr1_1);
+    if(triangle->e3()!=nullptr)
+        tr1_2->sete2(triangle->e3());
+    tr1_2->sete3(tr2_2);
+
+    this->flag=0;
 
 
-    }else{
-
-        tr1_1->sete1(tr2_1);
-        if(triangle->e2()!=nullptr)
-            tr1_1->sete2(triangle->e2());
-        tr1_1->sete3(tr1_2);
-
-        tr1_2->sete1(tr1_1);
-        if(triangle->e3()!=nullptr)
-            tr1_2->sete2(triangle->e3());
-        tr1_2->sete3(tr2_2);
-
-        this->flag=0;
-
-        legalizeEdge(point, triangle->v1(), triangle->v2(), tr1_1, dag);
-        legalizeEdge(point, triangle->v3(), triangle->v1(), tr1_2, dag);
-
-    }
-
+    legalizeEdge(point, triangle->v1(), triangle->v2(), tr1_1, dag);
+    legalizeEdge(point, triangle->v3(), triangle->v1(), tr1_2, dag);
+    legalizeEdge(point, triangle->v2(), tp, tr2_1, dag);
+    legalizeEdge(point, tp, triangle->v3(), tr2_2, dag);
 }
 
 
@@ -169,59 +147,42 @@ void Triangulation::subdivisionTriangleDoubleE2(const Point2Dd& point, Triangle*
     delaunay::Triangle* tr2_1 = nullptr;
     delaunay::Triangle* tr2_2 = nullptr;
 
-    if(triangle->e2()!=nullptr){
-        const Point2Dd tp = triangle->e2()->thirdpoint(triangle->v2(), triangle->v3());
+    const Point2Dd tp = triangle->e2()->thirdpoint(triangle->v2(), triangle->v3());
 
-        tr2_1 = Triangulation::createTriangle(point, triangle->v2(), tp, triangle->e2()->node(), dag);
-        tr2_2 = Triangulation::createTriangle(point, tp, triangle->v3(),  triangle->e2()->node(), dag);
-
-
-        tr2_1->sete1(tr1_1);
-        tr2_1->sete2(triangle->e2()->searchAdjacentTriangle(triangle->v2(), tp));
-        tr2_1->sete3(tr2_2);
-
-        tr2_2->sete1(tr2_1);
-        tr2_2->sete2(triangle->e2()->searchAdjacentTriangle(tp, triangle->v3()));
-        tr2_2->sete3(tr1_2);
+    tr2_1 = Triangulation::createTriangle(point, triangle->v2(), tp, triangle->e2()->node(), dag);
+    tr2_2 = Triangulation::createTriangle(point, tp, triangle->v3(),  triangle->e2()->node(), dag);
 
 
-        tr1_1->sete1(tr1_2);
-        if(triangle->e2()!=nullptr)
-            tr1_1->sete2(triangle->e2());
-        tr1_1->sete3(tr2_1);
-
-        tr1_2->sete1(tr2_2);
-        if(triangle->e3()!=nullptr)
-            tr1_2->sete2(triangle->e3());
-        tr1_2->sete3(tr1_1);
-
-        this->flag=0;
+    triangle->setIllegal();
+    triangle->e2()->setIllegal();
 
 
-        legalizeEdge(point, triangle->v1(), triangle->v2(), tr1_1, dag);
-        legalizeEdge(point, triangle->v3(), triangle->v1(), tr1_2, dag);
-        legalizeEdge(point, triangle->v2(), tp, tr2_1, dag);
-        legalizeEdge(point, tp, triangle->v3(), tr2_2, dag);
+    tr2_1->sete1(tr1_1);
+    tr2_1->sete2(triangle->e2()->searchAdjacentTriangle(triangle->v2(), tp));
+    tr2_1->sete3(tr2_2);
+
+    tr2_2->sete1(tr2_1);
+    tr2_2->sete2(triangle->e2()->searchAdjacentTriangle(tp, triangle->v3()));
+    tr2_2->sete3(tr1_2);
 
 
-    }else{
+    tr1_1->sete1(tr1_2);
+    if(triangle->e2()!=nullptr)
+        tr1_1->sete2(triangle->e2());
+    tr1_1->sete3(tr2_1);
 
-        tr1_1->sete1(tr1_2);
-        if(triangle->e2()!=nullptr)
-            tr1_1->sete2(triangle->e2());
-        tr1_1->sete3(tr2_1);
+    tr1_2->sete1(tr2_2);
+    if(triangle->e3()!=nullptr)
+        tr1_2->sete2(triangle->e3());
+    tr1_2->sete3(tr1_1);
 
-        tr1_2->sete1(tr2_2);
-        if(triangle->e3()!=nullptr)
-            tr1_2->sete2(triangle->e3());
-        tr1_2->sete3(tr1_1);
-        this->flag=0;
+    this->flag=0;
 
-        legalizeEdge(point, triangle->v1(), triangle->v2(), tr1_1, dag);
-        legalizeEdge(point, triangle->v3(), triangle->v1(), tr1_2, dag);
 
-    }
-
+    legalizeEdge(point, triangle->v1(), triangle->v2(), tr1_1, dag);
+    legalizeEdge(point, triangle->v3(), triangle->v1(), tr1_2, dag);
+    legalizeEdge(point, triangle->v2(), tp, tr2_1, dag);
+    legalizeEdge(point, tp, triangle->v3(), tr2_2, dag);
 
 }
 
@@ -237,58 +198,43 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
     delaunay::Triangle* tr2_1 = nullptr;
     delaunay::Triangle* tr2_2 = nullptr;
 
-    if(triangle->e3()!=nullptr){
-        const Point2Dd tp = triangle->e3()->thirdpoint(triangle->v3(), triangle->v1());
+    const Point2Dd tp = triangle->e3()->thirdpoint(triangle->v3(), triangle->v1());
 
-        tr2_1 = Triangulation::createTriangle(point, triangle->v3(), tp, triangle->e3()->node(), dag);
-        tr2_2 = Triangulation::createTriangle(point, tp, triangle->v1(),  triangle->e3()->node(), dag);
-
-
-        tr2_1->sete1(tr1_1);
-        tr2_1->sete2(triangle->e3()->searchAdjacentTriangle(triangle->v3(), tp));
-        tr2_1->sete3(tr2_2);
-
-        tr2_2->sete1(tr2_1);
-        tr2_2->sete2(triangle->e2()->searchAdjacentTriangle(tp, triangle->v1()));
-        tr2_2->sete3(tr1_2);
+    tr2_1 = Triangulation::createTriangle(point, triangle->v3(), tp, triangle->e3()->node(), dag);
+    tr2_2 = Triangulation::createTriangle(point, tp, triangle->v1(),  triangle->e3()->node(), dag);
 
 
-        tr1_1->sete1(tr1_2);
-        if(triangle->e2()!=nullptr)
-            tr1_1->sete2(triangle->e2());
-        tr1_1->sete3(tr2_1);
-
-        tr1_2->sete1(tr2_2);
-        if(triangle->e1()!=nullptr)
-            tr1_2->sete2(triangle->e1());
-        tr1_2->sete3(tr1_1);
-
-        this->flag=0;
+    triangle->setIllegal();
+    triangle->e3()->setIllegal();
 
 
-        legalizeEdge(point, triangle->v2(), triangle->v3(), tr1_1, dag);
-        legalizeEdge(point, triangle->v2(), triangle->v1(), tr1_2, dag);
-        legalizeEdge(point, triangle->v3(), tp, tr2_1, dag);
-        legalizeEdge(point, tp, triangle->v1(), tr2_2, dag);
+    tr2_1->sete1(tr1_1);
+    tr2_1->sete2(triangle->e3()->searchAdjacentTriangle(triangle->v3(), tp));
+    tr2_1->sete3(tr2_2);
+
+    tr2_2->sete1(tr2_1);
+    tr2_2->sete2(triangle->e2()->searchAdjacentTriangle(tp, triangle->v1()));
+    tr2_2->sete3(tr1_2);
 
 
-    }else{
+    tr1_1->sete1(tr1_2);
+    if(triangle->e2()!=nullptr)
+        tr1_1->sete2(triangle->e2());
+    tr1_1->sete3(tr2_1);
 
-        tr1_1->sete1(tr1_2);
-        if(triangle->e2()!=nullptr)
-            tr1_1->sete2(triangle->e2());
-        tr1_1->sete3(tr2_1);
+    tr1_2->sete1(tr2_2);
+    if(triangle->e1()!=nullptr)
+        tr1_2->sete2(triangle->e1());
+    tr1_2->sete3(tr1_1);
 
-        tr1_2->sete1(tr2_2);
-        if(triangle->e1()!=nullptr)
-            tr1_2->sete2(triangle->e1());
-        tr1_2->sete3(tr1_1);
-        this->flag=0;
+    this->flag=0;
 
-        legalizeEdge(point, triangle->v2(), triangle->v3(), tr1_1, dag);
-        legalizeEdge(point, triangle->v2(), triangle->v1(), tr1_2, dag);
 
-    }
+    legalizeEdge(point, triangle->v2(), triangle->v3(), tr1_1, dag);
+    legalizeEdge(point, triangle->v2(), triangle->v1(), tr1_2, dag);
+    legalizeEdge(point, triangle->v3(), tp, tr2_1, dag);
+    legalizeEdge(point, tp, triangle->v1(), tr2_2, dag);
+
 
 }
 
@@ -344,40 +290,40 @@ void Triangulation::edgeFlip(const Point2Dd& pr, const Point2Dd& pi, const Point
 
     const Point2Dd pk = tr2->thirdpoint(pi, pj);
 
-    ntr1 = createTriangle(pr, pi, pk, tr1->node(), tr2->node(), dag );
-    ntr2 = createTriangle(pr, pk, pj, tr1->node(), tr2->node(), dag );
+    if (pk != pi){
 
-    ntr1->sete3(ntr2); //e3 pk -> pr
-    ntr2->sete1(ntr1); // e1 pr -> pk
+        ntr1 = createTriangle(pr, pi, pk, tr1->node(), tr2->node(), dag );
+        ntr2 = createTriangle(pr, pk, pj, tr1->node(), tr2->node(), dag );
 
-    if(tr1->PointsAdjacent(pr,pi) != nullptr && tr1->PointsAdjacent(pr,pi)->isLegal()){
-        ntr1->sete1(tr1->PointsAdjacent(pr,pi)); //e1 pr -> pi
-        if (ntr1->e1()!=nullptr)
+        ntr1->sete3(ntr2); //e3 pk -> pr
+        ntr2->sete1(ntr1); // e1 pr -> pk
+
+        if(tr1->PointsAdjacent(pr,pi) != nullptr && tr1->PointsAdjacent(pr,pi)->isLegal()){
+            ntr1->sete1(tr1->PointsAdjacent(pr,pi)); //e1 pr -> pi
             tr1->PointsAdjacent(pr,pi)->twoPointsEdgeAdjacentFlip(pr,pi,ntr1); //triangolo ed edge opposto
-    }
+        }
 
-    if(tr2->PointsAdjacent(pi,pk) != nullptr && tr2->PointsAdjacent(pi,pk)->isLegal()){
-        ntr1->sete2(tr2->PointsAdjacent(pj,pk)); //e2 pi -> pk
-        if (ntr1->e2()!=nullptr)
+        if(tr2->PointsAdjacent(pi,pk) != nullptr && tr2->PointsAdjacent(pi,pk)->isLegal()){
+            ntr1->sete2(tr2->PointsAdjacent(pj,pk)); //e2 pi -> pk
             tr2->PointsAdjacent(pi,pk)->twoPointsEdgeAdjacentFlip(pi,pk,ntr1);
-    }
+        }
 
 
-    if(tr2->PointsAdjacent(pk,pj) != nullptr && tr2->PointsAdjacent(pk,pj)->isLegal()){
-        ntr2->sete2(tr2->PointsAdjacent(pk,pj)); // e2 pk -> pj
-        if (ntr2->e2()!=nullptr)
+        if(tr2->PointsAdjacent(pk,pj) != nullptr && tr2->PointsAdjacent(pk,pj)->isLegal()){
+            ntr2->sete2(tr2->PointsAdjacent(pk,pj)); // e2 pk -> pj
             tr2->PointsAdjacent(pk,pj)->twoPointsEdgeAdjacentFlip(pk,pj,ntr2); // triangolo ed edge opposto
-    }
+        }
 
-    if(tr1->PointsAdjacent(pj,pr) != nullptr && tr1->PointsAdjacent(pj,pr)->isLegal()){
-        ntr2->sete3(tr1->PointsAdjacent(pj,pr)); // e3 pj -> pr
-        if (ntr1->e3()!=nullptr)
+        if(tr1->PointsAdjacent(pj,pr) != nullptr && tr1->PointsAdjacent(pj,pr)->isLegal()){
+            ntr2->sete3(tr1->PointsAdjacent(pj,pr)); // e3 pj -> pr
             tr1->PointsAdjacent(pj,pr)->twoPointsEdgeAdjacentFlip(pj,pr,ntr2);
+        }
+
+        legalizeEdge(pr, pi, pk, ntr1, dag);
+        legalizeEdge(pr, pk, pj, ntr2, dag);
+    }else {
+        std::cout<<"non dovrei mai essere qui"<<std::endl;
     }
-
-    legalizeEdge(pr, pi, pk, ntr1, dag);
-    legalizeEdge(pr, pk, pj, ntr2, dag);
-
 }
 
 
