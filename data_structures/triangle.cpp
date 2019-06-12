@@ -82,21 +82,7 @@ void Triangle::setIllegal(){
     _legal=false;
 }
 bool Triangle::isLegal(){return _legal;}
-/*
-bool Triangle::pointlyingontheline(const cg3::Point2Dd &p, int &f){
-    if (!(bool(Triangle(_v1,_v2,p).area()))){
-        f=1;
-        return true;}
-    if (!(bool(Triangle(_v2,_v3,p).area()))){
-        f=2;
-        return true;}
 
-    if (!(bool(Triangle(_v3,_v1,p).area()))) {
-        f=3;
-        return true;}
-    return false;
-}
-*/
 bool Triangle::pointlyingontheline(const cg3::Point2Dd &p, int &f){
     if (pointLyingOnTheLineCheck(p,_v1,_v2) ){
         f=1;

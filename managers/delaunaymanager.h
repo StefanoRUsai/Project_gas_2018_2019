@@ -51,6 +51,7 @@ private:
     PointCollectionDrawer<std::vector<cg3::Point2Dd>> pcd;
     DrawableTriangulation tcd;
     std::vector<delaunay::Triangulation *> _triangulation;
+    Triangulation* tri = nullptr;
 
     /********************************************************************************************************************/
 

@@ -63,7 +63,7 @@ void Triangulation::unionEdge(const Point2Dd& point){
 //suddivisione in 3 triangoli caso normale
 void Triangulation::subdivisionTriangle(const Point2Dd& point, Triangle* triangle, Node* node, Dag* dag){
 
-    delaunay::Triangle* tr1 = Triangulation::createTriangle(point, triangle->v1(), triangle->v2(),    node, dag);
+    delaunay::Triangle* tr1 = Triangulation::createTriangle(point, triangle->v1(), triangle->v2(), node, dag);
     delaunay::Triangle* tr2 = Triangulation::createTriangle(point, triangle->v2(), triangle->v3(), node, dag);
     delaunay::Triangle* tr3 = Triangulation::createTriangle(point, triangle->v3(), triangle->v1(), node, dag);
 
@@ -320,40 +320,37 @@ void Triangulation::edgeFlip(const Point2Dd& pr, const Point2Dd& pi, const Point
 
     const Point2Dd pk = tr2->thirdpoint(pi, pj);
 
-    if (pk != pi){
 
-        ntr1 = createTriangle(pr, pi, pk, tr1->node(), tr2->node(), dag );
-        ntr2 = createTriangle(pr, pk, pj, tr1->node(), tr2->node(), dag );
+    ntr1 = createTriangle(pr, pi, pk, tr1->node(), tr2->node(), dag );
+    ntr2 = createTriangle(pr, pk, pj, tr1->node(), tr2->node(), dag );
 
-        ntr1->sete3(ntr2); //e3 pk -> pr
-        ntr2->sete1(ntr1); // e1 pr -> pk
+    ntr1->sete3(ntr2); //e3 pk -> pr
+    ntr2->sete1(ntr1); // e1 pr -> pk
 
-        if(tr1->PointsAdjacent(pr,pi) != nullptr && tr1->PointsAdjacent(pr,pi)->isLegal()){
-            ntr1->sete1(tr1->PointsAdjacent(pr,pi)); //e1 pr -> pi
-            tr1->PointsAdjacent(pr,pi)->twoPointsEdgeAdjacentFlip(pr,pi,ntr1); //triangolo ed edge opposto
-        }
-
-        if(tr2->PointsAdjacent(pi,pk) != nullptr && tr2->PointsAdjacent(pi,pk)->isLegal()){
-            ntr1->sete2(tr2->PointsAdjacent(pj,pk)); //e2 pi -> pk
-            tr2->PointsAdjacent(pi,pk)->twoPointsEdgeAdjacentFlip(pi,pk,ntr1);
-        }
-
-
-        if(tr2->PointsAdjacent(pk,pj) != nullptr && tr2->PointsAdjacent(pk,pj)->isLegal()){
-            ntr2->sete2(tr2->PointsAdjacent(pk,pj)); // e2 pk -> pj
-            tr2->PointsAdjacent(pk,pj)->twoPointsEdgeAdjacentFlip(pk,pj,ntr2); // triangolo ed edge opposto
-        }
-
-        if(tr1->PointsAdjacent(pj,pr) != nullptr && tr1->PointsAdjacent(pj,pr)->isLegal()){
-            ntr2->sete3(tr1->PointsAdjacent(pj,pr)); // e3 pj -> pr
-            tr1->PointsAdjacent(pj,pr)->twoPointsEdgeAdjacentFlip(pj,pr,ntr2);
-        }
-
-        legalizeEdge(pr, pi, pk, ntr1, dag);
-        legalizeEdge(pr, pk, pj, ntr2, dag);
-    }else {
-        std::cout<<"non dovrei mai essere qui"<<std::endl;
+    if(tr1->PointsAdjacent(pr,pi) != nullptr){
+        ntr1->sete1(tr1->PointsAdjacent(pr,pi)); //e1 pr -> pi
+        tr1->PointsAdjacent(pr,pi)->twoPointsEdgeAdjacentFlip(pr,pi,ntr1); //triangolo ed edge opposto
     }
+
+    if(tr2->PointsAdjacent(pi,pk) != nullptr){
+        ntr1->sete2(tr2->PointsAdjacent(pi,pk)); //e2 pi -> pk
+        tr2->PointsAdjacent(pi,pk)->twoPointsEdgeAdjacentFlip(pi,pk,ntr1);
+    }
+
+
+    if(tr2->PointsAdjacent(pk,pj) != nullptr){
+        ntr2->sete2(tr2->PointsAdjacent(pk,pj)); // e2 pk -> pj
+        tr2->PointsAdjacent(pk,pj)->twoPointsEdgeAdjacentFlip(pk,pj,ntr2); // triangolo ed edge opposto
+    }
+
+    if(tr1->PointsAdjacent(pj,pr) != nullptr){
+        ntr2->sete3(tr1->PointsAdjacent(pj,pr)); // e3 pj -> pr
+        tr1->PointsAdjacent(pj,pr)->twoPointsEdgeAdjacentFlip(pj,pr,ntr2);
+    }
+
+    legalizeEdge(pr, pi, pk, ntr1, dag);
+    legalizeEdge(pr, pk, pj, ntr2, dag);
+
 }
 
 

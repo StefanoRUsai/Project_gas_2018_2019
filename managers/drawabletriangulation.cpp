@@ -44,7 +44,7 @@ void DrawableTriangulation::draw() const{
                 cg3::viewer::drawLine2D( t->v1(), t->v2(),  color, 1);
             if(printPoint(t->v2())&& printPoint(t->v3()))
                 cg3::viewer::drawLine2D( t->v2(), t->v3(), color, 1);
-            if(printPoint(t->v3())&& printPoint(t->v1()))
+               if(printPoint(t->v3())&& printPoint(t->v1()))
                 cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 1 );
         }
 

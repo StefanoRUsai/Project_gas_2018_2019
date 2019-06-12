@@ -23,6 +23,8 @@ void PointCollectionDrawer<Container>::setPoints(Container* value)
     this->containerPointer = value;
 }
 
+
+
 /**
  * @brief Set point color
  * @param color Color
