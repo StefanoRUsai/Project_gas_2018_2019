@@ -31,7 +31,6 @@ void Triangle::sete1(Triangle *t){ _e1=t; }
 void Triangle::sete2(Triangle *t){ _e2=t; }
 void Triangle::sete3(Triangle *t){ _e3=t; }
 void Triangle::setNode(Node *node){ _node=node; }
-void Triangle::setIndex(unsigned int index){ _index=index; }
 
 //https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
 //tecnica del baricentro
@@ -83,36 +82,6 @@ void Triangle::setIllegal(){
 }
 bool Triangle::isLegal(){return _legal;}
 
-bool Triangle::pointlyingontheline(const cg3::Point2Dd &p, int &f){
-    if (pointLyingOnTheLineCheck(p,_v1,_v2) ){
-        f=1;
-        return true;}
-    if (pointLyingOnTheLineCheck(p,_v2,_v3)){
-        f=2;
-        return true;}
-
-    if (pointLyingOnTheLineCheck(p,_v3,_v1)) {
-        f=3;
-        return true;}
-    return false;
-}
-
-
-bool Triangle::pointLyingOnTheLineCheck(const Point2Dd& p, const Point2Dd& a, const Point2Dd& b){
-
-    double epsilon = 0.000001;
-
-    double dap = a.dist(p) + p.dist(b);
-
-    double ab = a.dist(b);
-
-    if( (dap - ab) < epsilon)
-        return true;
-    else
-        return false;
-
-}
-
 
 const Point2Dd& Triangle::thirdpoint(const Point2Dd& p1, const Point2Dd& p2){
     if ((_v2 == p1 && _v3 == p2)||(_v3 == p1 && _v2 == p2)) return _v1;
@@ -130,12 +99,6 @@ bool Triangle::twoPointsAdjacent(const Point2Dd& p1, const Point2Dd& p2){
     return false;
 }
 
-std::string Triangle::twoPointsEdgeAdjacent(const Point2Dd& p1, const Point2Dd& p2){
-    if ((_v2 == p1 && _v3 == p2)||(_v3 == p1 && _v2 == p2)) return "e2";
-    if ((_v3 == p1 && _v1 == p2)||(_v1 == p1 && _v3 == p2)) return "e3";
-    if ((_v1 == p1 && _v2 == p2)||(_v2 == p1 && _v1 == p2)) return "e1";
-    return "false";
-}
 
 
 void Triangle::twoPointsEdgeAdjacentFlip(const Point2Dd& p1, const Point2Dd& p2, Triangle* t){

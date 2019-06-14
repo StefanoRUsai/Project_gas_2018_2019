@@ -40,13 +40,13 @@ public:
     void addPoint(Point2Dd &point);
 
 
+    bool pointLyingOnTheLineCheck(const Point2Dd &p, const Point2Dd &a, const Point2Dd &b);
 protected:
 
     std::vector<Point2Dd> _points;
     cg3::Array2D<unsigned int> _triangles;
     std::vector<delaunay::Triangle*> drawTriangles;
     Dag _dag;
-    int flag=0; // flag controllo costruzione triangoli nel caso di punto sulla linea
 
 };
 

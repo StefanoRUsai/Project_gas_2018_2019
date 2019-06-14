@@ -25,35 +25,4 @@ int main(int argc, char *argv[]) {
     gui.show();
 
     return app.exec();
-
-
-/*
-    Point2Dd p1(2,2);
-    Point2Dd p2(4,2);
-    Point2Dd p3(3,8);
-
-    Point2Dd p4(3,3);
-
-
-    delaunay::Triangle triangolo(p1,p2,p3);
-
-    triangolo.printTriangle();
-
-    Node node1;
-    Node node2;
-    Node node3;
-
-
-    if(triangolo.controlPointinTriangle(p4))
-        std::cout<<"true"<<std::endl;
-    else
-        std::cout<<"false"<<std::endl;
-
-
-    if (triangolo.pointlyingontheline(p4))
-        std::cout<<"true"<<std::endl;
-    else
-        std::cout<<"false"<<std::endl;
-    return 0;
-*/
 }

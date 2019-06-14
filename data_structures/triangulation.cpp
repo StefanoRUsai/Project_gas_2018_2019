@@ -47,20 +47,24 @@ void Triangulation::addDrawTriangles(delaunay::Triangle* t){
 
 
 void Triangulation::unionEdge(const Point2Dd& point){
-    delaunay::Node *node=this->_dag.navigateGraph(point, flag);
-    delaunay::Triangle *triangle = node->t();
+    delaunay::Node *node=this->_dag.navigateGraph(point);
+    delaunay::Triangle *t = node->t();
 
     //triangolazione partendo da un solo nodo
 
-    if (this->flag==0) this->subdivisionTriangle(point,triangle, node, &_dag);
-    if (this->flag==1) this->subdivisionTriangleDoubleE1(point,triangle, node, &_dag);
-    if (this->flag==2) this->subdivisionTriangleDoubleE2(point,triangle, node, &_dag);
-    if (this->flag==3) this->subdivisionTriangleDoubleE3(point,triangle, node, &_dag);
+    if (pointLyingOnTheLineCheck(point, t->v1(), t->v2())){
+        this->subdivisionTriangleDoubleE1(point,t , node, &_dag);
+    }else if (pointLyingOnTheLineCheck(point, t->v2(), t->v3())){
+        this->subdivisionTriangleDoubleE2(point, t , node, &_dag);
+    }else if (pointLyingOnTheLineCheck(point, t->v3(), t->v1())){
+        this->subdivisionTriangleDoubleE3(point,t , node, &_dag);
+    } else {
+        this->subdivisionTriangle(point,t, node, &_dag);
+    }
 
-
-    //triangolazione partendo da 2 nodi
 }
-//suddivisione in 3 triangoli caso normale
+
+    //suddivisione in 3 triangoli caso normale
 void Triangulation::subdivisionTriangle(const Point2Dd& point, Triangle* triangle, Node* node, Dag* dag){
 
     delaunay::Triangle* tr1 = Triangulation::createTriangle(point, triangle->v1(), triangle->v2(), node, dag);
@@ -140,7 +144,6 @@ void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle*
     }
     tr1_2->sete3(tr2_2);
 
-    this->flag=0;
 
 
     legalizeEdge(point, triangle->v1(), triangle->v2(), tr1_1, dag);
@@ -198,7 +201,6 @@ void Triangulation::subdivisionTriangleDoubleE2(const Point2Dd& point, Triangle*
     }
     tr1_2->sete3(tr1_1);
 
-    this->flag=0;
 
 
     legalizeEdge(point, triangle->v1(), triangle->v2(), tr1_1, dag);
@@ -257,8 +259,6 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
     }
     tr1_2->sete3(tr1_1);
 
-    this->flag=0;
-
 
     legalizeEdge(point, triangle->v2(), triangle->v3(), tr1_1, dag);
     legalizeEdge(point, triangle->v2(), triangle->v1(), tr1_2, dag);
@@ -296,6 +296,7 @@ Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two,
 void Triangulation::legalizeEdge(const Point2Dd& pr, const Point2Dd& pi, const Point2Dd& pj, Triangle* t, Dag* dag){
 
     Triangle* adjacent = t->PointsAdjacent(pi, pj);
+
 
     if(adjacent != nullptr){
         if(DelaunayTriangulation::Checker::isPointLyingInCircle(adjacent->v1(), adjacent->v2(), adjacent->v3(), pr, false)){
@@ -336,7 +337,6 @@ void Triangulation::edgeFlip(const Point2Dd& pr, const Point2Dd& pi, const Point
         ntr1->sete2(tr2->PointsAdjacent(pi,pk)); //e2 pi -> pk
         tr2->PointsAdjacent(pi,pk)->twoPointsEdgeAdjacentFlip(pi,pk,ntr1);
     }
-
 
     if(tr2->PointsAdjacent(pk,pj) != nullptr){
         ntr2->sete2(tr2->PointsAdjacent(pk,pj)); // e2 pk -> pj
@@ -403,4 +403,21 @@ std::vector<Point2Dd> Triangulation::getPoints(){
 }
 cg3::Array2D<unsigned int> Triangulation::getTriangles(){
     return this->_triangles;
+}
+
+
+
+bool Triangulation::pointLyingOnTheLineCheck(const Point2Dd& p, const Point2Dd& a, const Point2Dd& b){
+
+    double epsilon = 0.000001;
+
+    double dap = a.dist(p) + p.dist(b);
+
+    double ab = a.dist(b);
+
+    if( (dap - ab) < epsilon)
+        return true;
+    else
+        return false;
+
 }

@@ -62,8 +62,6 @@ protected:
     Triangle* _e2 = nullptr;
     Triangle* _e3 = nullptr;
     delaunay::Node* _node = nullptr;
-    unsigned int _index;
-
 };
 
 }
