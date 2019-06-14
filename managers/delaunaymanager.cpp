@@ -54,7 +54,7 @@ const cg3::Pointd SCENECENTER(0,0,0);
 DelaunayManager::DelaunayManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::DelaunayManager),
-    mainWindow(static_cast<cg3::viewer::MainWindow&>(*parent)),
+    mainWindow(dynamic_cast<cg3::viewer::MainWindow&>(*parent)),
     boundingBox(cg3::Point2Dd(-BOUNDINGBOX, -BOUNDINGBOX),
                 cg3::Point2Dd(BOUNDINGBOX, BOUNDINGBOX))    
 {
@@ -452,9 +452,9 @@ void DelaunayManager::point2DClicked(const cg3::Point2Dd& p) { //Do not write co
                              "] is not contained in the bounding box.");
         return;
     }
-    else {
+    
         addPointToDelaunayTriangulation(p);
-    }
+    
 }
 
 

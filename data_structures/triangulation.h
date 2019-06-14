@@ -31,7 +31,7 @@ public:
     void AdjacencyFlip(Triangle *ntr1, Triangle *ntr2, Triangle *otr1, Triangle *otr2);
     void TrianglesForValidation();
     std::vector<Point2Dd> getPoints();
-    void setPoints(Point2Dd p);
+    void setPoints(const Point2Dd& p);
     cg3::Array2D<unsigned int> getTriangles();
     void setTriangles(int index, int c, unsigned int position);
 

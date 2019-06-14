@@ -5,7 +5,7 @@
 #include <utils/delaunay_checker.h>
 
 using namespace delaunay;
-Triangulation::Triangulation(){}
+Triangulation::Triangulation()= default;
 
 
 Triangulation::Triangulation(const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){
@@ -26,7 +26,7 @@ Triangulation::Triangulation(Triangle* t, Node* node){
 
 
 void Triangulation::addList(std::vector<Point2Dd>& points){
-    for(Point2Dd point: points){
+    for(const Point2Dd& point: points){
 
         this->unionEdge(point);
     }
@@ -76,20 +76,20 @@ void Triangulation::subdivisionTriangle(const Point2Dd& point, Triangle* triangl
     tr1->sete1(tr3);
     tr1->sete2(triangle->PointsAdjacent(tr1->v2(),tr1->v3()));
     if(triangle->PointsAdjacent(tr1->v2(),tr1->v3()) != nullptr)
-        triangle->PointsAdjacent(tr1->v2(),tr1->v3())->twoPointsEdgeAdjacentFlip(tr1->v2(),tr1->v3(), tr1);
+        tr1->e2()->twoPointsEdgeAdjacentFlip(tr1->v2(),tr1->v3(), tr1);
     tr1->sete3(tr2);
 
     tr2->sete1(tr1);
     tr2->sete2(triangle->PointsAdjacent(tr2->v2(),tr2->v3()));
     if(triangle->PointsAdjacent(tr2->v2(),tr2->v3()) != nullptr)
-        triangle->PointsAdjacent(tr2->v2(),tr2->v3())->twoPointsEdgeAdjacentFlip(tr2->v2(),tr2->v3(), tr2);
+        tr2->e2()->twoPointsEdgeAdjacentFlip(tr2->v2(),tr2->v3(), tr2);
     tr2->sete3(tr3);
 
 
     tr3->sete1(tr2);
     tr3->sete2(triangle->PointsAdjacent(tr3->v2(),tr3->v3()));
     if(triangle->PointsAdjacent(tr3->v2(),tr3->v3()) != nullptr)
-        triangle->PointsAdjacent(tr3->v2(),tr3->v3())->twoPointsEdgeAdjacentFlip(tr3->v2(),tr3->v3(), tr3);
+        tr3->e2()->twoPointsEdgeAdjacentFlip(tr3->v2(),tr3->v3(), tr3);
     tr3->sete3(tr1);
 
     legalizeEdge(point, triangle->v1(), triangle->v2(), tr1, dag);
@@ -120,13 +120,13 @@ void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle*
     tr2_1->sete1(tr2_2);
     tr2_1->sete2(triangle->e1()->searchAdjacentTriangle(tp, triangle->v2()));
     if (triangle->e1()->searchAdjacentTriangle(tp, triangle->v2()) != nullptr)
-        triangle->e1()->searchAdjacentTriangle(tp, triangle->v2())->twoPointsEdgeAdjacentFlip(tp, triangle->v2(), tr2_1);
+        tr2_1->e2()->twoPointsEdgeAdjacentFlip(tp, triangle->v2(), tr2_1);
     tr2_1->sete3(tr1_1);
 
     tr2_2->sete1(tr1_2);
     tr2_2->sete2(triangle->e1()->searchAdjacentTriangle(triangle->v1(), tp));
-    if (triangle->e1()->searchAdjacentTriangle(tp, triangle->v2()) != nullptr)
-        triangle->e1()->searchAdjacentTriangle(tp, triangle->v2())->twoPointsEdgeAdjacentFlip(tp, triangle->v2(), tr2_2);
+    if (triangle->e1()->searchAdjacentTriangle(triangle->v1(), tp) != nullptr)
+        tr2_2->e2()->twoPointsEdgeAdjacentFlip(triangle->v1(), tp, tr2_2);
     tr2_2->sete3(tr2_1);
 
 
@@ -177,13 +177,13 @@ void Triangulation::subdivisionTriangleDoubleE2(const Point2Dd& point, Triangle*
     tr2_1->sete1(tr1_1);
     tr2_1->sete2(triangle->e2()->searchAdjacentTriangle(triangle->v2(), tp));
     if (triangle->e2()->searchAdjacentTriangle(triangle->v2(), tp) != nullptr)
-        triangle->e2()->searchAdjacentTriangle(triangle->v2(), tp)->twoPointsEdgeAdjacentFlip(triangle->v2(), tp, tr2_1);
+        tr2_1->e2()->twoPointsEdgeAdjacentFlip(triangle->v2(), tp, tr2_1);
     tr2_1->sete3(tr2_2);
 
     tr2_2->sete1(tr2_1);
     tr2_2->sete2(triangle->e2()->searchAdjacentTriangle(tp, triangle->v3()));
     if (triangle->e2()->searchAdjacentTriangle(tp, triangle->v3()) != nullptr)
-        triangle->e2()->searchAdjacentTriangle(tp, triangle->v3())->twoPointsEdgeAdjacentFlip(tp, triangle->v3(), tr2_2);
+        tr2_2->e2()->twoPointsEdgeAdjacentFlip(tp, triangle->v3(), tr2_2);
     tr2_2->sete3(tr1_2);
 
 
@@ -235,13 +235,13 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
     tr2_1->sete1(tr1_1);
     tr2_1->sete2(triangle->e3()->searchAdjacentTriangle(triangle->v3(), tp));
     if (triangle->e3()->searchAdjacentTriangle(triangle->v3(), tp) != nullptr)
-        triangle->e3()->searchAdjacentTriangle(triangle->v3(), tp)->twoPointsEdgeAdjacentFlip(triangle->v3(), tp, tr2_1);
+        tr2_1->e2()->twoPointsEdgeAdjacentFlip(triangle->v3(), tp, tr2_1);
     tr2_1->sete3(tr2_2);
 
     tr2_2->sete1(tr2_1);
     tr2_2->sete2(triangle->e2()->searchAdjacentTriangle(tp, triangle->v1()));
     if (triangle->e2()->searchAdjacentTriangle(tp, triangle->v1()) != nullptr)
-        triangle->e2()->searchAdjacentTriangle(tp, triangle->v1())->twoPointsEdgeAdjacentFlip(tp, triangle->v1(), tr2_2);
+        tr2_2->e2()->twoPointsEdgeAdjacentFlip(tp, triangle->v1(), tr2_2);
     tr2_2->sete3(tr1_2);
 
 
@@ -271,7 +271,7 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
 
 
 Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two, const Point2Dd& three, Node *node, Dag *dag){
-    Triangle* t = new Triangle(one, two, three);
+    auto* t = new Triangle(one, two, three);
     Node* n = new Node();
     n->setTriangle(t);
     t->setNode(n);
@@ -281,7 +281,7 @@ Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two,
 }
 
 Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two, const Point2Dd& three, Node *node1, Node *node2, Dag *dag){
-    Triangle* t = new Triangle(one, two, three);
+    auto* t = new Triangle(one, two, three);
     Node* n = new Node();
     n->setTriangle(t);
     t->setNode(n);
@@ -301,6 +301,7 @@ void Triangulation::legalizeEdge(const Point2Dd& pr, const Point2Dd& pi, const P
     if(adjacent != nullptr){
         if(DelaunayTriangulation::Checker::isPointLyingInCircle(adjacent->v1(), adjacent->v2(), adjacent->v3(), pr, false)){
             edgeFlip(pr, pi, pj, t, adjacent, dag);
+
         }else{
             this->addDrawTriangles(t);
         }
@@ -328,28 +329,29 @@ void Triangulation::edgeFlip(const Point2Dd& pr, const Point2Dd& pi, const Point
     ntr1->sete3(ntr2); //e3 pk -> pr
     ntr2->sete1(ntr1); // e1 pr -> pk
 
-    if(tr1->PointsAdjacent(pr,pi) != nullptr){
+    if(tr1->PointsAdjacent(pr,pi) != nullptr && tr1->PointsAdjacent(pr,pi)->isLegal() ){
         ntr1->sete1(tr1->PointsAdjacent(pr,pi)); //e1 pr -> pi
-        tr1->PointsAdjacent(pr,pi)->twoPointsEdgeAdjacentFlip(pr,pi,ntr1); //triangolo ed edge opposto
+        ntr1->e1()->twoPointsEdgeAdjacentFlip(pr,pi,ntr1);//triangolo ed edge opposto
     }
 
-    if(tr2->PointsAdjacent(pi,pk) != nullptr){
+    if(tr2->PointsAdjacent(pi,pk) != nullptr && tr2->PointsAdjacent(pi,pk)->isLegal()){
         ntr1->sete2(tr2->PointsAdjacent(pi,pk)); //e2 pi -> pk
-        tr2->PointsAdjacent(pi,pk)->twoPointsEdgeAdjacentFlip(pi,pk,ntr1);
+        ntr1->e2()->twoPointsEdgeAdjacentFlip(pi,pk,ntr1);
     }
 
-    if(tr2->PointsAdjacent(pk,pj) != nullptr){
+    if(tr2->PointsAdjacent(pk,pj) != nullptr && tr2->PointsAdjacent(pk,pj)->isLegal()){
         ntr2->sete2(tr2->PointsAdjacent(pk,pj)); // e2 pk -> pj
-        tr2->PointsAdjacent(pk,pj)->twoPointsEdgeAdjacentFlip(pk,pj,ntr2); // triangolo ed edge opposto
+        ntr2->e2()->twoPointsEdgeAdjacentFlip(pk,pj,ntr2);
     }
 
-    if(tr1->PointsAdjacent(pj,pr) != nullptr){
+    if(tr1->PointsAdjacent(pj,pr) != nullptr && tr1->PointsAdjacent(pj,pr)->isLegal()){
         ntr2->sete3(tr1->PointsAdjacent(pj,pr)); // e3 pj -> pr
-        tr1->PointsAdjacent(pj,pr)->twoPointsEdgeAdjacentFlip(pj,pr,ntr2);
+        ntr2->e3()->twoPointsEdgeAdjacentFlip(pj,pr,ntr2);
     }
 
     legalizeEdge(pr, pi, pk, ntr1, dag);
     legalizeEdge(pr, pk, pj, ntr2, dag);
+
 
 }
 
@@ -393,7 +395,7 @@ void Triangulation::resizeTriangles(int row,int colum){
     _triangles.resize(row, colum);
 }
 
-void Triangulation::setPoints(Point2Dd p){
+void Triangulation::setPoints(const Point2Dd& p){
 
     _points.push_back(p);
 }
@@ -415,9 +417,5 @@ bool Triangulation::pointLyingOnTheLineCheck(const Point2Dd& p, const Point2Dd& 
 
     double ab = a.dist(b);
 
-    if( (dap - ab) < epsilon)
-        return true;
-    else
-        return false;
-
+    return (dap - ab) < epsilon;
 }

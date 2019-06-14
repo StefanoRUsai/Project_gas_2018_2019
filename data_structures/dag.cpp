@@ -1,6 +1,6 @@
 #include "dag.h"
 using namespace delaunay;
-Dag::Dag(){}
+Dag::Dag()= default;
 
 std::vector<Node *> Dag::nodes() { return _nodes; }
 

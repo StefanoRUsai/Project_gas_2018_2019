@@ -24,5 +24,5 @@ int main(int argc, char *argv[]) {
     gui.updateGlCanvas();
     gui.show();
 
-    return app.exec();
+    return QApplication::exec();
 }

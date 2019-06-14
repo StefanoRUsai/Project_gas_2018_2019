@@ -40,10 +40,7 @@ bool Triangle::controlPointinTriangle(const cg3::Point2Dd &p){
 double a = area();
 double s = (1/(2*a))*(_v1.y()*_v3.x() - _v1.x()*_v3.y() + (_v3.y() - _v1.y())*p.x() + (_v1.x() - _v3.x())*p.y());
 double t = (1/(2*a))*(_v1.x()*_v2.y() - _v1.y()*_v2.x() + (_v1.y() - _v2.y())*p.x() + (_v2.x() - _v1.x())*p.y());
-if(s > 0 && t > 0 && (1-s-t) > 0)
-   return true;
-
-return false;
+return s > 0 && t > 0 && (1-s-t) > 0;
 }
 
 bool Triangle::controlPointinTriangle2(const cg3::Point2Dd &p){

@@ -1,6 +1,6 @@
 #include "node.h"
 using namespace delaunay;
-Node::Node(){}
+Node::Node()= default;
 
 
 Node::Node(Triangle* t){ _t= t;}
