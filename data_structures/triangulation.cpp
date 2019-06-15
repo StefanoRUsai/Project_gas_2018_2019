@@ -25,7 +25,7 @@ Triangulation::Triangulation(Triangle* t, Node* node){
 
 
 
-void Triangulation::addList(std::vector<Point2Dd>& points){
+void Triangulation::addList(const std::vector<cg3::Point2Dd>& points){
     for(const Point2Dd& point: points){
 
         this->unionEdge(point);
@@ -61,6 +61,7 @@ void Triangulation::unionEdge(const Point2Dd& point){
     } else {
         this->subdivisionTriangle(point,t, node, &_dag);
     }
+    
 
 }
 
@@ -105,19 +106,15 @@ void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle*
     delaunay::Triangle* tr1_1 = Triangulation::createTriangle(point, triangle->v2(), triangle->v3(), node, dag);
     delaunay::Triangle* tr1_2 = Triangulation::createTriangle(point, triangle->v3(), triangle->v1(), node, dag);
 
-
-    delaunay::Triangle* tr2_1 = nullptr;
-    delaunay::Triangle* tr2_2 = nullptr;
-
     const Point2Dd tp = triangle->e1()->thirdpoint(triangle->v1(), triangle->v2());
 
-    tr2_1 = Triangulation::createTriangle(point, tp, triangle->v2(), triangle->e1()->node(), dag);
-    tr2_2 = Triangulation::createTriangle(point, triangle->v1(), tp, triangle->e1()->node(), dag);
+    delaunay::Triangle* tr2_1 = Triangulation::createTriangle(point, tp, triangle->v2(), triangle->e1()->node(), dag);
+    delaunay::Triangle* tr2_2 = Triangulation::createTriangle(point, triangle->v1(), tp, triangle->e1()->node(), dag);
 
     triangle->setIllegal();
     triangle->e1()->setIllegal();
 
-    tr2_1->sete1(tr2_2);
+    //TRIANGOLI DI SOTTO
     tr2_1->sete2(triangle->e1()->searchAdjacentTriangle(tp, triangle->v2()));
     if (triangle->e1()->searchAdjacentTriangle(tp, triangle->v2()) != nullptr)
         tr2_1->e2()->twoPointsEdgeAdjacentFlip(tp, triangle->v2(), tr2_1);
@@ -129,7 +126,7 @@ void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle*
         tr2_2->e2()->twoPointsEdgeAdjacentFlip(triangle->v1(), tp, tr2_2);
     tr2_2->sete3(tr2_1);
 
-
+    //TRIANGOLI DI SOPRA
     tr1_1->sete1(tr2_1);
     if(triangle->e2()!=nullptr){
         tr1_1->sete2(triangle->e2());
@@ -143,7 +140,6 @@ void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle*
         triangle->e3()->twoPointsEdgeAdjacentFlip(tr1_2->v2(), tr1_2->v3(), tr1_2);
     }
     tr1_2->sete3(tr2_2);
-
 
 
     legalizeEdge(point, triangle->v1(), triangle->v2(), tr1_1, dag);
@@ -160,20 +156,18 @@ void Triangulation::subdivisionTriangleDoubleE2(const Point2Dd& point, Triangle*
     delaunay::Triangle* tr1_1 = Triangulation::createTriangle(point, triangle->v1(), triangle->v2(), node, dag);
     delaunay::Triangle* tr1_2 = Triangulation::createTriangle(point, triangle->v3(), triangle->v1(), node, dag);
 
-
-    delaunay::Triangle* tr2_1 = nullptr;
-    delaunay::Triangle* tr2_2 = nullptr;
-
     const Point2Dd tp = triangle->e2()->thirdpoint(triangle->v2(), triangle->v3());
 
-    tr2_1 = Triangulation::createTriangle(point, triangle->v2(), tp, triangle->e2()->node(), dag);
-    tr2_2 = Triangulation::createTriangle(point, tp, triangle->v3(),  triangle->e2()->node(), dag);
+
+
+    delaunay::Triangle* tr2_1 = Triangulation::createTriangle(point, triangle->v2(), tp, triangle->e2()->node(), dag);
+    delaunay::Triangle* tr2_2 = Triangulation::createTriangle(point, tp, triangle->v3(),  triangle->e2()->node(), dag);
 
 
     triangle->setIllegal();
     triangle->e2()->setIllegal();
 
-
+    //TRIANGOLI DI SOTTO
     tr2_1->sete1(tr1_1);
     tr2_1->sete2(triangle->e2()->searchAdjacentTriangle(triangle->v2(), tp));
     if (triangle->e2()->searchAdjacentTriangle(triangle->v2(), tp) != nullptr)
@@ -186,7 +180,7 @@ void Triangulation::subdivisionTriangleDoubleE2(const Point2Dd& point, Triangle*
         tr2_2->e2()->twoPointsEdgeAdjacentFlip(tp, triangle->v3(), tr2_2);
     tr2_2->sete3(tr1_2);
 
-
+    //TRIANGOLI DI SOPRA
     tr1_1->sete1(tr1_2);
     if(triangle->e2()!=nullptr){
         tr1_1->sete2(triangle->e2());
@@ -218,20 +212,15 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
     delaunay::Triangle* tr1_1 = Triangulation::createTriangle(point, triangle->v2(), triangle->v3(), node, dag);
     delaunay::Triangle* tr1_2 = Triangulation::createTriangle(point, triangle->v2(), triangle->v1(), node, dag);
 
-
-    delaunay::Triangle* tr2_1 = nullptr;
-    delaunay::Triangle* tr2_2 = nullptr;
-
     const Point2Dd tp = triangle->e3()->thirdpoint(triangle->v3(), triangle->v1());
 
-    tr2_1 = Triangulation::createTriangle(point, triangle->v3(), tp, triangle->e3()->node(), dag);
-    tr2_2 = Triangulation::createTriangle(point, tp, triangle->v1(),  triangle->e3()->node(), dag);
-
+    delaunay::Triangle* tr2_1 = Triangulation::createTriangle(point, triangle->v3(), tp, triangle->e3()->node(), dag);
+    delaunay::Triangle* tr2_2 = Triangulation::createTriangle(point, tp, triangle->v1(),  triangle->e3()->node(), dag);
 
     triangle->setIllegal();
     triangle->e3()->setIllegal();
 
-
+    //TRIANGOLI DI SOTTO
     tr2_1->sete1(tr1_1);
     tr2_1->sete2(triangle->e3()->searchAdjacentTriangle(triangle->v3(), tp));
     if (triangle->e3()->searchAdjacentTriangle(triangle->v3(), tp) != nullptr)
@@ -244,7 +233,7 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
         tr2_2->e2()->twoPointsEdgeAdjacentFlip(tp, triangle->v1(), tr2_2);
     tr2_2->sete3(tr1_2);
 
-
+    //TRIANGOLI DI SOPRA
     tr1_1->sete1(tr1_2);
     if(triangle->e2()!=nullptr){
         tr1_1->sete2(triangle->e2());

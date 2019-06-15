@@ -146,6 +146,8 @@ void DelaunayManager::computeDelaunayTriangulation(const std::vector<cg3::Point2
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
+    tri = delaunay::triangulation(inputPoints, BT_P1, BT_P2, BT_P3);
+
     /********************************************************************************************************************/
     CG3_SUPPRESS_WARNING(inputPoints);
 }
@@ -161,26 +163,23 @@ void DelaunayManager::addPointToDelaunayTriangulation(const cg3::Point2Dd& p) {
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
 
-//    if (tri != nullptr){
-//        pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
-//        mainWindow.pushObj(&pcd, "Points");
+    if (tri != nullptr){
+        pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
 
-//        tri->unionEdge(p);
-//        tcd.setTriangles(tri->getDrawTriangles());
 
-//        mainWindow.pushObj(&tcd, "Triangle");
-//        mainWindow.updateGlCanvas();
+        tri->unionEdge(p);
 
-//    }else{
-//       pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
-//       mainWindow.pushObj(&pcd, "Points");
-//       tri=delaunay::triangulation(BT_P1, BT_P2, BT_P3);
-//       tcd.setTriangles(tri->getDrawTriangles());
 
-//       mainWindow.pushObj(&tcd, "Triangle");
-//       mainWindow.updateGlCanvas();
+        tcd.setTriangles(tri->getDrawTriangles());
 
-//    }
+        mainWindow.pushObj(&tcd, "Triangle");
+        mainWindow.updateGlCanvas();
+
+    }else{
+       tri=delaunay::triangulation(BT_P1, BT_P2, BT_P3);
+
+
+    }
 
     /********************************************************************************************************************/
     CG3_SUPPRESS_WARNING(p);
@@ -221,13 +220,6 @@ void DelaunayManager::drawDelaunayTriangulation() {
     pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
     mainWindow.pushObj(&pcd, "Points");
 
-
-    cg3::Timer t("Triangulation");
-
-    tri = delaunay::triangulation(points, BT_P1, BT_P2, BT_P3);
-
-    t.stopAndPrint();
-    ui->timeLabel->setNum(t.delay());
 
     tcd.setTriangles(tri->getDrawTriangles()); //Points shouldn't change whenever the canvas is drawing it!
     mainWindow.pushObj(&tcd, "Triangle");
@@ -305,6 +297,13 @@ void DelaunayManager::checkTriangulation() {
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
+
+      tri->TrianglesForValidation();
+      points=tri->getPoints();
+      triangles=tri->getTriangles();
+
+
+
 
     /********************************************************************************************************************/
 

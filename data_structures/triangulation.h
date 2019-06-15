@@ -36,7 +36,7 @@ public:
     void setTriangles(int index, int c, unsigned int position);
 
     void resizeTriangles(int row, int colum);
-    void addList(std::vector<Point2Dd> &points);
+    void addList(const std::vector<Point2Dd> &points);
     void addPoint(Point2Dd &point);
 
 

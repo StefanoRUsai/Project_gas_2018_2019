@@ -5,29 +5,25 @@
 using namespace delaunay;
 
 Triangulation* delaunay::triangulation(const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){
-    auto* t = new Triangle(BT_P1, BT_P2, BT_P3);
+    Triangle* t = new Triangle(BT_P1, BT_P2, BT_P3);
     Node *node = new Node(t);
-    auto* tri = new Triangulation(t, node);
+    Triangulation* tri = new Triangulation(t, node);
+
+
 
     return tri;
 }
 
-Triangulation* delaunay::triangulation(std::vector<Point2Dd>& points,
+Triangulation* delaunay::triangulation(const std::vector<cg3::Point2Dd>& points,
                              const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){
-    auto* t = new Triangle(BT_P1, BT_P2, BT_P3);
+    Triangle* t = new Triangle(BT_P1, BT_P2, BT_P3);
     Node *node = new Node(t);
-    auto* tri = new Triangulation(t, node);
+    Triangulation* tri = new Triangulation(t, node);
     tri->addList(points);
 
     return tri;
 }
 
-//void delaunay::addList(Triangulation *tri, std::vector<Point2Dd>& points){
-//    for(Point2Dd point: points){
-
-//        tri->unionEdge(point);
-//    }
-//}
 
 void delaunay::addPoint(Triangulation *tri, Point2Dd& point){
 
