@@ -19,6 +19,10 @@ Triangulation* delaunay::triangulation(const std::vector<cg3::Point2Dd>& points,
     Triangle* t = new Triangle(BT_P1, BT_P2, BT_P3);
     Node *node = new Node(t);
     Triangulation* tri = new Triangulation(t, node);
+
+    std::srand ( unsigned ( std::time(0) ) );
+  //std::random_shuffle ( points.begin(), points.end() );
+
     tri->addList(points);
 
     return tri;

@@ -3,6 +3,7 @@
 #include "triangle.h"
 
 #include <utils/delaunay_checker.h>
+#include <cg3/core/cg3/geometry/2d/utils2d.h>
 
 using namespace delaunay;
 Triangulation::Triangulation()= default;
@@ -50,18 +51,18 @@ void Triangulation::unionEdge(const Point2Dd& point){
     delaunay::Node *node=this->_dag.navigateGraph(point);
     delaunay::Triangle *t = node->t();
 
-    //triangolazione partendo da un solo nodo
-
-    if (pointLyingOnTheLineCheck(point, t->v1(), t->v2())){
+    if (areCollinear(t->v1(), t->v2(), point)){
         this->subdivisionTriangleDoubleE1(point,t , node, &_dag);
-    }else if (pointLyingOnTheLineCheck(point, t->v2(), t->v3())){
+    }else if (areCollinear(t->v2(), t->v3(), point)){
         this->subdivisionTriangleDoubleE2(point, t , node, &_dag);
-    }else if (pointLyingOnTheLineCheck(point, t->v3(), t->v1())){
+    }else if (areCollinear(t->v3(), t->v1(), point)){
         this->subdivisionTriangleDoubleE3(point,t , node, &_dag);
     } else {
         this->subdivisionTriangle(point,t, node, &_dag);
     }
-    
+
+
+
 
 }
 
@@ -115,6 +116,8 @@ void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle*
     triangle->e1()->setIllegal();
 
     //TRIANGOLI DI SOTTO
+
+    tr2_1->sete1(tr2_2);
     tr2_1->sete2(triangle->e1()->searchAdjacentTriangle(tp, triangle->v2()));
     if (triangle->e1()->searchAdjacentTriangle(tp, triangle->v2()) != nullptr)
         tr2_1->e2()->twoPointsEdgeAdjacentFlip(tp, triangle->v2(), tr2_1);
@@ -210,7 +213,7 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
 
 
     delaunay::Triangle* tr1_1 = Triangulation::createTriangle(point, triangle->v2(), triangle->v3(), node, dag);
-    delaunay::Triangle* tr1_2 = Triangulation::createTriangle(point, triangle->v2(), triangle->v1(), node, dag);
+    delaunay::Triangle* tr1_2 = Triangulation::createTriangle(point, triangle->v1(), triangle->v2(), node, dag);
 
     const Point2Dd tp = triangle->e3()->thirdpoint(triangle->v3(), triangle->v1());
 
@@ -396,15 +399,3 @@ cg3::Array2D<unsigned int> Triangulation::getTriangles(){
     return this->_triangles;
 }
 
-
-
-bool Triangulation::pointLyingOnTheLineCheck(const Point2Dd& p, const Point2Dd& a, const Point2Dd& b){
-
-    double epsilon = 0.000001;
-
-    double dap = a.dist(p) + p.dist(b);
-
-    double ab = a.dist(b);
-
-    return (dap - ab) < epsilon;
-}

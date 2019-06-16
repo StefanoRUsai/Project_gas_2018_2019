@@ -162,6 +162,7 @@ void DelaunayManager::addPointToDelaunayTriangulation(const cg3::Point2Dd& p) {
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
+    tcd.eraseTriangles();
 
     if (tri != nullptr){
         pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
