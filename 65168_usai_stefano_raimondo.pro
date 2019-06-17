@@ -51,7 +51,9 @@ SOURCES += \
     managers/drawabletriangulation.cpp \
     data_structures/node.cpp \
     data_structures/triangulation.cpp \
-    algorithms/delaunay.cpp
+    algorithms/delaunay.cpp \
+    algorithms/voronoi.cpp \
+    managers/drawablevoronoi.cpp
 
 FORMS += \
     managers/delaunaymanager.ui
@@ -67,7 +69,9 @@ HEADERS += \
     managers/drawabletriangulation.h \
     data_structures/node.h \
     data_structures/triangulation.h \
-    algorithms/delaunay.h
+    algorithms/delaunay.h \
+    algorithms/voronoi.h \
+    managers/drawablevoronoi.h
 
 
 

@@ -2,6 +2,7 @@
 #define DELAUNAYMANAGER_H
 
 #include "drawabletriangulation.h"
+#include "drawablevoronoi.h"
 #include "pointcollectiondrawer.h"
 
 #include <QFrame>
@@ -50,6 +51,7 @@ private:
     //Drawer for the collection of points
     PointCollectionDrawer<std::vector<cg3::Point2Dd>> pcd;
     DrawableTriangulation tcd;
+    DrawableVoronoi vcd;
     std::vector<delaunay::Triangulation *> _triangulation;
     Triangulation* tri = nullptr;
 
@@ -78,6 +80,8 @@ private:
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
+    void drawVoronoiDiagram();
+
     /********************************************************************************************************************/
 
 
@@ -87,6 +91,11 @@ private slots:
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
+
+
+    void on_voronoiDiagramPushButton_clicked();
+    void on_clearVoronoiDiagramPushButton_clicked();
+
 
     /********************************************************************************************************************/
 

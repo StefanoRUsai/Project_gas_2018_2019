@@ -48,12 +48,6 @@ void DrawableTriangulation::draw() const{
                 cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 1 );
         }
 
-//        }else{
-//            std::cout<<"sono illegale"<<std::endl;
-//        }
-
-       // std::cout<<"separatore"<<std::endl;
-        //t->printTriangle();
 
     }
 

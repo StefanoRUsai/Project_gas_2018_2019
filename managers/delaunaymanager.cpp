@@ -195,6 +195,8 @@ void DelaunayManager::clearDelaunayTriangulation() {
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
+    tcd.eraseTriangles();
+
     /********************************************************************************************************************/
 }
 
@@ -224,6 +226,7 @@ void DelaunayManager::drawDelaunayTriangulation() {
 
     tcd.setTriangles(tri->getDrawTriangles()); //Points shouldn't change whenever the canvas is drawing it!
     mainWindow.pushObj(&tcd, "Triangle");
+
 
     /********************************************************************************************************************/
 
@@ -325,6 +328,20 @@ void DelaunayManager::checkTriangulation() {
 
 /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
+/**
+ * @brief Draw the Delaunay Triangulation in the canvas
+ */
+void DelaunayManager::drawVoronoiDiagram() {
+
+    vcd.setTriangles(tri->getDrawTriangles());
+    mainWindow.pushObj(&vcd, "Diagram");
+
+
+    //Canvas update
+    mainWindow.updateGlCanvas();
+}
+
+
 /********************************************************************************************************************/
 
 
@@ -334,6 +351,17 @@ void DelaunayManager::checkTriangulation() {
 /********************************************************************************************************************/
 
 /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
+
+void DelaunayManager::on_voronoiDiagramPushButton_clicked(){
+    drawVoronoiDiagram();
+
+}
+
+
+void DelaunayManager::on_clearVoronoiDiagramPushButton_clicked(){
+    vcd.eraseTriangles();
+    mainWindow.updateGlCanvas();
+}
 
 /********************************************************************************************************************/
 
