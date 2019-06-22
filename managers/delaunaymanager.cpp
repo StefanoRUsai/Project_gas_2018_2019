@@ -161,15 +161,16 @@ void DelaunayManager::addPointToDelaunayTriangulation(const cg3::Point2Dd& p) {
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
-
     tcd.eraseTriangles();
+
+    points.push_back(p);
 
     if (tri != nullptr){
         pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
-
+        mainWindow.pushObj(&pcd, "Triangle");
+        mainWindow.updateGlCanvas();
 
         tri->unionEdge(p);
-
 
         tcd.setTriangles(tri->getDrawTriangles());
 
@@ -178,6 +179,18 @@ void DelaunayManager::addPointToDelaunayTriangulation(const cg3::Point2Dd& p) {
 
     }else{
        tri=delaunay::triangulation(BT_P1, BT_P2, BT_P3);
+
+       pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
+       mainWindow.pushObj(&pcd, "Triangle");
+       mainWindow.updateGlCanvas();
+
+       tri->unionEdge(p);
+
+       tcd.setTriangles(tri->getDrawTriangles());
+
+       mainWindow.pushObj(&tcd, "Triangle");
+       mainWindow.updateGlCanvas();
+
 
 
     }
@@ -194,9 +207,11 @@ void DelaunayManager::clearDelaunayTriangulation() {
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
-
-    tcd.eraseTriangles();
-
+    if(tri != nullptr){
+        points.clear();
+        tri->eraseTriangulation();
+        tcd.eraseTriangles();
+    }
     /********************************************************************************************************************/
 }
 
@@ -273,7 +288,7 @@ void DelaunayManager::setVisibilityBoundingTriangle(const bool visible)
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
-
+    tcd.setActiveBoundingTriangle(visible);
     /********************************************************************************************************************/
     CG3_SUPPRESS_WARNING(visible);
 }

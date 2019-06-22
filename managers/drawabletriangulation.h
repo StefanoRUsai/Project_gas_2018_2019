@@ -33,7 +33,7 @@ public:
 private:
 
     QColor color; //Color of the edges
-    bool activeBoundingTriangle=false;
+    bool boundingTriangle=false;
     std::vector<delaunay::Triangle* > triangles;
 
 

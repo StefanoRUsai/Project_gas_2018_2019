@@ -14,6 +14,7 @@ class Triangulation{
 
 public:
     Triangulation();
+    ~Triangulation();
     Triangulation(const Point2Dd &BT_P1, const Point2Dd &BT_P2, const Point2Dd &BT_P3);
     Triangulation(Triangle *t, Node *node);
     std::vector<delaunay::Triangle*> getDrawTriangles();
@@ -39,8 +40,8 @@ public:
     void addList(const std::vector<Point2Dd> &points);
     void addPoint(Point2Dd &point);
 
+    void eraseTriangulation();
 
-    bool pointLyingOnTheLineCheck(const Point2Dd &p, const Point2Dd &a, const Point2Dd &b);
 protected:
 
     std::vector<Point2Dd> _points;

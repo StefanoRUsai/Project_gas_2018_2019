@@ -9,6 +9,7 @@ void Dag::setNodes(Node* node){ _nodes.push_back(node); }
 Node* Dag::navigateGraph(const Point2Dd &point){
     bool flag = true;
     Node* root = _nodes.front();
+
     while(flag){
         Triangle* triangle = nullptr;
         // Se il punto si trova all'interno di questo triangolo
@@ -38,3 +39,10 @@ Node* Dag::navigateGraph(const Point2Dd &point){
     return root;
 }
 
+
+void Dag::erase(){
+    _nodes[0]->setFirst(nullptr);
+    _nodes[0]->setSecond(nullptr);
+    _nodes[0]->setThird(nullptr);
+    _nodes.erase(_nodes.begin()+1, _nodes.end());
+}

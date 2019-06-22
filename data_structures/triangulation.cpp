@@ -7,6 +7,11 @@
 
 using namespace delaunay;
 Triangulation::Triangulation()= default;
+Triangulation::~Triangulation(){
+
+}
+
+
 
 
 Triangulation::Triangulation(const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){
@@ -15,6 +20,13 @@ Triangulation::Triangulation(const Point2Dd& BT_P1, const Point2Dd& BT_P2, const
     Node node(&start);
     addDrawTriangles(&start);
     this->_dag.setNodes(&node);
+
+}
+
+void Triangulation::eraseTriangulation(){
+
+    drawTriangles.erase(drawTriangles.begin(), drawTriangles.end());
+    _dag.erase();
 
 }
 
@@ -263,7 +275,7 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
 
 
 Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two, const Point2Dd& three, Node *node, Dag *dag){
-    auto* t = new Triangle(one, two, three);
+    Triangle* t = new Triangle(one, two, three);
     Node* n = new Node();
     n->setTriangle(t);
     t->setNode(n);
@@ -273,7 +285,7 @@ Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two,
 }
 
 Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two, const Point2Dd& three, Node *node1, Node *node2, Dag *dag){
-    auto* t = new Triangle(one, two, three);
+    Triangle* t = new Triangle(one, two, three);
     Node* n = new Node();
     n->setTriangle(t);
     t->setNode(n);
@@ -349,7 +361,8 @@ void Triangulation::edgeFlip(const Point2Dd& pr, const Point2Dd& pi, const Point
 
 
 void Triangulation::TrianglesForValidation(){
-
+    this->_triangles.clear();
+    this->_points.clear();
     int index = 0;
     int count = 0;
 

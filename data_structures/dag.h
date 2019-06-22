@@ -16,6 +16,7 @@ public:
     Node* navigateGraph(const Point2Dd &point);
     Node *navigateforFlip(const Point2Dd &point1, const Point2Dd &point2);
     void setNodes(Node* node);
+    void erase();
 protected:
     //non è un puntatore ma è composto da puntatori a nodi
     //usato al posto della lista perchè molto più veloce

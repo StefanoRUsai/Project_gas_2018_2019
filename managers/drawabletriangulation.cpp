@@ -29,29 +29,47 @@ void DrawableTriangulation::setColor(const QColor& color)
 //DrawableTriangulation::DrawableTriangulation(){}
 
 /**
- * @brief Drawable_triangulation::draw
+ * @brief DrawableTriangulation::draw
  * This method draw the triangle inside the canvas.
- * If activeBoundingTriangle is true print all points and edges, otherwise only the point inside the bounding triangle an the edges that
- * not lie in one of three verticies of the bounding triangle
+ * If activeBoundingTriangle is true print all points and edges
  */
 
 void DrawableTriangulation::draw() const{
     // Edges
 
     for(Triangle* t: triangles){
-        if(t->isLegal()){
-            if(printPoint(t->v1())&& printPoint(t->v2()))
-                cg3::viewer::drawLine2D( t->v1(), t->v2(),  color, 1);
-            if(printPoint(t->v2())&& printPoint(t->v3()))
-                cg3::viewer::drawLine2D( t->v2(), t->v3(), color, 1);
-               if(printPoint(t->v3())&& printPoint(t->v1()))
-                cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 1 );
+
+        if(this->boundingTriangle){
+
+            if(t->isLegal()){
+                    cg3::viewer::drawLine2D( t->v1(), t->v2(),  color, 1);
+                    cg3::viewer::drawLine2D( t->v2(), t->v3(), color, 1);
+                    cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 1 );
+            }
+        }else{
+            if(t->isLegal()){
+                if(printPoint(t->v1())&& printPoint(t->v2()))
+                    cg3::viewer::drawLine2D( t->v1(), t->v2(),  color, 1);
+                if(printPoint(t->v2())&& printPoint(t->v3()))
+                    cg3::viewer::drawLine2D( t->v2(), t->v3(), color, 1);
+                if(printPoint(t->v3())&& printPoint(t->v1()))
+                    cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 1 );
+            }
+
         }
 
 
     }
 
 }
+
+
+/**
+ * @brief DrawableTriangulation::setBoundingTriangleActive
+ * @param b, simple boolean value
+ */
+
+
 
 bool DrawableTriangulation::printPoint(const Point2Dd& p) const{
     return ( p != BT_P1 && p != BT_P2 && p != BT_P3); //
@@ -66,7 +84,7 @@ double DrawableTriangulation::sceneRadius() const {
 }
 
 void DrawableTriangulation::setActiveBoundingTriangle(bool b){
-    this->activeBoundingTriangle = b;
+    this->boundingTriangle = b;
 }
 
 

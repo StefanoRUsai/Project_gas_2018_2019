@@ -16,14 +16,14 @@ void DrawableVoronoi::draw() const{
         for(Triangle* t: _triangles){
             if(t->isLegal()){
 
-                viewer::drawPoint2D(circumcircle(t), QColor(0,255,0), 5);
+                viewer::drawPoint2D(circumcircle(t), QColor(0,18,12), 2);
 
                 if(t->e1() != nullptr)
-                viewer::drawLine2D(circumcircle(t), circumcircle(t->e1()), color, 3);
+                viewer::drawLine2D(circumcircle(t), circumcircle(t->e1()), color, 1);
                 if(t->e2() != nullptr)
-                viewer::drawLine2D(circumcircle(t), circumcircle(t->e2()), color, 3);
+                viewer::drawLine2D(circumcircle(t), circumcircle(t->e2()), color, 1);
                 if(t->e3() != nullptr)
-                viewer::drawLine2D(circumcircle(t), circumcircle(t->e3()), color, 3);
+                viewer::drawLine2D(circumcircle(t), circumcircle(t->e3()), color, 1);
 
              }
         }

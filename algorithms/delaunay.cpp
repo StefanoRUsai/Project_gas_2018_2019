@@ -16,12 +16,13 @@ Triangulation* delaunay::triangulation(const Point2Dd& BT_P1, const Point2Dd& BT
 
 Triangulation* delaunay::triangulation(const std::vector<cg3::Point2Dd>& points,
                              const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){
+    std::vector<cg3::Point2Dd> newPoints = points;
     Triangle* t = new Triangle(BT_P1, BT_P2, BT_P3);
     Node *node = new Node(t);
     Triangulation* tri = new Triangulation(t, node);
 
-//    std::srand ( unsigned ( std::time(0) ) );
-//    std::random_shuffle ( points.begin(), points.end() );
+    std::srand ( unsigned ( std::time(nullptr) ) );
+    std::random_shuffle ( newPoints.begin(), newPoints.end() );
 
     tri->addList(points);
 
