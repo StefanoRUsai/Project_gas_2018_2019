@@ -8,7 +8,13 @@
 using namespace delaunay;
 Triangulation::Triangulation()= default;
 Triangulation::~Triangulation(){
+    for(auto t: drawTriangles){
+        delete t;
+    }
 
+    for(auto n: _dag.nodes()){
+        delete n;
+    }
 }
 
 

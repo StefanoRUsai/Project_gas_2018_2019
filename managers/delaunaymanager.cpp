@@ -161,6 +161,7 @@ void DelaunayManager::addPointToDelaunayTriangulation(const cg3::Point2Dd& p) {
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
+    vcd.eraseTriangles();
     tcd.eraseTriangles();
 
     points.push_back(p);

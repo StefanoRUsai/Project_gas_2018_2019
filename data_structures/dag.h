@@ -9,7 +9,6 @@ class Dag{
 
 public:
     Dag();
-
     //getter
     std::vector<Node *> nodes();
     //navigazione del grafo secondo tentativo, vediamo se implode tutto
