@@ -27,14 +27,15 @@ public:
     double sceneRadius() const;
 
     void setActiveBoundingTriangle(bool b);
-    void setTriangles(const std::vector<delaunay::Triangle* >& t);
     void eraseTriangles();
     bool printPoint(const Point2Dd &p) const;
+    void setTriangles(std::vector<cg3::Point2Dd> *p, const std::vector<delaunay::Triangle *> &t);
 private:
 
     QColor color; //Color of the edges
     bool boundingTriangle=false;
     std::vector<delaunay::Triangle* > triangles;
+    std::vector<cg3::Point2Dd> *points = nullptr;
 
 
 

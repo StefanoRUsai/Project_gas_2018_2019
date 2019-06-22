@@ -15,12 +15,15 @@ public:
 
 
     void draw() const;
-    void setTriangles(const std::vector<delaunay::Triangle* >& t);
+    void setTriangles(std::vector<Point2Dd> *p, const std::vector<delaunay::Triangle* >& t);
     void eraseTriangles();
     void setColor(const QColor &color);
 protected:
     QColor color;
     std::vector<delaunay::Triangle* > _triangles;
+    std::vector<cg3::Point2Dd> *points = nullptr;
+
+
 };
 
 #endif // DRAWABLEVORONOI_H

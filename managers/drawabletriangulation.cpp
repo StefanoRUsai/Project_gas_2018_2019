@@ -76,11 +76,29 @@ bool DrawableTriangulation::printPoint(const Point2Dd& p) const{
 }
 
 Pointd DrawableTriangulation::sceneCenter() const {
-   return Pointd(0, 0);
+    cg3::Pointd center(0,0,0);
+    for (const cg3::Point2Dd& p : *this->points) {
+        center.x() += p.x();
+        center.y() += p.y();
+    }
+    center /= (this->points)->size();
+
+    return center;
+
 }
 
 double DrawableTriangulation::sceneRadius() const {
-    return -1;
+    cg3::Pointd center = sceneCenter();
+
+    double maxDistance = 0;
+    for (const cg3::Point2Dd& p : *this->points) {
+        cg3::Point2Dd center2D(center.x(), center.y());
+        double dist = p.dist(center2D);
+
+        maxDistance = std::max(dist, maxDistance);
+    }
+
+    return maxDistance;
 }
 
 void DrawableTriangulation::setActiveBoundingTriangle(bool b){
@@ -92,7 +110,8 @@ void DrawableTriangulation::eraseTriangles(){
     this->triangles.clear();
 }
 
-void DrawableTriangulation::setTriangles(const std::vector<delaunay::Triangle* >& t){
+void DrawableTriangulation::setTriangles(std::vector<cg3::Point2Dd> *p, const std::vector<delaunay::Triangle* >& t){
+    this->points=p;
     this->eraseTriangles();
     this->triangles = t;
 }

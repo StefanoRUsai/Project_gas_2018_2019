@@ -173,7 +173,7 @@ void DelaunayManager::addPointToDelaunayTriangulation(const cg3::Point2Dd& p) {
 
         tri->unionEdge(p);
 
-        tcd.setTriangles(tri->getDrawTriangles());
+        tcd.setTriangles(&points,tri->getDrawTriangles());
 
         mainWindow.pushObj(&tcd, "Triangle");
         mainWindow.updateGlCanvas();
@@ -187,7 +187,7 @@ void DelaunayManager::addPointToDelaunayTriangulation(const cg3::Point2Dd& p) {
 
        tri->unionEdge(p);
 
-       tcd.setTriangles(tri->getDrawTriangles());
+       tcd.setTriangles(&points, tri->getDrawTriangles());
 
        mainWindow.pushObj(&tcd, "Triangle");
        mainWindow.updateGlCanvas();
@@ -240,7 +240,7 @@ void DelaunayManager::drawDelaunayTriangulation() {
     mainWindow.pushObj(&pcd, "Points");
 
 
-    tcd.setTriangles(tri->getDrawTriangles()); //Points shouldn't change whenever the canvas is drawing it!
+    tcd.setTriangles(&points, tri->getDrawTriangles()); //Points shouldn't change whenever the canvas is drawing it!
     mainWindow.pushObj(&tcd, "Triangle");
 
 
@@ -349,7 +349,7 @@ void DelaunayManager::checkTriangulation() {
  */
 void DelaunayManager::drawVoronoiDiagram() {
 
-    vcd.setTriangles(tri->getDrawTriangles());
+    vcd.setTriangles(&points,tri->getDrawTriangles());
     mainWindow.pushObj(&vcd, "Diagram");
 
 
