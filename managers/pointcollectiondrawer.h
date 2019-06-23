@@ -4,8 +4,9 @@
 #include <cg3/viewer/drawable_objects/drawable_objects.h>
 #include <cg3/geometry/2d/point2d.h>
 
+
 /**
- * Drawable object which draws points contained in a generic container
+ * @brief Class for representing a point
  */
 template<class Container>
 class PointCollectionDrawer : public cg3::DrawableObject

@@ -7,7 +7,9 @@
 #include <data_structures/triangulation.h>
 
 using namespace delaunay;
-
+/**
+ * @brief Class for representing a drawable triangulation
+ */
 class DrawableTriangulation: public cg3::DrawableObject {
 public:
 
@@ -30,6 +32,7 @@ public:
     void eraseTriangles();
     bool printPoint(const Point2Dd &p) const;
     void setTriangles(std::vector<cg3::Point2Dd> *p, const std::vector<delaunay::Triangle *> &t);
+    void setTriangles(const std::vector<delaunay::Triangle *> &t);
 private:
 
     QColor color; //Color of the edges

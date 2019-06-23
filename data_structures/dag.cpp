@@ -1,11 +1,23 @@
 #include "dag.h"
 using namespace delaunay;
 Dag::Dag()= default;
-
+/**
+ * @brief Dag::nodes
+ * @return the vector of the nodes
+ */
 std::vector<Node *> Dag::nodes() { return _nodes; }
-
+/**
+ * @brief Dag::setNodes
+ * @details adds the node in the vector with which I maintain the list of nodes of the dag
+ * @param node
+ */
 void Dag::setNodes(Node* node){ _nodes.push_back(node); }
 
+/**
+ * @brief Dag::navigateGraph
+ * @param point
+ * @return returns the node connected to the triangle in which the point is located
+ */
 Node* Dag::navigateGraph(const Point2Dd &point){
     bool flag = true;
     Node* root = _nodes.front();
@@ -39,7 +51,9 @@ Node* Dag::navigateGraph(const Point2Dd &point){
     return root;
 }
 
-
+/**
+ * @brief Dag::erase
+ */
 void Dag::erase(){
     _nodes[0]->setFirst(nullptr);
     _nodes[0]->setSecond(nullptr);

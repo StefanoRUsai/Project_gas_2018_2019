@@ -4,6 +4,7 @@
 
 using namespace cg3;
 
+// points of the bounding triangle
 const cg3::Point2Dd BT_P1(1e+10, 0);
 const cg3::Point2Dd BT_P2(0, 1e+10);
 const cg3::Point2Dd BT_P3(-1e+10, -1e+10);
@@ -17,8 +18,9 @@ DrawableTriangulation::DrawableTriangulation() :color(QColor(0,0,255))
 
 
 /**
- * @brief Set color of the edges of the convex hull
- * @param color Color of the edges
+ * @brief DrawableTriangulation::setColor
+ * @details setColor of the edges of the delaunay triangualation
+ * @param color
  */
 void DrawableTriangulation::setColor(const QColor& color)
 {
@@ -26,16 +28,12 @@ void DrawableTriangulation::setColor(const QColor& color)
 }
 
 
-//DrawableTriangulation::DrawableTriangulation(){}
-
 /**
  * @brief DrawableTriangulation::draw
- * This method draw the triangle inside the canvas.
- * If activeBoundingTriangle is true print all points and edges
+ * @details the method serves to draw the triangulation, if the bounding triangle is active it will draw everything
  */
-
 void DrawableTriangulation::draw() const{
-    // Edges
+
 
     for(Triangle* t: triangles){
 
@@ -64,54 +62,70 @@ void DrawableTriangulation::draw() const{
 }
 
 
+
+
 /**
- * @brief DrawableTriangulation::setBoundingTriangleActive
- * @param b, simple boolean value
+ * @brief DrawableTriangulation::printPoint
+ * @details points of the bounding triangle that should not be drawn
+ * @param p
+ * @return
  */
-
-
-
 bool DrawableTriangulation::printPoint(const Point2Dd& p) const{
     return ( p != BT_P1 && p != BT_P2 && p != BT_P3); //
 }
 
 Pointd DrawableTriangulation::sceneCenter() const {
-    cg3::Pointd center(0,0,0);
-    for (const cg3::Point2Dd& p : *this->points) {
-        center.x() += p.x();
-        center.y() += p.y();
-    }
-    center /= (this->points)->size();
+//    cg3::Pointd center(0,0,0);
+//    for (const cg3::Point2Dd& p : *this->points) {
+//        center.x() += p.x();
+//        center.y() += p.y();
+//    }
+//    center /= (this->points)->size();
 
-    return center;
+//    return center;
+
+    return Pointd(0, 0);
 
 }
 
 double DrawableTriangulation::sceneRadius() const {
-    cg3::Pointd center = sceneCenter();
+//    cg3::Pointd center = sceneCenter();
 
-    double maxDistance = 0;
-    for (const cg3::Point2Dd& p : *this->points) {
-        cg3::Point2Dd center2D(center.x(), center.y());
-        double dist = p.dist(center2D);
+//    double maxDistance = 0;
+//    for (const cg3::Point2Dd& p : *this->points) {
+//        cg3::Point2Dd center2D(center.x(), center.y());
+//        double dist = p.dist(center2D);
 
-        maxDistance = std::max(dist, maxDistance);
-    }
+//        maxDistance = std::max(dist, maxDistance);
+//    }
 
-    return maxDistance;
+//    return maxDistance;
+
+    return -1;
 }
 
+/**
+ * @brief DrawableTriangulation::setActiveBoundingTriangle
+ * @param b
+ */
 void DrawableTriangulation::setActiveBoundingTriangle(bool b){
     this->boundingTriangle = b;
 }
 
-
+/**
+ * @brief DrawableTriangulation::eraseTriangles
+ */
 void DrawableTriangulation::eraseTriangles(){
     this->triangles.clear();
 }
 
-void DrawableTriangulation::setTriangles(std::vector<cg3::Point2Dd> *p, const std::vector<delaunay::Triangle* >& t){
-    this->points=p;
+/**
+ * @brief DrawableTriangulation::setTriangles
+ * @details sets the initialization of the class that draws the triangulation
+ * @param t
+ */
+void DrawableTriangulation::setTriangles( const std::vector<delaunay::Triangle* >& t){
+
     this->eraseTriangles();
     this->triangles = t;
 }

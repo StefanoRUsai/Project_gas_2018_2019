@@ -9,7 +9,9 @@
 using namespace cg3;
 namespace delaunay {
 
-
+/**
+ * @brief Class for representing a triangulation
+ */
 class Triangulation{
 
 public:

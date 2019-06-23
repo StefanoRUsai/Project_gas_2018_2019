@@ -12,6 +12,10 @@ using namespace voronoi;
 
 DrawableVoronoi::DrawableVoronoi():color(QColor(255,0,0)){}
 
+/**
+ * @brief DrawableVoronoi::draw
+ * @details draws the diagram of voronoi
+ */
 void DrawableVoronoi::draw() const{
         for(Triangle* t: _triangles){
             if(t->isLegal()){
@@ -32,8 +36,8 @@ void DrawableVoronoi::draw() const{
 
 
 /**
- * @brief Set color of the edges of the convex hull
- * @param color Color of the edges
+ * @brief DrawableVoronoi::setColor
+ * @param color
  */
 void DrawableVoronoi::setColor(const QColor& color)
 {
@@ -41,40 +45,52 @@ void DrawableVoronoi::setColor(const QColor& color)
 }
 
 
-
-void DrawableVoronoi::setTriangles(std::vector<cg3::Point2Dd> *p, const std::vector<delaunay::Triangle* >& triangles){
-   this->points=p;
+/**
+ * @brief DrawableVoronoi::setTriangles
+ * @param triangles
+ */
+void DrawableVoronoi::setTriangles(const std::vector<delaunay::Triangle* >& triangles){
    _triangles = triangles;
 }
-
+/**
+ * @brief DrawableVoronoi::eraseTriangles
+ */
 void DrawableVoronoi::eraseTriangles(){
     _triangles.clear();
 }
-
+/**
+ * @brief DrawableVoronoi::sceneCenter
+ * @return
+ */
 Pointd DrawableVoronoi::sceneCenter() const {
-    cg3::Pointd center(0,0,0);
-    for (const cg3::Point2Dd& p : *this->points) {
-        center.x() += p.x();
-        center.y() += p.y();
-    }
-    center /= (this->points)->size();
+//    cg3::Pointd center(0,0,0);
+//    for (const cg3::Point2Dd& p : *this->points) {
+//        center.x() += p.x();
+//        center.y() += p.y();
+//    }
+//    center /= (this->points)->size();
 
-    return center;
+//    return center;
+
+    return Pointd(0, 0);
 }
-
+/**
+ * @brief DrawableVoronoi::sceneRadius
+ * @return
+ */
 double DrawableVoronoi::sceneRadius() const {
-    cg3::Pointd center = sceneCenter();
+//    cg3::Pointd center = sceneCenter();
 
-    double maxDistance = 0;
-    for (const cg3::Point2Dd& p : *this->points) {
-        cg3::Point2Dd center2D(center.x(), center.y());
-        double dist = p.dist(center2D);
+//    double maxDistance = 0;
+//    for (const cg3::Point2Dd& p : *this->points) {
+//        cg3::Point2Dd center2D(center.x(), center.y());
+//        double dist = p.dist(center2D);
 
-        maxDistance = std::max(dist, maxDistance);
-    }
+//        maxDistance = std::max(dist, maxDistance);
+//    }
 
-    return maxDistance;
-
+//    return maxDistance;
+    return -1;
 }
 
 

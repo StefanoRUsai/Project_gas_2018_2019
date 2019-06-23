@@ -2,6 +2,8 @@
 
 /**
  * @brief circumcircle
+ * @details function that returns the points on which the voronoi diagram is built,
+   each cell built contains the points of delaunay triangulation
  * @param t is the triangle
  * @link https://en.wikipedia.org/wiki/Circumscribed_circle#Circumcenter_coordinates
  */

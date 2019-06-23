@@ -5,6 +5,9 @@
 #include "node.h"
 
 namespace delaunay {
+/**
+ * @brief Class for representing a Directed acyclic graph
+ */
 class Dag{
 
 public:

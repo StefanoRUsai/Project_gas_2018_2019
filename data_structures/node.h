@@ -3,6 +3,10 @@
 #include <data_structures/triangle.h>
 
 namespace delaunay  {
+/**
+ * @brief Class for representing a Node. Every node has 3 children.
+ */
+
 class Node{
 public:
     //costruttore

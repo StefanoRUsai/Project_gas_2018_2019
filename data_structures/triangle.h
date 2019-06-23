@@ -7,6 +7,11 @@
 using namespace cg3;
 namespace delaunay {
 class Node;
+
+/**
+@brief Triangle class. This class implements a triangle using his vertex
+**/
+
 class Triangle{
 public:
     //costruttori
@@ -31,10 +36,10 @@ public:
     void setNode(Node *node);
     void setIndex(unsigned int value);
 
-    //funzione di stampa
+    //print function
     void printTriangle();
 
-    //funzioni del triangolo
+    //triangle functions
     double area();
     bool controlPointinTriangle(const cg3::Point2Dd &point);
     bool controlPointinTriangle2(const cg3::Point2Dd &point);
@@ -43,7 +48,6 @@ public:
     void setLegal();
     void setIllegal();
 
-    bool pointlyingontheline(const cg3::Point2Dd &p, int& f);    
     const Point2Dd &thirdpoint(const Point2Dd &p1, const Point2Dd &p2);
     bool twoPointsAdjacent(const Point2Dd &p1, const Point2Dd &p2);
     bool isLegal();

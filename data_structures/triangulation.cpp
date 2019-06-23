@@ -7,6 +7,9 @@
 
 using namespace delaunay;
 Triangulation::Triangulation()= default;
+/**
+ * @brief Triangulation::~Triangulation
+ */
 Triangulation::~Triangulation(){
     for(auto t: drawTriangles){
         delete t;
@@ -19,7 +22,14 @@ Triangulation::~Triangulation(){
 
 
 
-
+/**
+ * @brief Triangulation::Triangulation
+ * @details manufacturer of the triangulation with the passage of the
+   initial triangle starting from the vertices and initializing the dag
+ * @param BT_P1
+ * @param BT_P2
+ * @param BT_P3
+ */
 Triangulation::Triangulation(const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){
 
     delaunay::Triangle start(BT_P3,BT_P1,BT_P2);
@@ -29,6 +39,9 @@ Triangulation::Triangulation(const Point2Dd& BT_P1, const Point2Dd& BT_P2, const
 
 }
 
+/**
+ * @brief Triangulation::eraseTriangulation
+ */
 void Triangulation::eraseTriangulation(){
 
     drawTriangles.erase(drawTriangles.begin(), drawTriangles.end());
@@ -36,6 +49,12 @@ void Triangulation::eraseTriangulation(){
 
 }
 
+/**
+ * @brief Triangulation::Triangulation
+ * @details manufacturer of the triangulation with the passage of the initial triangle and the first knot on the dag
+ * @param t
+ * @param node
+ */
 Triangulation::Triangulation(Triangle* t, Node* node){
 
     addDrawTriangles(t);
@@ -43,7 +62,11 @@ Triangulation::Triangulation(Triangle* t, Node* node){
 }
 
 
-
+/**
+ * @brief Triangulation::addList
+ * @details adds a list of points to the triangulation
+ * @param points
+ */
 void Triangulation::addList(const std::vector<cg3::Point2Dd>& points){
     for(const Point2Dd& point: points){
 
@@ -51,6 +74,11 @@ void Triangulation::addList(const std::vector<cg3::Point2Dd>& points){
     }
 }
 
+/**
+ * @brief Triangulation::addPoint
+ * @details adds points to the triangulation
+ * @param point
+ */
 void Triangulation::addPoint( Point2Dd& point){
 
     this->unionEdge(point);
@@ -59,12 +87,20 @@ void Triangulation::addPoint( Point2Dd& point){
 std::vector<delaunay::Triangle*> Triangulation::getDrawTriangles(){
     return drawTriangles;
 }
-
+/**
+ * @brief Triangulation::addDrawTriangles
+ * @details adds the triangles to the vector of the triangles that will then be printed
+ * @param t
+ */
 void Triangulation::addDrawTriangles(delaunay::Triangle* t){
     drawTriangles.push_back(t);
 }
 
-
+/**
+ * @brief Triangulation::unionEdge
+ * @details joins the points to the vertices
+ * @param point
+ */
 void Triangulation::unionEdge(const Point2Dd& point){
     delaunay::Node *node=this->_dag.navigateGraph(point);
     delaunay::Triangle *t = node->t();
@@ -83,8 +119,15 @@ void Triangulation::unionEdge(const Point2Dd& point){
 
 
 }
-
-    //suddivisione in 3 triangoli caso normale
+/**
+ * @brief Triangulation::subdivisionTriangle
+ * @details basic function with which the triangulation is created,
+   this subdivides a triangle joining the vertices to the inserted point and setting the adjacencies of the created triangles
+ * @param point
+ * @param triangle
+ * @param node
+ * @param dag
+ */
 void Triangulation::subdivisionTriangle(const Point2Dd& point, Triangle* triangle, Node* node, Dag* dag){
 
     delaunay::Triangle* tr1 = Triangulation::createTriangle(point, triangle->v1(), triangle->v2(), node, dag);
@@ -118,8 +161,15 @@ void Triangulation::subdivisionTriangle(const Point2Dd& point, Triangle* triangl
 
 }
 
-//suddivisione in 4 triangoli partendolo dall'edge 3
-//ricordandoci che i triangoli sono creati in senso anti orario la costruzione dovrebbe avenire nel modo seguente
+/**
+ * @brief Triangulation::subdivisionTriangleDoubleE1
+ * @details subdivision into 4 triangles starting from edge 3
+    reminding us that the triangles are created in an anticlockwise direction, the construction should be as follows
+ * @param point
+ * @param triangle
+ * @param node
+ * @param dag
+ */
 void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle* triangle, Node* node, Dag* dag){
 
     delaunay::Triangle* tr1_1 = Triangulation::createTriangle(point, triangle->v2(), triangle->v3(), node, dag);
@@ -133,7 +183,6 @@ void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle*
     triangle->setIllegal();
     triangle->e1()->setIllegal();
 
-    //TRIANGOLI DI SOTTO
 
     tr2_1->sete1(tr2_2);
     tr2_1->sete2(triangle->e1()->searchAdjacentTriangle(tp, triangle->v2()));
@@ -147,7 +196,6 @@ void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle*
         tr2_2->e2()->twoPointsEdgeAdjacentFlip(triangle->v1(), tp, tr2_2);
     tr2_2->sete3(tr2_1);
 
-    //TRIANGOLI DI SOPRA
     tr1_1->sete1(tr2_1);
     if(triangle->e2()!=nullptr){
         tr1_1->sete2(triangle->e2());
@@ -169,9 +217,15 @@ void Triangulation::subdivisionTriangleDoubleE1(const Point2Dd& point, Triangle*
     legalizeEdge(point, tp, triangle->v3(), tr2_2, dag);
 }
 
-
-//suddivisione in 4 triangoli partendolo dall'edge 2
-//ricordandoci che i triangoli sono creati in senso anti orario la costruzione dovrebbe avenire nel modo seguente
+/**
+ * @brief Triangulation::subdivisionTriangleDoubleE2
+ * @details subdivision into 4 triangles starting from edge 2
+    reminding us that the triangles are created in an anticlockwise direction, the construction should be as follows
+ * @param point
+ * @param triangle
+ * @param node
+ * @param dag
+ */
 void Triangulation::subdivisionTriangleDoubleE2(const Point2Dd& point, Triangle* triangle, Node* node, Dag* dag){
 
     delaunay::Triangle* tr1_1 = Triangulation::createTriangle(point, triangle->v1(), triangle->v2(), node, dag);
@@ -188,7 +242,6 @@ void Triangulation::subdivisionTriangleDoubleE2(const Point2Dd& point, Triangle*
     triangle->setIllegal();
     triangle->e2()->setIllegal();
 
-    //TRIANGOLI DI SOTTO
     tr2_1->sete1(tr1_1);
     tr2_1->sete2(triangle->e2()->searchAdjacentTriangle(triangle->v2(), tp));
     if (triangle->e2()->searchAdjacentTriangle(triangle->v2(), tp) != nullptr)
@@ -201,7 +254,6 @@ void Triangulation::subdivisionTriangleDoubleE2(const Point2Dd& point, Triangle*
         tr2_2->e2()->twoPointsEdgeAdjacentFlip(tp, triangle->v3(), tr2_2);
     tr2_2->sete3(tr1_2);
 
-    //TRIANGOLI DI SOPRA
     tr1_1->sete1(tr1_2);
     if(triangle->e2()!=nullptr){
         tr1_1->sete2(triangle->e2());
@@ -225,8 +277,15 @@ void Triangulation::subdivisionTriangleDoubleE2(const Point2Dd& point, Triangle*
 
 }
 
-//suddivisione in 4 triangoli partendolo dall'edge 2
-//ricordandoci che i triangoli sono creati in senso anti orario la costruzione dovrebbe avenire nel modo seguente
+/**
+ * @brief Triangulation::subdivisionTriangleDoubleE3
+ * @details subdivision into 4 triangles starting from edge 3
+    reminding us that the triangles are created in an anticlockwise direction, the construction should be as follows
+ * @param point
+ * @param triangle
+ * @param node
+ * @param dag
+ */
 void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle* triangle, Node* node, Dag* dag){
 
 
@@ -241,7 +300,6 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
     triangle->setIllegal();
     triangle->e3()->setIllegal();
 
-    //TRIANGOLI DI SOTTO
     tr2_1->sete1(tr1_1);
     tr2_1->sete2(triangle->e3()->searchAdjacentTriangle(triangle->v3(), tp));
     if (triangle->e3()->searchAdjacentTriangle(triangle->v3(), tp) != nullptr)
@@ -254,7 +312,6 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
         tr2_2->e2()->twoPointsEdgeAdjacentFlip(tp, triangle->v1(), tr2_2);
     tr2_2->sete3(tr1_2);
 
-    //TRIANGOLI DI SOPRA
     tr1_1->sete1(tr1_2);
     if(triangle->e2()!=nullptr){
         tr1_1->sete2(triangle->e2());
@@ -279,7 +336,16 @@ void Triangulation::subdivisionTriangleDoubleE3(const Point2Dd& point, Triangle*
 }
 
 
-
+/**
+ * @brief Triangulation::createTriangle
+ * @details creation of the triangle, also setting the node of belonging and adding it to the dag
+ * @param one
+ * @param two
+ * @param three
+ * @param node
+ * @param dag
+ * @return triangle
+ */
 Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two, const Point2Dd& three, Node *node, Dag *dag){
     Triangle* t = new Triangle(one, two, three);
     Node* n = new Node();
@@ -289,7 +355,17 @@ Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two,
     node->add(n);
     return t;
 }
-
+/**
+ * @brief Triangulation::createTriangle
+ * @details is executed when the flip occurs and the triangle needs to be derived from 2 parent nodes
+ * @param one
+ * @param two
+ * @param three
+ * @param node1
+ * @param node2
+ * @param dag
+ * @return triangle
+ */
 Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two, const Point2Dd& three, Node *node1, Node *node2, Dag *dag){
     Triangle* t = new Triangle(one, two, three);
     Node* n = new Node();
@@ -301,7 +377,15 @@ Triangle* Triangulation::createTriangle(const Point2Dd& one,const Point2Dd& two,
     return t;
 }
 
-
+/**
+ * @brief Triangulation::legalizeEdge
+ * @details control of triangles according to delaunay's algorithm using the verification function provided
+ * @param pr
+ * @param pi
+ * @param pj
+ * @param t
+ * @param dag
+ */
 
 void Triangulation::legalizeEdge(const Point2Dd& pr, const Point2Dd& pi, const Point2Dd& pj, Triangle* t, Dag* dag){
 
@@ -321,7 +405,16 @@ void Triangulation::legalizeEdge(const Point2Dd& pr, const Point2Dd& pi, const P
 
 }
 
-
+/**
+ * @brief Triangulation::edgeFlip
+ * @details function to perform flip according to delaunay algorithm
+ * @param pr
+ * @param pi
+ * @param pj
+ * @param tr1
+ * @param tr2
+ * @param dag
+ */
 void Triangulation::edgeFlip(const Point2Dd& pr, const Point2Dd& pi, const Point2Dd& pj, Triangle* tr1, Triangle* tr2, Dag* dag ){
 
     tr1->setIllegal();
@@ -365,7 +458,10 @@ void Triangulation::edgeFlip(const Point2Dd& pr, const Point2Dd& pi, const Point
 
 }
 
-
+/**
+ * @brief Triangulation::TrianglesForValidation
+ * @details function to set the triangulation fields for verification with the function provided
+ */
 void Triangulation::TrianglesForValidation(){
     this->_triangles.clear();
     this->_points.clear();
@@ -398,22 +494,45 @@ void Triangulation::TrianglesForValidation(){
         }
     }
 }
-
+/**
+ * @brief Triangulation::setTriangles
+ * @param index
+ * @param c
+ * @param position
+ */
 void Triangulation::setTriangles(int index, int c, unsigned int position ){
     _triangles(index, c) = position;
 }
+/**
+ * @brief Triangulation::resizeTriangles
+ * @param row
+ * @param colum
+ */
 void Triangulation::resizeTriangles(int row,int colum){
     _triangles.resize(row, colum);
 }
-
+/**
+ * @brief Triangulation::setPoints
+ * @details insert the points in the vector
+ * @param p
+ */
 void Triangulation::setPoints(const Point2Dd& p){
 
     _points.push_back(p);
 }
 
+/**
+ * @brief Triangulation::getPoints
+ * @return vector of triangle points
+ */
 std::vector<Point2Dd> Triangulation::getPoints(){
     return this->_points;
 }
+
+/**
+ * @brief Triangulation::getTriangles
+ * @return matrix with triangle points
+ */
 cg3::Array2D<unsigned int> Triangulation::getTriangles(){
     return this->_triangles;
 }

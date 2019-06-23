@@ -2,10 +2,10 @@
 
 #include <cg3/viewer/renderable_objects/2d/renderable_objects2d.h>
 
-/**
- * @brief Default constructor
- */
 template<class Container>
+/**
+ * @brief PointCollectionDrawer<Container>::PointCollectionDrawer
+ */
 PointCollectionDrawer<Container>::PointCollectionDrawer() :
     containerPointer(nullptr),
     color(QColor(255,0,0))
@@ -13,11 +13,11 @@ PointCollectionDrawer<Container>::PointCollectionDrawer() :
 
 }
 
-/**
- * @brief Setter for the container of the points
- * @param containerPointer Pointer to the container to draw
- */
 template<class Container>
+/**
+ * @brief PointCollectionDrawer<Container>::setPoints
+ * @param value
+ */
 void PointCollectionDrawer<Container>::setPoints(Container* value)
 {
     this->containerPointer = value;
@@ -25,21 +25,21 @@ void PointCollectionDrawer<Container>::setPoints(Container* value)
 
 
 
-/**
- * @brief Set point color
- * @param color Color
- */
 template<class Container>
+/**
+ * @brief PointCollectionDrawer<Container>::setColor
+ * @param color
+ */
 void PointCollectionDrawer<Container>::setColor(const QColor& color)
 {
     this->color = color;
 }
 
 
-/**
- * @brief Method for drawing a collection of points
- */
 template<class Container>
+/**
+ * @brief PointCollectionDrawer<Container>::draw
+ */
 void PointCollectionDrawer<Container>::draw() const {
     for (const cg3::Point2Dd& p : *this->containerPointer) {
         cg3::viewer::drawPoint2D(p, color, 5);
@@ -51,35 +51,43 @@ void PointCollectionDrawer<Container>::draw() const {
  * @return Center of the scene
  */
 template<class Container>
+/**
+ * @brief PointCollectionDrawer<Container>::sceneCenter
+ * @return
+ */
 cg3::Pointd PointCollectionDrawer<Container>::sceneCenter() const {
-    cg3::Pointd center(0,0,0);
-    for (const cg3::Point2Dd& p : *this->containerPointer) {
-        center.x() += p.x();
-        center.y() += p.y();
-    }
-    center /= (*this->containerPointer).size();
+//    cg3::Pointd center(0,0,0);
+//    for (const cg3::Point2Dd& p : *this->containerPointer) {
+//        center.x() += p.x();
+//        center.y() += p.y();
+//    }
+//    center /= (*this->containerPointer).size();
 
-    return center;
+//    return center;
+
+    return cg3::Pointd(0, 0);
 
 }
 
-/**
- * @brief Get the radius of the scene containing the collection of points
- * @return Radius of the scene
- */
 template<class Container>
+/**
+ * @brief PointCollectionDrawer<Container>::sceneRadius
+ * @return
+ */
 double PointCollectionDrawer<Container>::sceneRadius() const {
-    cg3::Pointd center = sceneCenter();
+//    cg3::Pointd center = sceneCenter();
 
-    double maxDistance = 0;
-    for (const cg3::Point2Dd& p : *this->containerPointer) {
-        cg3::Point2Dd center2D(center.x(), center.y());
-        double dist = p.dist(center2D);
+//    double maxDistance = 0;
+//    for (const cg3::Point2Dd& p : *this->containerPointer) {
+//        cg3::Point2Dd center2D(center.x(), center.y());
+//        double dist = p.dist(center2D);
 
-        maxDistance = std::max(dist, maxDistance);
-    }
+//        maxDistance = std::max(dist, maxDistance);
+//    }
 
-    return maxDistance;
+//    return maxDistance;
+
+    return -1;
 
 }
 
