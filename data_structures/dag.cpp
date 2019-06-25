@@ -1,6 +1,7 @@
 #include "dag.h"
 using namespace delaunay;
 Dag::Dag()= default;
+Dag::~Dag()= default;
 /**
  * @brief Dag::nodes
  * @return the vector of the nodes
@@ -44,12 +45,14 @@ Node* Dag::navigateGraph(const Point2Dd &point){
             if(triangle->controlPointinTriangle(point)) root = root->third();
         }
         //se non ci sono più figli si blocca il loop
-       if(root->first() == nullptr && root->second() == nullptr && root->third() == nullptr)
+       if(root->isLeaf())
            flag = false;
 
     }
     return root;
 }
+
+
 
 /**
  * @brief Dag::erase

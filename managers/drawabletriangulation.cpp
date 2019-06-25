@@ -8,7 +8,8 @@ using namespace cg3;
 const cg3::Point2Dd BT_P1(1e+10, 0);
 const cg3::Point2Dd BT_P2(0, 1e+10);
 const cg3::Point2Dd BT_P3(-1e+10, -1e+10);
-
+const cg3::Point2Dd distance(1e+6, 0);
+const cg3::Point2Dd negDistance(-1e+6, 0);
 
 
 DrawableTriangulation::DrawableTriangulation() :color(QColor(0,0,255))
@@ -101,6 +102,7 @@ double DrawableTriangulation::sceneRadius() const {
 
 //    return maxDistance;
 
+    //return (negDistance.dist(distance))/2;
     return -1;
 }
 

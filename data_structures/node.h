@@ -12,6 +12,7 @@ public:
     //costruttore
     Node();
     Node(Triangle* t);
+    ~Node();
 
     //getter
     Triangle* t() const;
@@ -31,6 +32,7 @@ public:
     //compere
     bool operator ==(const Node& node);
 
+    bool isLeaf();
 protected:
     Triangle* _t = nullptr; //info
     Node* _first = nullptr; // first child

@@ -1,7 +1,7 @@
 #include "node.h"
 using namespace delaunay;
 Node::Node()= default;
-
+Node::~Node()=default;
 /**
  * @brief Node::Node
  * @param t
@@ -80,4 +80,13 @@ void Node::add(Node* node){
         this->setThird(node);
         return;
     }
+}
+
+bool Node::isLeaf(){
+    if (this->first() == nullptr && this->second() == nullptr && this->third() == nullptr){
+        return true;
+    }else {
+        return false;
+    }
+
 }

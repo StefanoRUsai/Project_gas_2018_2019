@@ -2,6 +2,9 @@
 
 #include <cg3/viewer/renderable_objects/2d/renderable_objects2d.h>
 
+const cg3::Point2Dd distance(1e+6, 0);
+const cg3::Point2Dd negDistance(-1e+6, 0);
+
 template<class Container>
 /**
  * @brief PointCollectionDrawer<Container>::PointCollectionDrawer
@@ -56,14 +59,14 @@ template<class Container>
  * @return
  */
 cg3::Pointd PointCollectionDrawer<Container>::sceneCenter() const {
-    //    cg3::Pointd center(0,0,0);
-    //    for (const cg3::Point2Dd& p : *this->containerPointer) {
-    //        center.x() += p.x();
-    //        center.y() += p.y();
-    //    }
-    //    center /= (*this->containerPointer).size();
+//    cg3::Pointd center(0,0,0);
+//    for (const cg3::Point2Dd& p : *this->containerPointer) {
+//        center.x() += p.x();
+//        center.y() += p.y();
+//    }
+//    center /= (*this->containerPointer).size();
 
-    //    return center;
+//    return center;
 
     return cg3::Pointd(0, 0);
 
@@ -75,20 +78,20 @@ template<class Container>
  * @return
  */
 double PointCollectionDrawer<Container>::sceneRadius() const {
-    //    cg3::Pointd center = sceneCenter();
+//    cg3::Pointd center = sceneCenter();
 
-    //    double maxDistance = 0;
-    //    for (const cg3::Point2Dd& p : *this->containerPointer) {
-    //        cg3::Point2Dd center2D(center.x(), center.y());
-    //        double dist = p.dist(center2D);
+//    double maxDistance = 0;
+//    for (const cg3::Point2Dd& p : *this->containerPointer) {
+//        cg3::Point2Dd center2D(center.x(), center.y());
+//        double dist = p.dist(center2D);
 
-    //        maxDistance = std::max(dist, maxDistance);
-    //    }
+//        maxDistance = std::max(dist, maxDistance);
+//    }
 
-    //    return maxDistance;
+//    return maxDistance;
 
+//    return (negDistance.dist(distance))/2;
     return -1;
-
 }
 
 

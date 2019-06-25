@@ -7,6 +7,7 @@
 
 using namespace delaunay;
 Triangulation::Triangulation()= default;
+
 /**
  * @brief Triangulation::~Triangulation
  */
@@ -38,17 +39,6 @@ Triangulation::Triangulation(const Point2Dd& BT_P1, const Point2Dd& BT_P2, const
     this->_dag.setNodes(&node);
 
 }
-
-/**
- * @brief Triangulation::eraseTriangulation
- */
-void Triangulation::eraseTriangulation(){
-
-    drawTriangles.erase(drawTriangles.begin(), drawTriangles.end());
-    _dag.erase();
-
-}
-
 /**
  * @brief Triangulation::Triangulation
  * @details manufacturer of the triangulation with the passage of the initial triangle and the first knot on the dag
@@ -60,6 +50,17 @@ Triangulation::Triangulation(Triangle* t, Node* node){
     addDrawTriangles(t);
     this->_dag.setNodes(node);
 }
+
+/**
+ * @brief Triangulation::eraseTriangulation
+ */
+void Triangulation::eraseTriangulation(){
+
+    drawTriangles.erase(drawTriangles.begin(), drawTriangles.end());
+    _dag.erase();
+
+}
+
 
 
 /**

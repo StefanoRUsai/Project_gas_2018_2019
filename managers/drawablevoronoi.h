@@ -26,6 +26,7 @@ protected:
     std::vector<delaunay::Triangle* > _triangles; // vector of triangles to be printed
 
 
+
 };
 
 #endif // DRAWABLEVORONOI_H

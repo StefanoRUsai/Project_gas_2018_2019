@@ -27,6 +27,7 @@ public:
 private:
     Container* containerPointer;
     QColor color; // Color of point
+
 };
 
 #include "pointcollectiondrawer.tpp"

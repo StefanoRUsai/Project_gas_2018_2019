@@ -9,7 +9,8 @@
 using namespace cg3;
 using namespace delaunay;
 using namespace voronoi;
-
+const cg3::Point2Dd distance(1e+6, 0);
+const cg3::Point2Dd negDistance(-1e+6, 0);
 DrawableVoronoi::DrawableVoronoi():color(QColor(255,0,0)){}
 
 /**
@@ -90,6 +91,7 @@ double DrawableVoronoi::sceneRadius() const {
 //    }
 
 //    return maxDistance;
+    //return (negDistance.dist(distance))/2;
     return -1;
 }
 

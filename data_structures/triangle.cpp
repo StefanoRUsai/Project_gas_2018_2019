@@ -2,7 +2,7 @@
 #include "triangle.h"
 #include "node.h"
 using namespace delaunay;
-
+Triangle::~Triangle()=default;
 /**
  * @brief Triangle::Triangle
  * @param v1

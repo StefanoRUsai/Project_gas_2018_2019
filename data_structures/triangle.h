@@ -17,6 +17,7 @@ public:
     //costruttori
     Triangle();
     Triangle(const Point2Dd& v1, const Point2Dd& v2, const Point2Dd& v3);
+    ~Triangle();
 
     //getter
     Point2Dd v1() const;
