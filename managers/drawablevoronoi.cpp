@@ -20,7 +20,7 @@ void DrawableVoronoi::draw() const{
         for(Triangle* t: _triangles){
             if(t->isLegal()){
 
-                viewer::drawPoint2D(circumcircle(t), QColor(0,18,12), 2);
+                viewer::drawPoint2D(circumcircle(t), QColor(0,18,12), 3);
 
                 if(t->e1() != nullptr)
                 viewer::drawLine2D(circumcircle(t), circumcircle(t->e1()), color, 1);

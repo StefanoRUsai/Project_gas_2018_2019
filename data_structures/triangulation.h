@@ -46,9 +46,9 @@ public:
 
 protected:
 
-    std::vector<Point2Dd> _points;
-    cg3::Array2D<unsigned int> _triangles;
-    std::vector<delaunay::Triangle*> drawTriangles;
+    std::vector<Point2Dd> _points; // vector of points belonging of the triangle
+    cg3::Array2D<unsigned int> _triangles; // matrix of triangles
+    std::vector<delaunay::Triangle*> drawTriangles; // vector of triangles to be printed
     Dag _dag;
 
 };

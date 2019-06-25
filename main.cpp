@@ -1,12 +1,6 @@
 #include <cg3/viewer/mainwindow.h>
 #include "managers/delaunaymanager.h"
 
-#include <data_structures/triangle.h>
-#include <data_structures/node.h>
-#include <data_structures/dag.h>
-
-using namespace delaunay;
-
 int main(int argc, char *argv[]) {
 
     CG3_SUPPRESS_WARNING(argc);
@@ -24,5 +18,5 @@ int main(int argc, char *argv[]) {
     gui.updateGlCanvas();
     gui.show();
 
-    return QApplication::exec();
+    return app.exec();
 }

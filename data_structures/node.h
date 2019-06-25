@@ -32,10 +32,10 @@ public:
     bool operator ==(const Node& node);
 
 protected:
-    Triangle* _t = nullptr;
-    Node* _first = nullptr;
-    Node* _second = nullptr;
-    Node* _third = nullptr;
+    Triangle* _t = nullptr; //info
+    Node* _first = nullptr; // first child
+    Node* _second = nullptr; // second child
+    Node* _third = nullptr; // third child
 
 };
 

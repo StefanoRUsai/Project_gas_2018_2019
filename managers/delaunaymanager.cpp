@@ -211,7 +211,6 @@ void DelaunayManager::clearDelaunayTriangulation() {
     if(tri != nullptr){
         points.clear();
         tri->eraseTriangulation();
-        tcd.eraseTriangles();
     }
     /********************************************************************************************************************/
 }
@@ -273,6 +272,10 @@ void DelaunayManager::eraseDrawnDelaunayTriangulation() {
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
+    if(tri != nullptr){
+        tcd.eraseTriangles();
+    }
+
     /********************************************************************************************************************/
 
     //Canvas update
@@ -318,9 +321,9 @@ void DelaunayManager::checkTriangulation() {
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
-      tri->TrianglesForValidation();
-      points=tri->getPoints();
-      triangles=tri->getTriangles();
+      tri->TrianglesForValidation(); //insert the points in the point vector and update the triangle matrix
+      points=tri->getPoints(); //get the vector of points
+      triangles=tri->getTriangles(); //get the matrix of triangles
 
 
 
@@ -345,7 +348,7 @@ void DelaunayManager::checkTriangulation() {
 /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
 /**
- * @brief Draw the Delaunay Triangulation in the canvas
+ * @brief Draw the voronoi diagram in the canvas
  */
 void DelaunayManager::drawVoronoiDiagram() {
 
@@ -367,13 +370,17 @@ void DelaunayManager::drawVoronoiDiagram() {
 /********************************************************************************************************************/
 
 /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
-
+/**
+ * @brief DelaunayManager::on_voronoiDiagramPushButton_clicked
+ */
 void DelaunayManager::on_voronoiDiagramPushButton_clicked(){
     drawVoronoiDiagram();
 
 }
 
-
+/**
+ * @brief DelaunayManager::on_clearVoronoiDiagramPushButton_clicked
+ */
 void DelaunayManager::on_clearVoronoiDiagramPushButton_clicked(){
     vcd.eraseTriangles();
     mainWindow.updateGlCanvas();

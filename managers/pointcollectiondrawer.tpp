@@ -42,7 +42,7 @@ template<class Container>
  */
 void PointCollectionDrawer<Container>::draw() const {
     for (const cg3::Point2Dd& p : *this->containerPointer) {
-        cg3::viewer::drawPoint2D(p, color, 5);
+        cg3::viewer::drawPoint2D(p, color, 3);
     }
 }
 

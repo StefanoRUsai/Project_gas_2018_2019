@@ -48,12 +48,11 @@ private:
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
-    //Drawer for the collection of points
-    PointCollectionDrawer<std::vector<cg3::Point2Dd>> pcd;
-    DrawableTriangulation tcd;
-    DrawableVoronoi vcd;
-    std::vector<delaunay::Triangulation *> _triangulation;
-    Triangulation* tri = nullptr;
+
+    PointCollectionDrawer<std::vector<cg3::Point2Dd>> pcd; //Drawer for the collection of points
+    DrawableTriangulation tcd; // Drawer class that manages printing of triangulation
+    DrawableVoronoi vcd; //  Drawer class that manages printing of voronoi diagram
+    Triangulation* tri = nullptr; // triangulation
 
     /********************************************************************************************************************/
 

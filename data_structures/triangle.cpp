@@ -165,7 +165,7 @@ bool Triangle::isLegal(){return _legal;}
  * @brief Triangle::thirdpoint
  * @param p1
  * @param p2
- * @return returns the third point of a triangle starting from 2,
+ * @return returns the third point of a triangle starting from 2 points,
  *  in case it is wrong it returns the first point passed so you can understand
  *  if the triangle under examination is completely wrong
  */
@@ -218,7 +218,7 @@ void Triangle::twoPointsEdgeAdjacentFlip(const Point2Dd& p1, const Point2Dd& p2,
  * @brief Triangle::PointsAdjacent
  * @param p1
  * @param p2
- * @return the adjacent triangle according to the points
+ * @return the edge on which the triangle is adjacent
  */
 Triangle* Triangle::PointsAdjacent(const Point2Dd& p1, const Point2Dd& p2){
 

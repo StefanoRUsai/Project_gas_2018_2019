@@ -22,9 +22,8 @@ public:
     void setColor(const QColor &color);
     void setTriangles(const std::vector<delaunay::Triangle *> &triangles);
 protected:
-    QColor color;
-    std::vector<delaunay::Triangle* > _triangles;
-    std::vector<cg3::Point2Dd> *points = nullptr;
+    QColor color; //Color of the edges
+    std::vector<delaunay::Triangle* > _triangles; // vector of triangles to be printed
 
 
 };

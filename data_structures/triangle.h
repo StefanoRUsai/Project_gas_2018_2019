@@ -60,12 +60,13 @@ public:
     Triangle *searchAdjacentTriangle(const Point2Dd &p1, const Point2Dd &p2);
     bool pointLyingOnTheLineCheck(const Point2Dd &p, const Point2Dd &a, const Point2Dd &b);
 protected:
-    Point2Dd _v1,_v2,_v3;
-    bool _legal;
-    Triangle* _e1 = nullptr;
-    Triangle* _e2 = nullptr;
-    Triangle* _e3 = nullptr;
-    delaunay::Node* _node = nullptr;
+
+    Point2Dd _v1,_v2,_v3; // vertex of triangle
+    bool _legal; // check if the triangle is legal
+    Triangle* _e1 = nullptr; //Pointer to adjacent triangle for edge 1
+    Triangle* _e2 = nullptr; //Pointer to adjacent triangle for edge 1
+    Triangle* _e3 = nullptr; //Pointer to adjacent triangle for edge 3
+    delaunay::Node* _node = nullptr; // cross link between triangle and node
 };
 
 }

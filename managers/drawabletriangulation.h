@@ -36,9 +36,9 @@ public:
 private:
 
     QColor color; //Color of the edges
-    bool boundingTriangle=false;
-    std::vector<delaunay::Triangle* > triangles;
-    std::vector<cg3::Point2Dd> *points = nullptr;
+    bool boundingTriangle=false; // flag
+    std::vector<delaunay::Triangle* > triangles; // vector of triangles to be printed
+
 
 
 

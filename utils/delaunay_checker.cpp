@@ -36,12 +36,12 @@ bool isPointLyingInCircle(
             c.x(), c.y(), c.x()*c.x() + c.y()*c.y(), 1,
             p.x(), p.y(), p.x()*p.x() + p.y()*p.y(), 1;
 
-    if (includeEndpoints) {        
+    if (includeEndpoints) {
         return (A.determinant() >= -std::numeric_limits<double>::epsilon());
     }
-    
+    else {
         return (A.determinant() > 0);
-    
+    }
 }
 
 /**

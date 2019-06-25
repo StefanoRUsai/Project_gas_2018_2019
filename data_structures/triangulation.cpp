@@ -163,7 +163,7 @@ void Triangulation::subdivisionTriangle(const Point2Dd& point, Triangle* triangl
 
 /**
  * @brief Triangulation::subdivisionTriangleDoubleE1
- * @details subdivision into 4 triangles starting from edge 3
+ * @details subdivision into 4 triangles starting from edge 1
     reminding us that the triangles are created in an anticlockwise direction, the construction should be as follows
  * @param point
  * @param triangle
@@ -494,6 +494,7 @@ void Triangulation::TrianglesForValidation(){
         }
     }
 }
+
 /**
  * @brief Triangulation::setTriangles
  * @param index
