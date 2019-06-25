@@ -61,7 +61,7 @@ bool isDeulaunayTriangulation(const std::vector<cg3::Point2Dd>& points, const cg
     unsigned int n = triangles.getSizeX();
     bool isDelaunay = true;
 
-    #pragma omp parallel for
+#pragma omp parallel for
     for (unsigned int i = 0; i < n; i++) {
         //Get the points of the triangle
         const cg3::Point2Dd& a = points[triangles(i,0)];
@@ -83,7 +83,6 @@ bool isDeulaunayTriangulation(const std::vector<cg3::Point2Dd>& points, const cg
     }
     return isDelaunay;
 }
-
 
 }
 
