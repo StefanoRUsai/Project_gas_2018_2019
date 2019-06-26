@@ -108,10 +108,11 @@ bool Triangle::controlPointinTriangle2(const cg3::Point2Dd &p){
     double as_y = p.y()-_v1.y();
 
     bool s_ab = (_v2.x()-_v1.x())*as_y-(_v2.y()-_v1.y())*as_x > 0;
+    bool s_c = (_v3.x()-_v1.x())*as_y-(_v3.y()-_v1.y())*as_x > 0;
+    bool s_d = (_v3.x()-_v2.x())*(p.y()-_v2.y())-(_v3.y()-_v2.y())*(p.x()-_v2.x()) > 0;
+    if(s_c == s_ab) return false;
 
-    if((_v3.x()-_v1.x())*as_y-(_v3.y()-_v1.y())*as_x > 0 == s_ab) return false;
-
-    if((_v3.x()-_v2.x())*(p.y()-_v2.y())-(_v3.y()-_v2.y())*(p.x()-_v2.x()) > 0 != s_ab) return false;
+    if(s_d != s_ab) return false;
 
     return true;
 }

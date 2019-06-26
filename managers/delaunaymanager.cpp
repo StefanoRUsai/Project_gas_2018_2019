@@ -162,41 +162,44 @@ void DelaunayManager::addPointToDelaunayTriangulation(const cg3::Point2Dd& p) {
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
-    vcd.eraseTriangles();
-    tcd.eraseTriangles();
-
+    mainWindow.deleteObj(&tcd);
+    mainWindow.deleteObj(&pcd);
+    mainWindow.deleteObj(&vcd);
     points.push_back(p);
 
     if (tri != nullptr){
         pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
-        mainWindow.pushObj(&pcd, "Triangle");
-        mainWindow.updateGlCanvas();
+        mainWindow.pushObj(&pcd, "Point");
+
+        fitScene();
 
         tri->unionEdge(p);
 
         tcd.setTriangles(tri->getDrawTriangles());
 
         mainWindow.pushObj(&tcd, "Triangle");
-        mainWindow.updateGlCanvas();
+
+        fitScene();
 
     }else{
        tri=delaunay::triangulation(BT_P1, BT_P2, BT_P3);
 
        pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
-       mainWindow.pushObj(&pcd, "Triangle");
-       mainWindow.updateGlCanvas();
+       mainWindow.pushObj(&pcd, "Point");
+       fitScene();
 
        tri->unionEdge(p);
 
        tcd.setTriangles(tri->getDrawTriangles());
 
        mainWindow.pushObj(&tcd, "Triangle");
-       mainWindow.updateGlCanvas();
+
+       fitScene();
 
 
 
     }
-
+    mainWindow.updateGlCanvas();
     /********************************************************************************************************************/
     CG3_SUPPRESS_WARNING(p);
 }
@@ -209,10 +212,14 @@ void DelaunayManager::clearDelaunayTriangulation() {
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
+    mainWindow.deleteObj(&tcd);
+    mainWindow.deleteObj(&pcd);
+    mainWindow.deleteObj(&vcd);
     if(tri != nullptr){
         points.clear();
         tri->eraseTriangulation();
     }
+    fitScene();
     /********************************************************************************************************************/
 }
 
@@ -238,11 +245,11 @@ void DelaunayManager::drawDelaunayTriangulation() {
 
     pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
     mainWindow.pushObj(&pcd, "Points");
-
+    fitScene();
 
     tcd.setTriangles(tri->getDrawTriangles()); //Points shouldn't change whenever the canvas is drawing it!
     mainWindow.pushObj(&tcd, "Triangle");
-
+    fitScene();
 
     /********************************************************************************************************************/
 
@@ -353,8 +360,10 @@ void DelaunayManager::checkTriangulation() {
  */
 void DelaunayManager::drawVoronoiDiagram() {
 
+   mainWindow.deleteObj(&vcd);
     vcd.setTriangles(tri->getDrawTriangles());
     mainWindow.pushObj(&vcd, "Diagram");
+    fitScene();
 
 
     //Canvas update
@@ -383,7 +392,12 @@ void DelaunayManager::on_voronoiDiagramPushButton_clicked(){
  * @brief DelaunayManager::on_clearVoronoiDiagramPushButton_clicked
  */
 void DelaunayManager::on_clearVoronoiDiagramPushButton_clicked(){
+    mainWindow.deleteObj(&tcd);
+    mainWindow.deleteObj(&pcd);
+    mainWindow.deleteObj(&vcd);
+
     vcd.eraseTriangles();
+    fitScene();
     mainWindow.updateGlCanvas();
 }
 
