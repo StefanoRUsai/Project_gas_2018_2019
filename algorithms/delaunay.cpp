@@ -23,7 +23,7 @@ Triangulation* delaunay::triangulation(const Point2Dd& BT_P1, const Point2Dd& BT
  * @param BT_P2 point the bounding triangle
  * @param BT_P3 point the bounding triangle
  * @param points are the initial set for triangulation,
-   The algorithm follows the specification of the permutation on the set of start points.
+ * @details The algorithm follows the specification of the permutation on the set of start points.
  */
 Triangulation* delaunay::triangulation(const std::vector<cg3::Point2Dd>& points,
                              const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){

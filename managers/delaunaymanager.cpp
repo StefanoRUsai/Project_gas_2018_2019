@@ -121,6 +121,9 @@ DelaunayManager::~DelaunayManager() {
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
+    mainWindow.deleteObj(&tcd);
+    mainWindow.deleteObj(&pcd);
+    mainWindow.deleteObj(&vcd);
     /********************************************************************************************************************/
 
     //Delete the bounding box drawable object

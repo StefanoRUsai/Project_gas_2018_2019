@@ -76,34 +76,14 @@ bool DrawableTriangulation::printPoint(const Point2Dd& p) const{
 }
 
 Pointd DrawableTriangulation::sceneCenter() const {
-//    cg3::Pointd center(0,0,0);
-//    for (const cg3::Point2Dd& p : *this->points) {
-//        center.x() += p.x();
-//        center.y() += p.y();
-//    }
-//    center /= (this->points)->size();
-
-//    return center;
 
     return Pointd(0, 0);
 
 }
 
 double DrawableTriangulation::sceneRadius() const {
-//    cg3::Pointd center = sceneCenter();
+    return (negDistance.dist(distance))/2;
 
-//    double maxDistance = 0;
-//    for (const cg3::Point2Dd& p : *this->points) {
-//        cg3::Point2Dd center2D(center.x(), center.y());
-//        double dist = p.dist(center2D);
-
-//        maxDistance = std::max(dist, maxDistance);
-//    }
-
-//    return maxDistance;
-
-    //return (negDistance.dist(distance))/2;
-    return -1;
 }
 
 /**
