@@ -1,6 +1,6 @@
 #include "node.h"
 using namespace delaunay;
-Node::Node()= default;
+Node::Node()=default;
 Node::~Node()=default;
 /**
  * @brief Node::Node

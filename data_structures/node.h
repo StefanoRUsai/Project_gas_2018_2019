@@ -4,7 +4,8 @@
 
 namespace delaunay  {
 /**
- * @brief Class for representing a Node. Every node has 3 children.
+ * @brief Class for representing a Node.
+ *  Every node has 3 children and the link to a triangle.
  */
 
 class Node{

@@ -9,7 +9,9 @@ namespace delaunay {
 class Node;
 
 /**
-@brief Triangle class. This class implements a triangle using his vertex
+*@brief Triangle class.
+* This class implements a triangle using his vertex.
+*
 **/
 
 class Triangle{
@@ -55,7 +57,7 @@ public:
 
     std::string twoPointsEdgeAdjacent(const Point2Dd &p1, const Point2Dd &p2);
     Triangle *twoPointsAdjacentTriangle(const Point2Dd &p1, const Point2Dd &p2, Triangle *t);
-    void twoPointsEdgeAdjacentFlip(const Point2Dd &p1, const Point2Dd &p2, Triangle *t);
+    void twoPointsEdgeAdjacentSet(const Point2Dd &p1, const Point2Dd &p2, Triangle *t);
     Triangle *twoPointsAdjacentTriangleNew(const Point2Dd &p1, const Point2Dd &p2);
     Triangle *PointsAdjacent(const Point2Dd &p1, const Point2Dd &p2);
     Triangle *searchAdjacentTriangle(const Point2Dd &p1, const Point2Dd &p2);

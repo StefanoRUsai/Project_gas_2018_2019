@@ -194,13 +194,13 @@ bool Triangle::twoPointsAdjacent(const Point2Dd& p1, const Point2Dd& p2){
 
 
 /**
- * @brief Triangle::twoPointsEdgeAdjacentFlip
+ * @brief Triangle::twoPointsEdgeAdjacentSet
  * @details sets the triangle passed as adjacent to the one found on the basis of the points
  * @param p1
  * @param p2
  * @param t
  */
-void Triangle::twoPointsEdgeAdjacentFlip(const Point2Dd& p1, const Point2Dd& p2, Triangle* t){
+void Triangle::twoPointsEdgeAdjacentSet(const Point2Dd& p1, const Point2Dd& p2, Triangle* t){
     if ((_v2 == p1 && _v3 == p2)||(_v3 == p1 && _v2 == p2)){
         if (t != nullptr)
             this->sete2(t);

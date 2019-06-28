@@ -11,6 +11,10 @@ namespace delaunay {
 
 /**
  * @brief Class for representing a triangulation
+ * The class consists of a vector of triangles, a vector of points, a matrix with the points of triangles and a DAG field.
+ * This class deals with the creation of new triangles, after the addition of points, for all 2 cases that requires the delaunay
+ * agorhythm, i.e. both if the point is inside the triangle and when the point falls on the line.
+ * It also takes care of checking that the triangulation is legal and in case it is not, it uses the required flip technique.
  */
 class Triangulation{
 
@@ -20,18 +24,28 @@ public:
     Triangulation(const Point2Dd &BT_P1, const Point2Dd &BT_P2, const Point2Dd &BT_P3);
     Triangulation(Triangle *t, Node *node);
     std::vector<delaunay::Triangle*> getDrawTriangles();
+
+    //create triangles
     Triangle *createTriangle(const Point2Dd &one, const Point2Dd &two, const Point2Dd &three, Node *node, Dag *dag);
     Triangle *createTriangle(const Point2Dd &one, const Point2Dd &two, const Point2Dd &three, Node *node1, Node *node2, Dag *dag);
     void addDrawTriangles(delaunay::Triangle *t);
     void unionEdge(const Point2Dd &point);
     void setDag(Dag* dag);
+
+    //insert point
+    void addList(const std::vector<Point2Dd> &points);
+    void addPoint(Point2Dd &point);
+
+    //subdivision
     void subdivisionTriangle(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
     void subdivisionTriangleDoubleE1(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
     void subdivisionTriangleDoubleE2(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
     void subdivisionTriangleDoubleE3(const Point2Dd &point, Triangle *triangle, Node *node, Dag *dag);
+
+    // legalization
     void legalizeEdge(const Point2Dd &pr, const Point2Dd &pi, const Point2Dd &pj, Triangle *t, Dag* dag);
     void edgeFlip(const Point2Dd &pr, const Point2Dd &pi, const Point2Dd &pj, Triangle *tr1, Triangle *tr2, Dag* dag);
-    void AdjacencyFlip(Triangle *ntr1, Triangle *ntr2, Triangle *otr1, Triangle *otr2);
+
     void TrianglesForValidation();
     std::vector<Point2Dd> getPoints();
     void setPoints(const Point2Dd& p);
@@ -39,8 +53,7 @@ public:
     void setTriangles(int index, int c, unsigned int position);
 
     void resizeTriangles(int row, int colum);
-    void addList(const std::vector<Point2Dd> &points);
-    void addPoint(Point2Dd &point);
+
 
     void eraseTriangulation();
 

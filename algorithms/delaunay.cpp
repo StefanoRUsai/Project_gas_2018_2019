@@ -8,6 +8,8 @@ using namespace delaunay;
  * @param BT_P1 point the bounding triangle
  * @param BT_P2 point the bounding triangle
  * @param BT_P3 point the bounding triangle
+ * @details start triangulation, simply starting from the bounding triangle.
+ * Function used to initialize the algorithm in case the points are passed by hand from the beginning
  */
 Triangulation* delaunay::triangulation(const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){
     Triangle* t = new Triangle(BT_P1, BT_P2, BT_P3);

@@ -7,6 +7,7 @@
 namespace delaunay {
 /**
  * @brief Class for representing a Directed acyclic graph
+ * this class deals with the navigation of the dag and the storage of the nodes
  */
 class Dag{
 
