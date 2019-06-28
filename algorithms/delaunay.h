@@ -8,7 +8,7 @@ using namespace cg3;
 namespace delaunay {
 
 Triangulation* triangulation(const std::vector<Point2Dd> &points,
-                   const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3);
+                             const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3);
 
 Triangulation* triangulation(const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3);
 

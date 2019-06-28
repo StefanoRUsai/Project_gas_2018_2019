@@ -67,8 +67,8 @@ bool Node::operator == (const Node& node){ return (_t == node.t()); }
 void Node::add(Node* node){
 
     if(this->first() == nullptr){
-       this->setFirst(node);
-       return;
+        this->setFirst(node);
+        return;
     }
 
     if(this->second() == nullptr){

@@ -28,7 +28,7 @@ Triangulation* delaunay::triangulation(const Point2Dd& BT_P1, const Point2Dd& BT
  * @details The algorithm follows the specification of the permutation on the set of start points.
  */
 Triangulation* delaunay::triangulation(const std::vector<cg3::Point2Dd>& points,
-                             const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){
+                                       const Point2Dd& BT_P1, const Point2Dd& BT_P2, const Point2Dd& BT_P3){
     std::vector<cg3::Point2Dd> newPoints = points;
     Triangle* t = new Triangle(BT_P1, BT_P2, BT_P3);
     Node *node = new Node(t);

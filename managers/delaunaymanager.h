@@ -13,7 +13,7 @@
 #include <data_structures/triangulation.h>
 
 namespace Ui {
-    class DelaunayManager;
+class DelaunayManager;
 }
 
 class DelaunayManager : public QFrame {
@@ -33,7 +33,7 @@ private:
 
     //UI fields
     Ui::DelaunayManager *ui;
-    cg3::viewer::MainWindow& mainWindow;    
+    cg3::viewer::MainWindow& mainWindow;
 
     //It is const because, once defined and initialized, it will never change!
     const cg3::DrawableBoundingBox2D boundingBox;
@@ -68,10 +68,10 @@ private:
 
     void drawDelaunayTriangulation();
     void eraseDrawnDelaunayTriangulation();
-	
+
     void setVisibilityBoundingTriangle(const bool visible);
 
-	void checkTriangulation();
+    void checkTriangulation();
 
 
     //Declare your private methods here if you need some
@@ -123,8 +123,8 @@ private slots:
     void on_enablePickingCheckBox_stateChanged(int arg1);
     void on_resetScenePushButton_clicked();
 
-    void on_generatePointsFilePushButton_clicked();	
-	
+    void on_generatePointsFilePushButton_clicked();
+
     void on_checkTriangulationPushButton_clicked();
 
     void on_showBoundingTriangleCheckBox_stateChanged(int arg1);

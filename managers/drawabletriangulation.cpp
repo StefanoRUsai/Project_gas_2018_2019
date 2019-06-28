@@ -41,9 +41,9 @@ void DrawableTriangulation::draw() const{
         if(this->boundingTriangle){
 
             if(t->isLegal()){
-                    cg3::viewer::drawLine2D( t->v1(), t->v2(),  color, 1);
-                    cg3::viewer::drawLine2D( t->v2(), t->v3(), color, 1);
-                    cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 1 );
+                cg3::viewer::drawLine2D( t->v1(), t->v2(),  color, 1);
+                cg3::viewer::drawLine2D( t->v2(), t->v3(), color, 1);
+                cg3::viewer::drawLine2D( t->v3(), t->v1(), color, 1 );
             }
         }else{
             if(t->isLegal()){

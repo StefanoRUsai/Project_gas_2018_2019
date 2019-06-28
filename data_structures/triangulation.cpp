@@ -21,8 +21,6 @@ Triangulation::~Triangulation(){
     }
 }
 
-
-
 /**
  * @brief Triangulation::Triangulation
  * @details manufacturer of the triangulation with the passage of the

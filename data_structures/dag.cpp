@@ -45,8 +45,8 @@ Node* Dag::navigateGraph(const Point2Dd &point){
             if(triangle->controlPointinTriangle(point)) root = root->third();
         }
         //se non ci sono più figli si blocca il loop
-       if(root->isLeaf())
-           flag = false;
+        if(root->isLeaf())
+            flag = false;
 
     }
     return root;

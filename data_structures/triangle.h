@@ -11,7 +11,8 @@ class Node;
 /**
 *@brief Triangle class.
 * This class implements a triangle using his vertex.
-*
+* the triangle class contains information about the vertices of the triangle,
+* the triangles adjacent to its edges and the pointer to which it belongs
 **/
 
 class Triangle{

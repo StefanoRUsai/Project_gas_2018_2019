@@ -56,7 +56,7 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     ui(new Ui::DelaunayManager),
     mainWindow(dynamic_cast<cg3::viewer::MainWindow&>(*parent)),
     boundingBox(cg3::Point2Dd(-BOUNDINGBOX, -BOUNDINGBOX),
-                cg3::Point2Dd(BOUNDINGBOX, BOUNDINGBOX))    
+                cg3::Point2Dd(BOUNDINGBOX, BOUNDINGBOX))
 {
     //UI setup
     ui->setupUi(this);
@@ -96,7 +96,7 @@ DelaunayManager::~DelaunayManager() {
     //should delete (deallocate) all of them when the application
     //closes.
     //Remember that each class which allocates dynamic objects
-    //should implement a destructor which deallocates them.    
+    //should implement a destructor which deallocates them.
     //
     //Example:
     //      delete dynamicObject;
@@ -185,19 +185,19 @@ void DelaunayManager::addPointToDelaunayTriangulation(const cg3::Point2Dd& p) {
         fitScene();
 
     }else{
-       tri=delaunay::triangulation(BT_P1, BT_P2, BT_P3);
+        tri=delaunay::triangulation(BT_P1, BT_P2, BT_P3);
 
-       pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
-       mainWindow.pushObj(&pcd, "Point");
-       fitScene();
+        pcd.setPoints(&points); //Points shouldn't change whenever the canvas is drawing it!
+        mainWindow.pushObj(&pcd, "Point");
+        fitScene();
 
-       tri->unionEdge(p);
+        tri->unionEdge(p);
 
-       tcd.setTriangles(tri->getDrawTriangles());
+        tcd.setTriangles(tri->getDrawTriangles());
 
-       mainWindow.pushObj(&tcd, "Triangle");
+        mainWindow.pushObj(&tcd, "Triangle");
 
-       fitScene();
+        fitScene();
 
 
 
@@ -312,7 +312,7 @@ void DelaunayManager::setVisibilityBoundingTriangle(const bool visible)
  * @brief Check if the current triangulation is a Delaunay Triangulation
  */
 void DelaunayManager::checkTriangulation() {
-	std::vector<cg3::Point2Dd> points;
+    std::vector<cg3::Point2Dd> points;
     cg3::Array2D<unsigned int> triangles;
 
     //Get your triangulation here and save the data in the vector of
@@ -323,18 +323,18 @@ void DelaunayManager::checkTriangulation() {
     //3 columns.
     //The i-th row represents the i-th triangle, which is composed of three
     //unsigned integers which are the indices of the points in the vector
-    //"points" that are the vertices to the i-th triangle. 
-	//Note that the points of each triangle must be in COUNTER-CLOCKWISE order.
-    //You should initially resize (for efficiency reasons) the matrix "triangles" 
-	//by calling "triangles.resize(n, 3)", and then fill the matrix using the
-    //assignment operator: "triangles(i,j) = a"; 
+    //"points" that are the vertices to the i-th triangle.
+    //Note that the points of each triangle must be in COUNTER-CLOCKWISE order.
+    //You should initially resize (for efficiency reasons) the matrix "triangles"
+    //by calling "triangles.resize(n, 3)", and then fill the matrix using the
+    //assignment operator: "triangles(i,j) = a";
     /********************************************************************************************************************/
 
     /* WRITE YOUR CODE HERE! Read carefully the above comments! This line can be deleted */
 
-      tri->TrianglesForValidation(); //insert the points in the point vector and update the triangle matrix
-      points=tri->getPoints(); //get the vector of points
-      triangles=tri->getTriangles(); //get the matrix of triangles
+    tri->TrianglesForValidation(); //insert the points in the point vector and update the triangle matrix
+    points=tri->getPoints(); //get the vector of points
+    triangles=tri->getTriangles(); //get the matrix of triangles
 
 
 
@@ -363,7 +363,7 @@ void DelaunayManager::checkTriangulation() {
  */
 void DelaunayManager::drawVoronoiDiagram() {
 
-   mainWindow.deleteObj(&vcd);
+    mainWindow.deleteObj(&vcd);
     vcd.setTriangles(tri->getDrawTriangles());
     mainWindow.pushObj(&vcd, "Diagram");
     fitScene();
@@ -459,9 +459,9 @@ void DelaunayManager::fitScene() { //Do not write code here
 void DelaunayManager::on_loadPointsPushButton_clicked() { //Do not write code here
     //File selector
     QString filename = QFileDialog::getOpenFileName(nullptr,
-                       "Open points",
-                       ".",
-                       "*.txt");
+                                                    "Open points",
+                                                    ".",
+                                                    "*.txt");
 
     if (!filename.isEmpty()) {
         //Clear current data
@@ -522,7 +522,7 @@ void DelaunayManager::point2DClicked(const cg3::Point2Dd& p) { //Do not write co
         return;
     }
     
-        addPointToDelaunayTriangulation(p);
+    addPointToDelaunayTriangulation(p);
     
 }
 
@@ -567,9 +567,9 @@ void DelaunayManager::on_resetScenePushButton_clicked() { //Do not write code he
 void DelaunayManager::on_generatePointsFilePushButton_clicked() { //Do not write code here
     QString selectedFilter;
     QString filename = QFileDialog::getSaveFileName(nullptr,
-                       "File containing points",
-                       ".",
-                       "TXT(*.txt)", &selectedFilter);
+                                                    "File containing points",
+                                                    ".",
+                                                    "TXT(*.txt)", &selectedFilter);
 
     if (!filename.isEmpty()){
         int number = QInputDialog::getInt(
@@ -589,7 +589,7 @@ void DelaunayManager::on_generatePointsFilePushButton_clicked() { //Do not write
  * It allows us to check if the triangulation is a Delaunay one.
  */
 void DelaunayManager::on_checkTriangulationPushButton_clicked() {
-	checkTriangulation();
+    checkTriangulation();
 }
 
 /**
