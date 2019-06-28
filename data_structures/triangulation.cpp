@@ -104,16 +104,18 @@ void Triangulation::addDrawTriangles(delaunay::Triangle* t){
  */
 void Triangulation::unionEdge(const Point2Dd& point){
     delaunay::Node *node=this->_dag.navigateGraph(point);
-    delaunay::Triangle *t = node->t();
+    if (node != nullptr){
+        delaunay::Triangle *t = node->t();
 
-    if (areCollinear(t->v1(), t->v2(), point)){
-        this->subdivisionTriangleDoubleE1(point,t , node, &_dag);
-    }else if (areCollinear(t->v2(), t->v3(), point)){
-        this->subdivisionTriangleDoubleE2(point, t , node, &_dag);
-    }else if (areCollinear(t->v3(), t->v1(), point)){
-        this->subdivisionTriangleDoubleE3(point,t , node, &_dag);
-    } else {
-        this->subdivisionTriangle(point,t, node, &_dag);
+        if (areCollinear(t->v1(), t->v2(), point)){
+            this->subdivisionTriangleDoubleE1(point,t , node, &_dag);
+        }else if (areCollinear(t->v2(), t->v3(), point)){
+            this->subdivisionTriangleDoubleE2(point, t , node, &_dag);
+        }else if (areCollinear(t->v3(), t->v1(), point)){
+            this->subdivisionTriangleDoubleE3(point,t , node, &_dag);
+        } else {
+            this->subdivisionTriangle(point,t, node, &_dag);
+        }
     }
 
 
